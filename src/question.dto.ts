@@ -15,6 +15,10 @@ export class QuestionDto {
 
     @IsString()
     @IsOptional()
+    folderPath?: string;
+
+    @IsString()
+    @IsOptional()
     fileName?: string;
 
     @IsString()
