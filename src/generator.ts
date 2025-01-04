@@ -5,7 +5,7 @@ import axios from 'axios';
 import * as fs from 'fs';
 import * as path from 'path';
 import { QuestionDto } from './question.dto';
-import promts from './promts.json' assert { type: "json" };
+import prompts from './prompts.json' assert { type: "json" };
 
 const program = new Command();
 
@@ -55,6 +55,22 @@ const formatFileName = (input: string): string => {
         .toLowerCase();
 };
 
+const llamaQuery = async (prompt: string) => {
+    return axios.post(
+        'http://localhost:11434/api/chat',
+        {
+            model: 'llama3.1:latest',
+            messages: [
+                {
+                    role: 'user',
+                    content: prompt,
+                },
+            ],
+            stream: false,
+        }
+    );
+}
+
 program
     // .command('greet <name>')
     .description('Greet a user')
@@ -76,48 +92,23 @@ program
             }
 
             try {
-                const response = await axios.post(
-                    'http://localhost:11434/api/chat',
-                    {
-                        model: 'llama3.1:latest',
-                        messages: [
-                            {
-                                role: 'user',
-                                content: promts.translation.replace(
-                                    '{{QUESTION}}',
-                                    question.question || ''
-                                ),
-                            },
-                        ],
-                        stream: false,
-                    }
-                );
-                const result = response.data.message.content;
-                question.fileName = `${formatFileName(result)}.md`;
+                const translationQuery = await llamaQuery(prompts.translation.replace(
+                    '{{QUESTION}}',
+                    question.question || ''
+                ));
+                question.fileName = `${formatFileName(translationQuery.data.message.content)}.md`;
 
-                const answerQuery = await axios.post(
-                    'http://localhost:11434/api/chat',
-                    {
-                        model: 'llama3.1:latest',
-                        messages: [
-                            {
-                                role: 'user',
-                                content: promts.answer.replace(
-                                    '{{QUESTION}}',
-                                    question.question || ''
-                                ),
-                            },
-                        ],
-                        stream: false,
-                    }
-                );
+                const answerQuery = await llamaQuery(prompts.answer.replace(
+                    '{{QUESTION}}',
+                    question.question || ''
+                ));
                 question.answer = answerQuery.data.message.content;
                 console.warn('Done');
             } catch (error) {
                 console.error('Error:', error);
             }
 
-            const content = `### {{QUESTION}}\n\n{{CONTENT}}\n\n| Попереднє питання | Наступне питання |\n|---|---|\n| {{PREV_TOPIC}}  | {{NEXT_TOPIC}} |`
+            const content = `#### {{QUESTION}}\n\n{{CONTENT}}\n\n| Попереднє питання | Наступне питання |\n|---|---|\n| {{PREV_TOPIC}}  | {{NEXT_TOPIC}} |`
                 .replace('{{QUESTION}}', question.question || '')
                 .replace('{{CONTENT}}', question.answer || '');
 
