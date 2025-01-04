@@ -1,0 +1,28 @@
+{
+  "name": "node.js-handbook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/generator.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node --inspect-brk dist/generator.js",
+    "debug": "npm run build && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OleksiiPopovDev/Node.JS-Handbook.git"
+  },
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "axios": "^1.7.9",
+    "class-validator": "^0.14.1",
+    "commander": "^12.1.0",
+    "openai": "^4.76.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
