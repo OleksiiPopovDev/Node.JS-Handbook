@@ -7,6 +7,7 @@ import {TranslateQuestionsTask} from "./translate-questions.task.js";
 import {AnswerQuestionsTask} from "./answer-questions.task.js";
 import {PrepareMdContentTask} from "./prepare-md-content.task.js";
 import {CreateMdFilesTask} from "./create-md-files.task.js";
+import {UpdateReadmeTask} from "./update-readme.task.js";
 
 const program = new Command();
 
@@ -19,13 +20,15 @@ program
         const answerQuestionsTask = new AnswerQuestionsTask();
         const prepareMdContentTask = new PrepareMdContentTask();
         const createMdFilesTask = new CreateMdFilesTask();
+        const updateReadmeTask = new UpdateReadmeTask();
 
         parserQuestionsTask
             .setNext(createFoldersTask)
             .setNext(translateQuestionsTask)
             .setNext(answerQuestionsTask)
             .setNext(prepareMdContentTask)
-            .setNext(createMdFilesTask);
+            .setNext(createMdFilesTask)
+            .setNext(updateReadmeTask);
 
         const questions = await parserQuestionsTask.handle();
 

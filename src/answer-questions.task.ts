@@ -21,7 +21,7 @@ export class AnswerQuestionsTask extends AbstractHandler{
 
             return question;
         }, {
-            concurrency: 5,
+            concurrency: 2,
         });
 
         return super.handle(answeredQuestions);

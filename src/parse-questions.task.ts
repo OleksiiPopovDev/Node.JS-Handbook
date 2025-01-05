@@ -39,7 +39,7 @@ export class ParseQuestionsTask extends AbstractHandler {
             }
         }
 
-        return questions.splice(0, 10);
+        return questions.splice(0, 20);
     }
 
     private isQuestion = (line: string): boolean => /^\s*(\d+\.)|\*/gm.test(line.trim());

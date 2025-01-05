@@ -23,7 +23,7 @@ export abstract class AbstractHandler implements Handler {
         return questions;
     }
 
-    protected progressBar = (title: string, length: number) => new ProgressBar(`  ${title}\t[:bar] :rate/bps :percent :etas`, {
+    protected progressBar = (title: string, length: number) => new ProgressBar(`  ${title}\t[:bar] :current/:total :percent :etas`, {
         complete: '=',
         incomplete: ' ',
         width: 50,
