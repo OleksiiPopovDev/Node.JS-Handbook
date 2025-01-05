@@ -8,16 +8,22 @@ import fs from "fs";
 
 export class CreateMdFilesTask extends AbstractHandler {
     public async handle(questions: QuestionDto[]): Promise<QuestionDto[]> {
+        const progressBar = this.progressBar('creating MD', questions.length);
+
         await BBPromise.map(questions, async (question) => {
-            const content = `#### {{QUESTION}}\n\n{{CONTENT}}\n\n| Попереднє питання | Наступне питання |\n|---|---|\n| {{PREV_TOPIC}}  | {{NEXT_TOPIC}} |`
-                .replace('{{QUESTION}}', question.question || '')
-                .replace('{{CONTENT}}', question.answer || '');
-
             const filePath = path.join(question.folderPath ?? '', question.fileName!);
-            fs.writeFileSync(filePath, content, 'utf8');
 
+            try {
+                fs.writeFileSync(filePath, question.answer ?? '', 'utf8');
+            } catch (err) {
+                if (err instanceof Error) {
+                    progressBar.interrupt(`Error writing file: ${err.message}`);
+                }
+            }
+
+            progressBar.tick();
         }, {
-            concurrency: 10,
+            concurrency: 1,
         });
 
         return super.handle(questions);

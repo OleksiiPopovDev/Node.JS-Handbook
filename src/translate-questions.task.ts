@@ -7,6 +7,8 @@ import BBPromise from "bluebird";
 
 export class TranslateQuestionsTask extends AbstractHandler{
     public async handle(questions: QuestionDto[]): Promise<QuestionDto[]> {
+        const progressBar = this.progressBar('translating', questions.length);
+
         const translatedQuestions = await BBPromise.map(questions, async (question) => {
             const folderPath = path.join(
                 this.formatFileName(question.level!),
@@ -27,10 +29,11 @@ export class TranslateQuestionsTask extends AbstractHandler{
                 console.error('Error:', error);
             }
 
+            progressBar.tick();
             return question;
 
         }, {
-            concurrency: 10,
+            concurrency: 5,
         });
 
         return super.handle(translatedQuestions);

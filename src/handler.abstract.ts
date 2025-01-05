@@ -1,5 +1,6 @@
 import { QuestionDto } from "./question.dto.js";
 import axios from "axios";
+import ProgressBar from "progress";
 
 export interface Handler<Request = QuestionDto[], Result = QuestionDto[]> {
     setNext(handler: Handler<Request, Result>): Handler<Request, Result>;
@@ -21,6 +22,13 @@ export abstract class AbstractHandler implements Handler {
         }
         return questions;
     }
+
+    protected progressBar = (title: string, length: number) => new ProgressBar(`  ${title}\t[:bar] :rate/bps :percent :etas`, {
+        complete: '=',
+        incomplete: ' ',
+        width: 50,
+        total: length
+    });
 
     protected llamaQuery = async (prompt: string) => {
         return axios.post(
