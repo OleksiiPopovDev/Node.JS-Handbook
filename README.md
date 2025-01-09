@@ -3,7 +3,7 @@
 ---
 ## Junior
 ### Node.js
-1. [Що таке Node.js?](./junior/nodejs/1-what-is-nodejs.md)
+1. [Що таке Node.js?](/junior/nodejs/1-what-is-nodejs.md)
 2. [Які основні переваги та недоліки використання Node.js?](./junior/nodejs/what-are-the-main-advantages-and-disadvantages-of-using-nodejs.md)
 3. [Для яких завдань Node.js не підходить?](./junior/nodejs/what-tasks-is-nodejs-not-suitable-for.md)
 4. [Які в Node.js головні компоненти?](./junior/nodejs/what-are-the-main-components-of-a-nodejs-application.md)
