@@ -15,4 +15,4 @@ Node.js - це відкритий, багатоплатформовий інте
 
 | Попереднє питання | Наступне питання |
 |---|---|
-|   | [2. Які основні переваги та недоліки використання Node.js?](./junior/nodejs/what-are-the-main-advantages-and-disadvantages-of-using-nodejs.md) |
+|   | [2. Які основні переваги та недоліки використання Node.js?](/junior/nodejs/what-are-the-main-advantages-and-disadvantages-of-using-nodejs.md) |
