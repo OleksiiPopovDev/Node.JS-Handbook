@@ -1,47 +1,57 @@
-#### 21. Що таке асинхронність і асинхронний код?
+#### 33. Що таке асинхронність і асинхронний код?
 
-Асинхронність в обчисленнях та програмуванні означає, що операції можуть виконуватися незалежно від основного потоку програми або від інших операцій. Це дозволяє програмі продовжувати виконувати інші завдання, не чекаючи завершення поточних асинхронних операцій, таких як I/O операції, запити до бази даних або мережеві запити.
+Асинхронність у JavaScript відноситься до можливості виконання коду без блокування виконання інших частин програми. Це означає, що певні операції можуть виконуватися у фоновому режимі, а інші частини коду продовжуватимуть виконуватися далі. Це особливо важливо для операцій, які можуть зайняти багато часу, таких як запити до серверу, файлові операції чи таймери.
 
-### Асинхронний код
+**Асинхронний код** — це код, який виконується не одразу, а після завершення якоїсь іншої задачі або певного проміжку часу. У JavaScript часто використовуються `callbacks`, `promises` та `async/await` для роботи з асинхронним кодом.
 
-Асинхронний код - це код, який виконує операції асинхронно, не блокуючи основний потік виконання програми. У сучасних мовах програмування для підтримки асинхронності можуть використовуватися такі підходи, як:
+### Приклади:
 
-1. **Колбеки (Callbacks)**: Функції, які передаються як аргументи в інші функції та викликаються, коли асинхронна операція завершується.
-
+1. **Колбеки (Callbacks):**
    ```javascript
-   fs.readFile('file.txt', 'utf8', function(err, data) {
-       if (err) throw err;
-       console.log(data);
+   function fetchData(callback) {
+     setTimeout(() => {
+       callback("Data received");
+     }, 1000);
+   }
+
+   fetchData((data) => {
+     console.log(data); // Виведе "Data received" через 1 секунду
    });
    ```
 
-2. **Проміси (Promises)**: Об'єкти, які представляють завершення (або невдачу) асинхронної операції та дозволяють обробляти результат цієї операції.
-
+2. **Проміси (Promises):**
    ```javascript
-   let promise = fetch('https://api.example.com/data');
-   promise.then(response => response.json())
-          .then(data => console.log(data))
-          .catch(error => console.error('Error:', error));
+   let promise = new Promise((resolve, reject) => {
+     setTimeout(() => {
+       resolve("Data received");
+     }, 1000);
+   });
+
+   promise.then((data) => {
+     console.log(data); // Виведе "Data received" через 1 секунду
+   });
    ```
 
-3. **Async/Await**: Синтаксичний цукор над промісами, який дозволяє писати асинхронний код, який виглядає як синхронний.  
-
+3. **Async/Await:**
    ```javascript
-   async function fetchData() {
-       try {
-           let response = await fetch('https://api.example.com/data');
-           let data = await response.json();
-           console.log(data);
-       } catch (error) {
-           console.error('Error:', error);
-       }
+   function fetchData() {
+     return new Promise((resolve) => {
+       setTimeout(() => {
+         resolve("Data received");
+       }, 1000);
+     });
    }
 
-   fetchData();
+   async function getData() {
+     const data = await fetchData();
+     console.log(data); // Виведе "Data received" через 1 секунду
+   }
+
+   getData();
    ```
 
-Асинхронність допомагає оптимізувати продуктивність додатків, особливо тих, які повинні взаємодіяти з повільними зовнішніми ресурсами або виконувати довготривалі обчислення.
+Асинхронний підхід дозволяє створювати швидкі та ефективні додатки, які можуть обробляти декілька запитів одразу, не блокуючи основний потік виконання програми.
 
 | Back | Forward |
 |---|---|
-| [Handle errors with Express.js middleware](/ua/junior/expressjs/how-to-handle-errors-in-expressjs.md)  | [Яка відмінність між var, let і const? Чому варто використовувати const, якщо змінна не буде змінюватися далі в коді?](/ua/junior/javascript/whats-the-difference-between-var-let-and-const-why-should-i-use-const-if-a-variable-wont-change-later-in-code.md) |
+| [Handle errors with Express.js middleware](/ua/junior/expressjs/how-to-handle-errors-with-expressjs-middleware.md)  | [Яка відмінність між var, let і const? Чому варто використовувати const, якщо змінна не буде змінюватися далі в коді?](/ua/junior/javascript/what-is-the-difference-between-var-let-and-const-why-use-const-when-a-variable-wont-be-reassigned-in-code.md) |

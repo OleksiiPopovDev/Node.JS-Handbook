@@ -1,65 +1,71 @@
 #### * Use child_process and worker_threads for parallel processing
 
-Використання модулів `child_process` та `worker_threads` в Node.js дозволяє виконувати паралельні операції, що може бути корисним для підвищення продуктивності додатка шляхом розділення задач на окремі процеси або потоки. Розглянемо приклади використання обох підходів.
+# Використання `child_process` та `worker_threads` для паралельної обробки
 
-### Використання `child_process`
+У Node.js існує кілька методів для паралельної обробки, зокрема `child_process` та `worker_threads`. Обидва підходи дозволяють виконувати код у паралельних потоках, але з різними механізмами та цільовим використанням.
 
-Модуль `child_process` дозволяє створювати дочірні процеси. Ви можете виконувати шельні команди, викликати скрипти Node.js або інші додатки.
+## `child_process`
+
+Модуль `child_process` використовується для запуску зовнішніх процесів, тобто створення нових процесів операційної системи. Це може бути корисно для забезпечення паралелізму на рівні процесів.
+
+### Приклад використання `child_process`:
 
 ```javascript
 const { exec } = require('child_process');
 
-// Виконання шельної команди
-exec('ls -l', (error, stdout, stderr) => {
+exec('node someScript.js', (error, stdout, stderr) => {
   if (error) {
-    console.error(`Помилка: ${error.message}`);
+    console.error(`Помилка виконання: ${error}`);
     return;
   }
   if (stderr) {
-    console.error(`Стерео вихід: ${stderr}`);
+    console.error(`Стандартна помилка: ${stderr}`);
     return;
   }
-  console.log(`Вихід команди:\n${stdout}`);
+  console.log(`Стандартний вивід: ${stdout}`);
 });
 ```
 
-### Використання `worker_threads`
+### Коли використовувати:
+- Коли потрібно виконати зовнішні скрипти чи програми.
+- Коли потрібна повна ізоляція від основного процесу Node.js.
+- Коли велика накладні витрати процесу не є проблемою.
 
-`worker_threads` пропонує можливість створення багатопотокових додатків в Node.js. Кожен потік має свій власний V8 інстанс, що забезпечує повноцінну багатозадачність.
+## `worker_threads`
 
-#### Головний файл:
+Модуль `worker_threads` дозволяє запускати JavaScript-код у багатопотоковому режимі в межах одного процесу, що може бути ефективніше з точки зору ресурсів, ніж `child_process`.
+
+### Приклад використання `worker_threads`:
+
 ```javascript
-const { Worker } = require('worker_threads');
+const { Worker, isMainThread, parentPort } = require('worker_threads');
 
-function runService(workerData) {
-  return new Promise((resolve, reject) => {
-    const worker = new Worker('./worker.js', { workerData });
-    worker.on('message', resolve);
-    worker.on('error', reject);
-    worker.on('exit', (code) => {
-      if (code !== 0)
-        reject(new Error(`Потік завершився з кодом виходу ${code}`));
-    });
+if (isMainThread) {
+  const worker = new Worker(__filename);
+  worker.on('message', (message) => {
+    console.log(`Отримано від потоку: ${message}`);
+  });
+  worker.postMessage('Привіт, потік');
+} else {
+  parentPort.on('message', (message) => {
+    console.log(`Отримано: ${message}`);
+    parentPort.postMessage('Привіт, основний потік');
   });
 }
-
-runService('Hello, Worker!').then(result => {
-  console.log(result);
-}).catch(err => {
-  console.error(err);
-});
 ```
 
-#### Файл `worker.js`:
-```javascript
-const { parentPort, workerData } = require('worker_threads');
+### Коли використовувати:
+- Коли потрібно виконувати JavaScript-код у паралельних потоках без створення нових процесів.
+- Коли важлива мінімізація накладних витрат.
+- Для спільного використання пам'яті між потоками з використанням `SharedArrayBuffer`.
 
-// Обробка даних
-parentPort.postMessage(workerData + ' - процесовано');
-```
+## Порівняння:
 
-Обидва підходи мають свої переваги і недоліки. `child_process` простіше в використанні для виконання сторонніх програм, тоді як `worker_threads` краще підходить для задач, які вимагають інтенсивного CPU обчислення всередині Node.js, оскільки він дозволяє застосовувати спільну пам’ять через `SharedArrayBuffer`, що є ефективним для обміну даними між потоками.
+- **`child_process`**: створює окремий процес із власною пам'яттю та контекстом, ізольований від батьківського процесу.
+- **`worker_threads`**: створює новий потік у межах одного процесу, що забезпечує більшу роздільну здатність при обміні даними через `parentPort`.
+
+Обирайте відповідний інструмент відповідно до конкретного випадку використання та вимог вашого проєкту.
 
 | Back | Forward |
 |---|---|
-| [Optimize task scheduling](/ua/middle/nodejs/scheduling-optimization.md)  | [Handle real-time communication using WebSocket or Socket.io](/ua/middle/nodejs/handle-realtime-communication-using-websocket-or-socketio.md) |
+| [Optimize task scheduling](/ua/middle/nodejs/optimizing-task-scheduling.md)  | [Handle real-time communication using WebSocket or Socket.io](/ua/middle/nodejs/handle-realtime-communication-using-websocket-or-socketio.md) |

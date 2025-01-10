@@ -1,109 +1,141 @@
 #### * Handle real-time communication using WebSocket or Socket.io
 
-Для організації реального часу комунікації у веб-застосунках часто використовують WebSocket або Socket.io. Ось як це можна зробити з використанням обох технологій:
+У Node.js для обробки реального часу спілкування зазвичай використовують WebSocket або бібліотеку Socket.io. Ось короткий огляд як їх застосовувати:
 
-### Використання WebSocket
+### WebSocket
 
-**Клієнтська частина (JavaScript у браузері):**
+WebSocket - це протокол, що забезпечує двосторонній зв’язок між клієнтом і сервером з малою затримкою. Він ефективний для забезпечення реального часу спілкування в додатках, таких як чати, ігри та системи оповіщення.
 
-```javascript
-// Ініціалізація з'єднання
-const socket = new WebSocket('ws://yourserver.com/socket');
+#### Приклад використання:
 
-socket.onopen = function(event) {
-    console.log('WebSocket is open now.');
-};
+1. **Встановлення пакету**:
 
-socket.onmessage = function(event) {
-    console.log('Message received: ', event.data);
-};
+   ```bash
+   npm install ws
+   ```
 
-socket.onclose = function(event) {
-    console.log('WebSocket is closed now.');
-};
+2. **Серверний код** (використовуючи `ws` пакет):
 
-socket.onerror = function(error) {
-    console.error('WebSocket error observed:', error);
-};
+   ```javascript
+   const WebSocket = require('ws');
 
-// Відправка повідомлення на сервер
-socket.send('Hello Server!');
-```
+   const server = new WebSocket.Server({ port: 8080 });
 
-**Серверна частина (Node.js, наприклад, з використанням бібліотеки `ws`):**
+   server.on('connection', (socket) => {
+     console.log('Новий зʼєднаний клієнт');
 
-```javascript
-const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 8080 });
+     socket.on('message', (message) => {
+       console.log(`Отримане повідомлення: ${message}`);
+       socket.send(`Відповідь на: ${message}`);
+     });
 
-wss.on('connection', function connection(ws) {
-    ws.on('message', function incoming(message) {
-        console.log('received: %s', message);
-        ws.send('Hello Client!');
-    });
+     socket.on('close', () => {
+       console.log('Клієнт відʼєднався');
+     });
+   });
 
-    ws.send('Welcome new client!');
-});
-```
+   console.log('WebSocket сервер запущено на порту 8080');
+   ```
 
-### Використання Socket.io
+3. **Клієнтський код**:
 
-**Клієнтська частина (JavaScript у браузері):**
+   ```javascript
+   const socket = new WebSocket('ws://localhost:8080');
 
-```html
-<script src="/socket.io/socket.io.js"></script>
-<script>
-    var socket = io();
+   socket.onopen = () => {
+     console.log('Зʼєднання встановлено');
+     socket.send('Привіт, сервер!');
+   };
 
-    socket.on('connect', function() {
-        console.log('Connected to server');
-    });
+   socket.onmessage = (event) => {
+     console.log(`Отримано дані: ${event.data}`);
+   };
 
-    socket.on('message', function(data) {
-        console.log('Message from server: ', data);
-    });
+   socket.onclose = () => {
+     console.log('Зʼєднання закрито');
+   };
+   ```
 
-    // Відправка повідомлення на сервер
-    socket.emit('message', 'Hello Server!');
-</script>
-```
+### Socket.io
 
-**Серверна частина (Node.js):**
+Socket.io - це бібліотека, що абстрагує над WebSocket і підтримує інші транспортні шари, забезпечуючи надійніший досвід роботи з реальним часом. Вона автоматично перемикається на WebSocket, якщо це можливо, і на інші методи зв'язку, якщо ні.
 
-```javascript
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
+#### Причини для вибору Socket.io:
 
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
+- **Автоматичне відновлення зв'язку**: легкість обробки розривів зв'язку.
+- **Простий API**: зручні функції для роботи з кімнатами, канальним зв'язком тощо.
+- **Більш надійний**: вбудований механізм поліпшення з'єднання.
 
-io.on('connection', (socket) => {
-    console.log('a user connected');
+#### Приклад використання:
 
-    socket.on('message', (msg) => {
-        console.log('message: ' + msg);
-        socket.send('Hello Client!');
-    });
+1. **Встановлення бібліотеки**:
 
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-    });
-});
+   ```bash
+   npm install socket.io
+   ```
 
-server.listen(3000, () => {
-    console.log('listening on *:3000');
-});
-```
+2. **Серверний код**:
 
-### Порівняння WebSocket та Socket.io
+   ```javascript
+   const express = require('express');
+   const http = require('http');
+   const socketIo = require('socket.io');
 
-- **WebSocket** — це нативний протокол для двостороннього зв'язку через TCP. Він легкий, але потребує ручної реалізації обробки багатьох низькорівневих речей, таких як перепідключення або кодування повідомлень.
-  
-- **Socket.io** — це бібліотека, що спрощує використання WebSocket та забезпечує додаткові функції, такі як автоматичне перепідключення, обробка падінь, підтримка більше транспортних засобів для сумісності з старими браузерами. 
+   const app = express();
+   const server = http.createServer(app);
+   const io = socketIo(server);
 
-Обидва підходи мають свої переваги та недоліки, тому вибір залежить від вимог конкретного проекту.
+   io.on('connection', (socket) => {
+     console.log('Новий зʼєднаний клієнт');
+
+     socket.on('message', (message) => {
+       console.log(`Отримано повідомлення: ${message}`);
+       socket.emit('message', `Відповідь на: ${message}`);
+     });
+
+     socket.on('disconnect', () => {
+       console.log('Клієнт відʼєднався');
+     });
+   });
+
+   server.listen(3000, () => {
+     console.log('Socket.io сервер запущено на порту 3000');
+   });
+   ```
+
+3. **Клієнтський код**:
+
+   ```html
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Socket.io Client</title>
+     <script src="/socket.io/socket.io.js"></script>
+   </head>
+   <body>
+     <script>
+       const socket = io('http://localhost:3000');
+
+       socket.on('connect', () => {
+         console.log('Зʼєднання встановлено');
+         socket.send('Привіт, сервер!');
+       });
+
+       socket.on('message', (data) => {
+         console.log(`Отримані дані: ${data}`);
+       });
+
+       socket.on('disconnect', () => {
+         console.log('Зʼєднання закрито');
+       });
+     </script>
+   </body>
+   </html>
+   ```
+
+Ось так можна реалізувати реальне часове спілкування з використанням WebSocket або Socket.io у Node.js. Обидва підходи мають свої переваги, і вибір між них залежить від вимог вашого проекту.
 
 | Back | Forward |
 |---|---|

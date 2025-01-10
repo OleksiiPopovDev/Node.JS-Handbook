@@ -10,13 +10,14 @@ export class UpdateReadmeService {
         const lines = fileContent.split('\n');
 
         const updatedLines = lines.map((line) => {
-            for (const question of questions) {
+            for (let index = 0; index < questions.length; index++) {
+                const question = questions[index];
                 if (line.includes(question.question ?? '')) {
                     const regex = /^(\d+\.|\*)\s(.+?)$/gm.exec(question.question ?? '');
                     if (!regex) {
                         return line;
                     }
-                    const newLink = `${regex[1]} [${regex[2]}](./${question.folderPath}/${question.fileName})`;
+                    const newLink = `${index + 1}. [${regex[2]}](./${question.folderPath}/${question.fileName})`;
                     return line.replace(question.question ?? '', newLink);
                 }
             }

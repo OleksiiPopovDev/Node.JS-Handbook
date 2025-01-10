@@ -20,7 +20,7 @@ program
     .action(async () => {
         const parseQuestionsService = new ParseQuestionsService();
         const updateReadmeService = new UpdateReadmeService();
-        const questions = parseQuestionsService.run();//.splice(0, 50);
+        const questions = parseQuestionsService.run();//.splice(0, 100);
 
         const createFoldersTask = new CreateFoldersTask();
         const translateQuestionsTask = new TranslateQuestionsTask();

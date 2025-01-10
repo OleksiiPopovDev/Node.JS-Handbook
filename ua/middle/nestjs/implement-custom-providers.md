@@ -1,67 +1,79 @@
 #### * Implement custom providers
 
-Звісно! Щоб реалізувати власних провайдерів, насамперед треба зрозуміти, які завдання вони виконуватимуть. Власні провайдери можуть бути використані в різних контекстах, таких як депенденсі-ін'єкція, збірка конфігурацій або інтеграція з іншими системами. Я наведу приклад реалізації простого провайдера конфігурації на основі мови програмування Python.
+У Nest.js, кастомні провайдери можна створити для забезпечення налаштовуваної логіки ін'єкції залежностей. Це може бути корисно, коли потрібно змінити поведінку стандартних провайдерів або ввести складніші механізми, такі як фабрики або класи.
 
-### Приклад: Власний провайдер конфігурації на Python
+Ось приклад, як можна реалізувати кастомний провайдер:
 
-У цьому прикладі ми реалізуємо провайдера, який буде читати налаштування з текстового файлу `config.txt`.
+### Крок 1: Створення кастомного провайдера
 
-#### Структура файлу конфігурації
+```typescript
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class CustomService {
+  private readonly message: string;
+
+  constructor(message: string) {
+    this.message = message;
+  }
+
+  getMessage(): string {
+    return this.message;
+  }
+}
 ```
-database=postgres
-username=admin
-password=pa$w0rd
+
+### Крок 2: Реєстрація кастомного провайдера
+
+В цьому прикладі ми створюємо провайдера, який повертає інстанцію `CustomService` з переданим параметром `message`.
+
+```typescript
+import { Module } from '@nestjs/common';
+
+const CustomProvider = {
+  provide: 'CUSTOM_SERVICE',
+  useFactory: () => {
+    return new CustomService('Hello, custom provider!');
+  },
+};
+
+@Module({
+  providers: [CustomProvider],
+  exports: [CustomProvider],
+})
+export class CustomModule {}
 ```
 
-#### Реалізація конфігураційного провайдера
+### Крок 3: Використання кастомного провайдера
 
-```python
-class ConfigProvider:
-    def __init__(self, filepath):
-        self.filepath = filepath
-        self.configurations = self._load_config()
+Важливо зазначити, що кастомні провайдери можна інжектувати через механізм dependency injection:
 
-    def _load_config(self):
-        configurations = {}
-        try:
-            with open(self.filepath, 'r') as file:
-                lines = file.readlines()
-            
-            for line in lines:
-                if '=' in line:
-                    key, value = line.strip().split('=', 1)
-                    configurations[key] = value
-        except FileNotFoundError:
-            print(f"Configuration file {self.filepath} not found.")
-        except Exception as e:
-            print(f"Error reading configuration: {e}")
+```typescript
+import { Controller, Get, Inject } from '@nestjs/common';
 
-        return configurations
+@Controller()
+export class AppController {
+  constructor(@Inject('CUSTOM_SERVICE') private readonly customService: CustomService) {}
 
-    def get(self, key, default=None):
-        return self.configurations.get(key, default)
-
-# Використання провайдера
-config_provider = ConfigProvider('config.txt')
-database = config_provider.get('database', 'default_db')
-username = config_provider.get('username')
-password = config_provider.get('password')
-
-print(f"Database: {database}")
-print(f"Username: {username}")
-print(f"Password: {password}")
+  @Get()
+  getCustomMessage(): string {
+    return this.customService.getMessage();
+  }
+}
 ```
 
 ### Пояснення
 
-1. **Клас `ConfigProvider`**: Визначає клас для роботи з файлами конфігурації. 
-2. **Методи**:
-   - `_load_config`: Читає файл конфігурацій і зберігає пари "ключ-значення" у словнику.
-   - `get`: Повертає значення для певного ключа, або значення за замовчуванням, якщо ключ не знайдено.
-3. **Обробка помилок**: Існує обробка випадків, коли файл не знайдено, або коли виникає інша помилка під час читання.
+1. **CustomService**: Це клас нашого сервісу, який ми маємо намір використовувати як провайдер.
 
-Цей базовий приклад можна адаптувати залежно від вимог вашої програми, зокрема додати підтримку різних форматів файлів або джерел даних.
+2. **CustomProvider**: Створюється об'єкт провайдера з полем `provide`, що визначає ключ для інжекцій, та `useFactory`, що повертає інстанцію сервісу.
+
+3. **Module**: Провайдер зареєстрований у модулі за допомогою providers. За потреби, його можна експортувати для доступу в інших модулях.
+
+4. **AppController**: Наприклад, тут можна побачити, як наш кастомний провайдер інжектується за допомогою конструктора і використовується у методі контролера.
+
+За допомогою цього підходу ви можете створювати налаштовувані провайдери у Nest.js, базуючись на специфічних вимогах вашого проекту.
 
 | Back | Forward |
 |---|---|
-| [Create and import modules](/ua/middle/nestjs/create-and-import-modules.md)  | [Create custom pipes](/ua/middle/nestjs/create-custom-pipelines.md) |
+| [Create and import modules](/ua/middle/nestjs/create-modules.md)  | [Create custom pipes](/ua/middle/nestjs/create-custom-pipelines.md) |

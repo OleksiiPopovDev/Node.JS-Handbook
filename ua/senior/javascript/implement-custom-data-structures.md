@@ -1,142 +1,78 @@
 #### * Implement custom data structures
 
-Реалізація власних структур даних може бути корисною, коли існуючі рішення не підходять для специфічних вимог вашого проекту. Ось декілька прикладів, як можна реалізувати базові структури даних на Python:
+У JavaScript ми можемо реалізовувати власні структури даних для покращення певних алгоритмів чи підвищення читабельності та організованості коду. Давайте розглянемо приклад реалізації простої структури даних — стеку (Stack), яка є класичною LIFO (Last In, First Out) структурою.
 
-### 1. Стек (Stack)
+### Реалізація стеку
 
-Стек реалізується за принципом LIFO (Last In, First Out).
+```javascript
+class Stack {
+  constructor() {
+    this.items = [];
+  }
 
-```python
-class Stack:
-    def __init__(self):
-        self.items = []
+  // Метод для додавання елемента в стек
+  push(element) {
+    this.items.push(element);
+  }
 
-    def is_empty(self):
-        return len(self.items) == 0
+  // Метод для видалення елемента з верхівки стека
+  pop() {
+    if (this.isEmpty()) {
+      return 'Стек порожній';
+    }
+    return this.items.pop();
+  }
 
-    def push(self, item):
-        self.items.append(item)
+  // Метод для перегляду елемента на верхівці стека без видалення
+  peek() {
+    if (this.isEmpty()) {
+      return 'Стек порожній';
+    }
+    return this.items[this.items.length - 1];
+  }
 
-    def pop(self):
-        if not self.is_empty():
-            return self.items.pop()
-        return None
+  // Метод для перевірки, чи є стек порожнім
+  isEmpty() {
+    return this.items.length === 0;
+  }
 
-    def peek(self):
-        if not self.is_empty():
-            return self.items[-1]
-        return None
+  // Метод для отримання розміру стека
+  size() {
+    return this.items.length;
+  }
 
-    def size(self):
-        return len(self.items)
+  // Метод для очищення стека
+  clear() {
+    this.items = [];
+  }
+
+  // Метод для виводу елементів стека (для зручності)
+  print() {
+    console.log(this.items.toString());
+  }
+}
+
+// Приклад використання
+const stack = new Stack();
+stack.push(10);
+stack.push(20);
+stack.push(30);
+stack.print(); // Виведе: 10,20,30
+console.log(stack.peek()); // Виведе: 30
+console.log(stack.pop());  // Виведе: 30
+stack.print(); // Виведе: 10,20
 ```
 
-### 2. Черга (Queue)
+### Опис методів:
+- **`push(element)`**: додає елемент на верхівку стека.
+- **`pop()`**: видаляє та повертає елемент з верхівки стека.
+- **`peek()`**: повертає елемент з верхівки стека, не видаляючи його.
+- **`isEmpty()`**: перевіряє, чи є стек порожнім.
+- **`size()`**: повертає кількість елементів у стеці.
+- **`clear()`**: очищає стек.
+- **`print()`**: виводить елементи стека у вигляді рядка.
 
-Черга реалізується за принципом FIFO (First In, First Out).
-
-```python
-class Queue:
-    def __init__(self):
-        self.items = []
-
-    def is_empty(self):
-        return len(self.items) == 0
-
-    def enqueue(self, item):
-        self.items.insert(0, item)
-
-    def dequeue(self):
-        if not self.is_empty():
-            return self.items.pop()
-        return None
-
-    def size(self):
-        return len(self.items)
-```
-
-### 3. Зв'язаний список (Linked List)
-
-Зв'язаний список складається з вузлів, кожен з яких містить дані і посилання на наступний вузол.
-
-```python
-class Node:
-    def __init__(self, value):
-        self.value = value
-        self.next = None
-
-class LinkedList:
-    def __init__(self):
-        self.head = None
-
-    def is_empty(self):
-        return self.head is None
-
-    def append(self, value):
-        new_node = Node(value)
-        if self.is_empty():
-            self.head = new_node
-        else:
-            current = self.head
-            while current.next:
-                current = current.next
-            current.next = new_node
-
-    def remove(self, value):
-        current = self.head
-        previous = None
-        while current:
-            if current.value == value:
-                if previous:
-                    previous.next = current.next
-                else:
-                    self.head = current.next
-                return True
-            previous = current
-            current = current.next
-        return False
-
-    def search(self, value):
-        current = self.head
-        while current:
-            if current.value == value:
-                return True
-            current = current.next
-        return False
-```
-
-### 4. Хеш-таблиця (Hash Table)
-
-Простий приклад хеш-таблиці з використанням відкритої адресації.
-
-```python
-class HashTable:
-    def __init__(self, size=10):
-        self.size = size
-        self.table = [None] * size
-
-    def _hash_function(self, key):
-        return hash(key) % self.size
-
-    def insert(self, key, value):
-        index = self._hash_function(key)
-        while self.table[index] is not None:
-            if self.table[index][0] == key:
-                self.table[index] = (key, value)
-                return
-            index = (index + 1) % self.size
-        self.table[index] = (key, value)
-
-    def retrieve(self, key):
-        index = self._hash_function(key)
-        while self.table[index] is not None:
-            if self.table[index][0] == key:
-                return self.table[index][1]
-            index = (index + 1) % self.size
-        return None
-```
-
-Ці приклади демонструють як можна реалізувати базові структури даних. Звісно, в реальних додатках варто враховувати більше факторів, таких як обробка колізій у хеш-таблицях, ефективність алгоритмів, а також потенційні помилки та винятки.
+Цей приклад демонструє основні операції зі стеком, однак ми можемо створювати й інші користувацькі структури даних, використовуючи подібний підхід, в залежності від наших потреб.
 
 | Back | Forward |
 |---|---|

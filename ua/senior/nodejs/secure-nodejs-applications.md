@@ -1,113 +1,52 @@
 #### * Secure Node.js applications (e.g., helmet.js, sanitization libraries)
 
-Для забезпечення безпеки Node.js додатків можна скористатися декількома методами та бібліотеками:
+Для забезпечення безпеки в Node.js додатках існує ряд практик та інструментів, які можуть допомогти захистити ваш проект від типових вразливостей. Ось деякі з них:
 
-### 1. Використання Helmet.js
-Helmet.js — це middleware для Express, що допомагає налаштувати HTTP заголовки для підвищення безпеки додатку.
+1. **Helmet.js**:
+   - Helmet.js — це middleware для Express, яке допомагає захищати ваші додатки встановленням різних HTTP-заголовків. Це включає захист від атак, таких як XSS (Cross-Site Scripting), клієнтська ін'єкція коду, маніпуляція заголовками та інші.
+   - Проста інтеграція Helmet.js дозволяє швидко додати декілька рекомендованих заголовків безпеки.
 
-- **Встановлення:**
-  ```bash
-  npm install helmet
-  ```
+   ```javascript
+   const helmet = require('helmet');
+   app.use(helmet());
+   ```
 
-- **Використання:**
-  ```javascript
-  const express = require('express');
-  const helmet = require('helmet');
+2. **Санітизація та валідація вхідних даних**:
+   - Важливо перевіряти та санітизувати всі вхідні дані, щоб запобігти атакам типу SQL ін'єкцій, XSS та іншим.
+   - Для цього можна використовувати бібліотеки, такі як `express-validator` або `validator.js`.
 
-  const app = express();
+   ```javascript
+   const { body, validationResult } = require('express-validator');
 
-  // Підключення Helmet
-  app.use(helmet());
+   app.post('/user', 
+     body('username').isAlphanumeric(),
+     (req, res) => {
+       const errors = validationResult(req);
+       if (!errors.isEmpty()) {
+         return res.status(400).json({ errors: errors.array() });
+       }
+       res.send('User is valid');
+   });
+   ```
 
-  // Інші налаштування вашого додатку
-  ```
+3. **Захист від CSRF (Cross-Site Request Forgery)**:
+   - Використання middleware, такого як `csurf`, для захисту від міжсайтових запитів фальсифікації.
+   - Це допоможе убезпечити ваші форми, забезпечивши, що запити справді є від користувача.
 
-### 2. Санітизація вхідних даних
-Санітизація допомагає запобігти ін'єкціям та іншим атакам через недовірені вхідні дані. Бібліотеки для санітизації допомагають очищати ці дані.
+4. **Керування сесіями та аутентифікація**:
+   - Використовуйте безпечні методи аутентифікації, такі як OAuth, JWT (JSON Web Tokens), або сервіс Passport.js для керування вхідними даними та сесіями.
+   - Обов'язково застосовуйте HTTPS для шифрування даних між клієнтом та сервером.
 
-- **sanitize-html:**
-  ```bash
-  npm install sanitize-html
-  ```
+5. **Регулярно оновлюйте залежності**:
+   - Використовуйте `npm audit` для перевірки ваших залежностей на відомі вразливості.
+   - Зберігайте оновлені пакети для вчасного отримання виправлень безпеки.
 
-  ```javascript
-  const sanitizeHtml = require('sanitize-html');
+6. **Логування та моніторинг**:
+   - Інструменти для логування, як-от Winston або Morgan, можуть допомогти в моніторингу активності та виявленні підозрілої поведінки.
+   - Це важливе доповнення до вчасного реагування на потенційні загрози безпеки.
 
-  const clean = sanitizeHtml(dirtyHtml, {
-    allowedTags: [],
-    allowedAttributes: {}
-  });
-
-  ```
-
-- **express-validator:**
-  Цей модуль допомагає валідувати та санітизувати вхідні дані у запитах.
-
-  ```bash
-  npm install express-validator
-  ```
-
-  ```javascript
-  const { body, validationResult } = require('express-validator');
-
-  app.post('/user', [
-    body('email').isEmail().normalizeEmail(),
-    body('password').isLength({ min: 5 }).escape()
-  ], (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    // Обробка даних користувача
-  });
-  ```
-
-### 3. Захист від CSRF
-Cross-Site Request Forgery (CSRF) атаки можна пом'якшити за допомогою використання токенів.
-
-- **csurf:**
-  ```bash
-  npm install csurf
-  ```
-
-  ```javascript
-  const csurf = require('csurf');
-
-  // Налаштування CSRF захисту
-  const csrfProtection = csurf({ cookie: true });
-
-  app.use(cookieParser());
-  app.use(csrfProtection);
-
-  app.get('/form', (req, res) => {
-    // Видаємо CSRF токен у форму
-    res.render('send', { csrfToken: req.csrfToken() });
-  });
-  ```
-
-### 4. Лімітування запитів
-Лімітування запитів допомагає захистити додаток від DDoS атак та надлишкового використання ресурсу.
-
-- **express-rate-limit:**
-  ```bash
-  npm install express-rate-limit
-  ```
-
-  ```javascript
-  const rateLimit = require('express-rate-limit');
-
-  const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 хвилин
-    max: 100 // Обмеження до 100 запитів з одного IP
-  });
-
-  // Застосування до всіх запитів
-  app.use(limiter);
-  ```
-
-Застосування цих методів та бібліотек допоможе забезпечити базовий рівень безпеки Node.js додатків. Не забувайте регулярно оновлювати свої залежності та стежити за останніми практиками безпеки.
+Використання цих практик та інструментів допоможе значно підвищити безпеку вашого Node.js додатку. Завжди пам'ятайте про безпеку додатків і регулярно переглядайте нові загрози та захисні методи.
 
 | Back | Forward |
 |---|---|
-| [Use performance monitoring tools (e.g., Prometheus, New Relic)](/ua/senior/nodejs/use-performance-monitoring-tools-like-prometheus-and-new-relic.md)  | [Analyze event loop behavior](/ua/senior/nodejs/analyze-event-loop-behavior.md) |
+| [Use performance monitoring tools (e.g., Prometheus, New Relic)](/ua/senior/nodejs/use-performance-monitoring-tools-eg-prometheus-new-relic.md)  | [Analyze event loop behavior](/ua/senior/nodejs/analyze-event-loop-behavior.md) |

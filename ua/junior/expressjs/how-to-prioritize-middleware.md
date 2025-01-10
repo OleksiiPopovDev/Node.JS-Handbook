@@ -1,63 +1,47 @@
-#### 19. Як пріоритизувати middleware?
+#### 29. Як пріоритизувати middleware?
 
-У Node.js та Express.js middleware може бути пріоритизований за допомогою порядку, в якому вони оголошені у вашому коді. Ось кілька кроків, які допоможуть вам пріоритизувати middleware:
+У Express.js middleware обробляються в тому порядку, в якому вони оголошені в коді. Ось кілька порад щодо того, як правильно пріоритизувати middleware:
 
-1. **Порядок визначення**: Middleware виконується в тому порядку, в якому вони визначені. Щоб встановити пріоритет, впевніться, що спочатку ви підключаєте ті middleware, які повинні спрацьовувати першими.
+1. **Порядок виклику**: Організуйте middleware у файлі в тому порядку, в якому вони повинні виконуватись. Express.js обробляє їх зверху вниз.
 
-    ```javascript
-    const express = require('express');
-    const app = express();
+   ```javascript
+   const express = require('express');
+   const app = express();
 
-    // Middleware 1
-    app.use((req, res, next) => {
-        console.log('Перше middleware');
-        next();
-    });
+   // Перший middleware
+   app.use(middlewareOne);
 
-    // Middleware 2
-    app.use((req, res, next) => {
-        console.log('Друге middleware');
-        next();
-    });
+   // Другий middleware
+   app.use(middlewareTwo);
+   ```
 
-    // Обробка маршруту
-    app.get('/', (req, res) => {
-        res.send('Привіт, світ!');
-    });
+2. **Специфічні перед загальними**: Розміщуйте більш специфічні middleware перед загальними. Наприклад, перевірка авторизації може бути специфічнішою, ніж логування запитів.
 
-    app.listen(3000);
-    ```
+   ```javascript
+   app.use(authMiddleware);  // Специфічний middleware
+   app.use(loggingMiddleware); // Загальний middleware
+   ```
 
-2. **Специфічність маршрутів**: Пріоритизуйте middleware, підключаючи їх до специфічних маршрутів, якщо потрібно, щоб вони застосовувалися лише до певних запитів.
+3. **Шляхові середовища**: Якщо ваш middleware пов'язаний з конкретними маршрутами, використовуйте путівільні (path-based) middleware перед загальними.
 
-    ```javascript
-    // Middleware для специфічного маршруту
-    app.use('/admin', (req, res, next) => {
-        console.log('Admin middleware');
-        next();
-    });
+   ```javascript
+   app.use('/api', apiMiddleware);  // Middleware для певного шляху
+   app.use(generalMiddleware);      // Загальне middleware для всіх шляхів
+   ```
 
-    app.get('/admin', (req, res) => {
-        res.send('Адмін сторінка');
-    });
-    ```
+4. **Етапи обробки запиту**: Враховуйте етапи обробки запиту - авторизація, валідність даних, обробка, відповіді. Починайте з тих middleware, які обробляють основні завдання (авторизація, валідність запиту) і переходьте до менш важливих (логування, обробка помилок).
 
-3. **Функції середовища та умови**: Визначте пріоритет використанням функцій або умов, щоб контролювати виконання певного middleware.
+5. **Підключення перед маршрутами**: Не забувайте підключати загальні middleware (наприклад, для обробки JSON або файлів cookie) перед визначенням маршрутів, інакше маршрути можуть не працювати належним чином.
 
-    ```javascript
-    // Middleware з умовою
-    app.use((req, res, next) => {
-        if (req.user.isAdmin) {
-            console.log('Виконано тільки для адмінів');
-        }
-        next();
-    });
-    ```
+   ```javascript
+   app.use(express.json());  // Підключаємо middleware для роботи з JSON
+   app.use(express.urlencoded({ extended: true }));
+   
+   app.use('/route', routeHandler);
+   ```
 
-4. **Використання пакетів**: Розгляньте використання пакетів або бібліотек, які можуть надавати додаткові інструменти для управління та пріоритизації middleware.
-
-Слід зазначити, що порядок виконання middleware визначає логіку обробки вашого додатку, тому важливо ретельно планувати їхній порядок.
+Пріоритизація middleware — це важлива частина проектування додатків в Express.js, оскільки від правильного порядку викликів може залежати поведінка всього додатку.
 
 | Back | Forward |
 |---|---|
-| [Як переходити з однієї middleware в іншу?](/ua/junior/expressjs/how-to-pass-between-middleware.md)  | [Як організувати error handler?](/ua/junior/expressjs/how-to-organize-error-handlers.md) |
+| [Як переходити з однієї middleware в іншу?](/ua/junior/expressjs/how-to-transition-between-middleware.md)  | [Як організувати error handler?](/ua/junior/expressjs/how-to-organize-error-handler.md) |

@@ -1,61 +1,66 @@
 #### 94. Як обробити помилки при роботі зі стримами в Node.js?
 
-Коли працюєш зі стримами в Node.js, обробка помилок є важливою частиною, оскільки стрими можуть стикатися з помилками на будь-якому етапі обробки даних (читання, запис, передачі тощо). Ось кілька порад щодо обробки помилок:
+Щоб обробити помилки при роботі зі стримами в Node.js, потрібно врахувати кілька важливих аспектів:
 
-1. **Події `error`:**
-   Кожен стрим в Node.js є екземпляром `EventEmitter`, і має подію `error`, яку можна використовувати для обробки помилок. Треба обов'язково підписатись на цю подію.
+1. **Обробка події 'error'**: Кожен стрим в Node.js є екземпляром EventEmitter, тому основний спосіб обробки помилок — це прослуховування події `'error'`. Ви повинні завжди підписуватися на цю подію, щоб запобігти можливим викиданням необроблених помилок.
 
    ```javascript
    const fs = require('fs');
 
-   const readStream = fs.createReadStream('file.txt');
+   const readStream = fs.createReadStream('somefile.txt');
 
    readStream.on('error', (err) => {
-     console.error('Сталася помилка при читанні файла:', err.message);
-   });
-
-   readStream.on('data', (chunk) => {
-     console.log('Читання шматка даних:', chunk);
+       console.error('Сталася помилка при читанні файлу:', err);
    });
    ```
 
-2. **Обробка `pipe` помилок:**
-   Якщо ви використовуєте метод `pipe`, може бути корисно обробити помилки на обох кінцях стриму.
+2. **Перевірка наявності помилок при ініціалізації стриму**: Деякі помилки можуть виникнути вже при створенні стриму, наприклад, якщо файл не існує.
 
    ```javascript
-   const readStream = fs.createReadStream('input.txt');
-   const writeStream = fs.createWriteStream('output.txt');
+   try {
+       const readStream = fs.createReadStream('somefile.txt');
+   } catch (err) {
+       console.error('Помилка при створенні потоку:', err);
+   }
+   ```
+
+3. **Обробка помилок в стримах pipe**: Якщо ви використовуєте `pipe` для з'єднання кількох стримів, також варто підписуватися на подію `'error'` для всіх стримів, які беруть участь у `pipe`.
+
+   ```javascript
+   const readStream = fs.createReadStream('source.txt');
+   const writeStream = fs.createWriteStream('destination.txt');
 
    readStream
-     .on('error', (err) => {
-       console.error('Помилка читання:', err.message);
-     })
-     .pipe(writeStream)
-     .on('error', (err) => {
-       console.error('Помилка запису:', err.message);
-     });
-
-   writeStream.on('finish', () => {
-     console.log('Запис завершено.');
-   });
+       .on('error', (err) => {
+           console.error('Помилка при читанні:', err);
+       })
+       .pipe(writeStream)
+       .on('error', (err) => {
+           console.error('Помилка при запису:', err);
+       });
    ```
 
-3. **Обробка `uncaughtException`:**
-   Це глобальна обробка непередбачених помилок, яка не завжди є кращою практикою, але може бути корисною в критичних випадках:
+4. **Використання модулів для керування стримами**: Розгляньте можливість використання бібліотек типу `stream.pipeline` з Node.js стандартної бібліотеки або сторонніх бібліотек, що спрощують управління стримами та їх помилками.
 
    ```javascript
-   process.on('uncaughtException', (err) => {
-     console.error('Сталася глобальна помилка:', err);
-     // Зверни увагу, що процес може бути в несправному стані, завершуй його коректно.
-     process.exit(1);
-   });
+   const { pipeline } = require('stream');
+   const fs = require('fs');
+
+   pipeline(
+       fs.createReadStream('source.txt'),
+       fs.createWriteStream('destination.txt'),
+       (err) => {
+           if (err) {
+               console.error('Помилка в потоковій передачі:', err);
+           } else {
+               console.log('Потокова передача завершена успішно');
+           }
+       }
+   );
    ```
 
-4. **Пробуй та злови (try-catch):**
-   Для синхронних операцій обробка через `try-catch` може працювати, але для стримів, які працюють асинхронно, цей метод не підходить. Помилки мають оброблятися через події.
-
-В цілому, якісна обробка помилок в Node.js стримах полягає у вчасній підписці на події та коректному реагуванні на них, що забезпечить стабільність і надійність додатку.
+Обробка помилок є критично важливою при роботі зі стримами, щоб забезпечити стабільність та надійність вашої Node.js аплікації.
 
 | Back | Forward |
 |---|---|
-| [Як використовувати події ’data’, ’end’, ’error’, ’finish’ у стримах Node.js?](/ua/middle/nodejs/how-to-use-events-data-end-error-finish-in-nodejs-streams.md)  | [Наведіть приклади роботи зі стримами різних типів.](/ua/middle/nodejs/what-are-some-examples-of-working-with-different-types-of-streams.md) |
+| [Як використовувати події ’data’, ’end’, ’error’, ’finish’ у стримах Node.js?](/ua/middle/nodejs/how-to-use-events-data-end-error-finish-in-nodejs-streams.md)  | [Наведіть приклади роботи зі стримами різних типів.](/ua/middle/nodejs/examples-of-working-with-different-types-of-streams.md) |

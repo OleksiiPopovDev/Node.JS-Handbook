@@ -1,34 +1,35 @@
 #### 177. Для чого використовують new Error.captureStackTrace?
 
-У JavaScript метод `Error.captureStackTrace` використовується переважно для налаштування стек-трейсів у об'єктах помилки. Це спеціальна функція, доступна у середовищі V8 (яке використовується в Chrome та Node.js), і вона дозволяє більш точно контролювати, як стек викликів зберігається у об'єкті помилки. Деякі з основних цілей використання `Error.captureStackTrace`:
+`new Error.captureStackTrace` в Node.js використовується для захоплення інформації про стек виконання на момент створення помилки. Це допомагає відстежувати точне місце в коді, де виникла помилка, що є корисним для відлагодження.
 
-1. **Створення користувацьких класів помилок**: Метод дозволяє розробникам створювати власні класи помилок, котрі можуть зберігати стек викликів безпосередньо з місця створення, замість того, щоб пересильно використовувати стандартні об'єкти помилки.
+Функція `Error.captureStackTrace` дозволяє налаштовувати стек трасування вручну і має такі основні застосування:
 
-2. **Фільтрація чи модифікація стеку**: Ви можете виключити певні функції чи рівні стеку, зробивши стек-трейс більш читабельним та специфічним для потреб вашої програми.
+1. **Відстежування викликів**: дає можливість уникнути включення в стек трасування специфічних функцій, за допомогою яких захоплюється стек, як-от обгорткові функції або бібліотечні виклики, які не є корисними для кінцевого користувача.
 
-3. **Оптимізація та діагностика**: Можна зменшити обсяг стеку для специфічних помилок, що може бути корисним для діагностичних цілей або покращення продуктивності, особливо в великих програмах.
+2. **Створення користувацьких Error класів**: при створенні власних класів помилок можна контролювати стек трасування задля кращого представлення інформації в логах або звітах про помилку.
 
-Приклад використання `Error.captureStackTrace`:
+Ось як це можна використати в коді:
 
 ```javascript
 class CustomError extends Error {
   constructor(message) {
     super(message);
-    this.name = 'CustomError';
-    // Capture stack trace, omitting constructor call from it.
-    Error.captureStackTrace(this, CustomError);
+    this.name = this.constructor.name;
+
+    // Захоплення стека для поточного об'єкта
+    Error.captureStackTrace(this, this.constructor);
   }
 }
 
 try {
-  throw new CustomError("This is a custom error message");
-} catch (err) {
-  console.error(err.stack);
+  throw new CustomError('Це приклад користувацької помилки');
+} catch (error) {
+  console.log(error.stack);
 }
 ```
 
-У цьому прикладі, `Error.captureStackTrace` використовується, щоб стек трейс не включав виклик конструктора `CustomError`, надаючи тим самим більш чистому трейсу викликів.
+У прикладі вище, `CustomError` являє собою користувацьку помилку, яка використовує `Error.captureStackTrace` для захоплення стека виконання без додаткових шарів обгортання.
 
 | Back | Forward |
 |---|---|
-| [Навіщо потрібен WASI та які можливості він дає?](/ua/strong-middle/questions-for-a-systems-programmer/why-is-wasi-needed-and-what-capabilities-does-it-provide.md)  | [Які ви знаєте deprecated API та якою є стратегія їх виведення з використання?](/ua/strong-middle/questions-for-a-systems-programmer/what-deprecated-apis-do-you-know-and-what-strategy-would-be-used-to-retire-them.md) |
+| [Навіщо потрібен WASI та які можливості він дає?](/ua/strong-middle/questions-for-a-systems-programmer/what-is-the-purpose-of-wasi-and-what-benefits-does-it-provide.md)  | [Які ви знаєте deprecated API та якою є стратегія їх виведення з використання?](/ua/strong-middle/questions-for-a-systems-programmer/what-are-deprecated-apis-you-know-and-what-strategy-is-their-removal.md) |

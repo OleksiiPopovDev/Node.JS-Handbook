@@ -1,17 +1,34 @@
 #### * Implement advanced scoping mechanisms
 
-В JavaScript, механізми розширеного області видимості можуть бути реалізовані за допомогою таких тем, як:
+У JavaScript механізми скопування (області видимості) поділяються на декілька категорій, які дозволяють краще організувати та управляти доступом до змінних. Давайте розглянемо деякі з них:
 
-### 1. Замикання (Closures)
-Замикання дозволяє функції "запам'ятовувати" область видимості, в якій вона була створена.
+### 1. Функціональна область видимості
+Функціональні області видимості є основною концепцією в JavaScript. Кожна функція створює свою власну область видимості, і змінні, оголошені всередині функції, є локальними для неї.
+
+```javascript
+function outerFunction() {
+    var outerVar = 'I am outside!';
+    
+    function innerFunction() {
+        var innerVar = 'I am inside!';
+        console.log(outerVar); // Доступна
+    }
+    
+    innerFunction();
+    console.log(innerVar); // Помилка: innerVar не визначена
+}
+```
+
+### 2. Лексичне (замкнення)
+Лексичне замикання (closure) дозволяє функціям доступ до перемінних, які знаходяться у їхній лексичній області видимості, навіть після того, як функція, у якій ці змінні були визначені, завершила виконання.
 
 ```javascript
 function createCounter() {
     let count = 0;
     return function() {
-        count++;
+        count += 1;
         return count;
-    };
+    }
 }
 
 const counter = createCounter();
@@ -19,96 +36,34 @@ console.log(counter()); // 1
 console.log(counter()); // 2
 ```
 
-### 2. Модулі
-Модулі використовуються для інкапсуляції коду. Вони можуть бути створені за допомогою IIFE (Immediately Invoked Function Expressions) або ES6 `modules`.
-
-#### Використання IIFE:
-
-```javascript
-const module = (function() {
-    let privateVar = 'Інкапсульовані дані';
-    
-    function privateMethod() {
-        console.log('Приватний метод');
-    }
-    
-    return {
-        publicMethod: function() {
-            console.log('Публічний метод');
-            privateMethod();
-        }
-    };
-})();
-
-module.publicMethod(); // Публічний метод, Приватний метод
-```
-
-#### Використання ES6 модулів:
-
-```javascript
-// counter.js
-let count = 0;
-
-export function increment() {
-    count++;
-    return count;
-}
-
-// main.js
-import { increment } from './counter.js';
-
-console.log(increment()); // 1
-console.log(increment()); // 2
-```
-
-### 3. Лексична область видимості (Lexical Scope)
-JavaScript має лексичну область видимості, що означає, що змінні доступні в області, де вони були визначені.
-
-```javascript
-function outerFunction() {
-    let outerVariable = 'Зовнішня';
-    
-    function innerFunction() {
-        console.log(outerVariable); // Зовнішня
-    }
-    
-    return innerFunction;
-}
-
-const inner = outerFunction();
-inner();
-```
-
-### 4. Блокова область видимості (Block Scope)
-В ES6 введено `let` і `const`, які мають блокову область видимості, на відміну від `var`, який має функціональну область видимості.
+### 3. Блочна область видимості
+Блочна область видимості була введена в ECMAScript 6 з використанням ключових слів `let` та `const`. Вони дозволяють змінним бути локальними для блоку коду, в якому вони оголошені.
 
 ```javascript
 if (true) {
-    let blockScoped = 'Це блокова видимість';
-    console.log(blockScoped); // Це блокова видимість
+    let blockScoped = 'I am block scoped';
+    console.log(blockScoped); // 'I am block scoped'
 }
-
-// console.log(blockScoped); // ReferenceError: blockScoped is not defined
+console.log(blockScoped); // Помилка: blockScoped не визначена
 ```
 
-### 5. Область видимості з `this` (Contextual Scope with this)
-Область видимості вказівника `this` залежить від того, як викликано функцію.
+### 4. Модулі
+Модулі в JavaScript використовують імпорти та експорти, щоб створювати окремі області видимості на рівні файлів, ізолюючи код і дозволяючи організувати його зручніше.
 
 ```javascript
-const obj = {
-    value: 42,
-    getValue: function() {
-        return this.value;
-    }
-};
+// file1.js
+export const myVar = 'Value';
+export function myFunction() {
+    console.log(myVar);
+}
 
-console.log(obj.getValue()); // 42
-
-const detachedGetValue = obj.getValue;
-console.log(detachedGetValue()); // undefined (втрата прив’язки this)
+// file2.js
+import { myVar, myFunction } from './file1.js';
+console.log(myVar); // 'Value'
+myFunction(); // 'Value'
 ```
 
-Кожен із цих механізмів дозволяє використовувати специфічні властивості області видимості та інкапсуляції в JavaScript.
+Використання цих механізмів допомагає розв'язувати завдання, пов'язані з організацією коду, управлінням доступом до даних та уникненням конфліктів змінних.
 
 | Back | Forward |
 |---|---|

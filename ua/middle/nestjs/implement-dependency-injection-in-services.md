@@ -1,79 +1,64 @@
 #### * Implement DI in services
 
-Впровадження залежностей (Dependency Injection, DI) в сервісах є основним підходом для полегшення тестування, зменшення зв'язаності коду та підвищення його гнучкості. Нижче надано приклад, як можна впровадити DI в сервісах на прикладі мови програмування C# з використанням ASP.NET Core, одного з найпопулярніших фреймворків, який підтримує це:
+У Nest.js впровадження залежностей (Dependency Injection - DI) є базовою функцією, яка значно полегшує управління залежностями між класами. Ось кроки для реалізації DI всередині сервісів:
 
-### 1. Визначення інтерфейсу сервісу
+### 1. Створіть Сервіс
 
-Спочатку потрібно визначити інтерфейс для сервісу:
+Спершу потрібно створити сервіс. Використовуйте CLI команду для генерації файлу сервісу, але тут просто покажемо приклад:
 
-```csharp
-public interface IMyService
-{
-    void DoWork();
+```typescript
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class ExampleService {
+  getHello(): string {
+    return 'Hello World!';
+  }
 }
 ```
 
-### 2. Реалізація цього інтерфейсу
+### 2. Реєстрація Сервісу в Модулі
 
-Потім створюється клас, який реалізує цей інтерфейс:
+Кожен сервіс повинен бути оголошений в модулі, щоб Nest.js міг управляти його інстанціацією та ін'єкцією.
 
-```csharp
-public class MyService : IMyService
-{
-    public void DoWork()
-    {
-        // Реалізація роботи
-        Console.WriteLine("Work is done.");
-    }
+```typescript
+import { Module } from '@nestjs/common';
+import { ExampleService } from './example.service';
+
+@Module({
+  providers: [ExampleService],
+  exports: [ExampleService] // якщо сервіс потрібно використовувати ще й в інших модулях
+})
+export class ExampleModule {}
+```
+
+### 3. Використання Сервісу через DI
+
+Щоб ін'єктувати `ExampleService` в інший клас, наприклад, в контролер, просто додайте його до конструктора контролера:
+
+```typescript
+import { Controller, Get } from '@nestjs/common';
+import { ExampleService } from './example.service';
+
+@Controller()
+export class ExampleController {
+  constructor(private readonly exampleService: ExampleService) {}
+
+  @Get()
+  getHello(): string {
+    return this.exampleService.getHello();
+  }
 }
 ```
 
-### 3. Реєстрація сервісу в DI контейнері
+### Пояснення
 
-За допомогою ASP.NET Core, ви можете зареєструвати сервіс в DI контейнері в `Startup.cs`:
+- **`@Injectable()`**: Декоратор, який робить клас кандидатом для впровадження залежностей.
+- **Конструктор з `private readonly exampleService: ExampleService`**: Це дозволяє Nest.js автоматично ін’іектувати `ExampleService` в `ExampleController`.
+- **`@Module` декоратор**: Декоратор, що визначає модуль. В ньому вказуємо, які сервіси модуль надає і може експортувати.
 
-```csharp
-public class Startup
-{
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddTransient<IMyService, MyService>();
-    }
-
-    // Інші методи
-}
-```
-
-- `AddTransient` - новий екземпляр сервісу створюється при кожному запиті.
-- `AddScoped` - новий екземпляр створюється для кожного HTTP-запиту.
-- `AddSingleton` - єдиний екземпляр сервісу для всього додатку.
-
-### 4. Використання сервісу за допомогою DI
-
-Далі DI може бути використане в будь-якому місці, де доступний конструктор:
-
-```csharp
-public class MyController : ControllerBase
-{
-    private readonly IMyService _myService;
-
-    public MyController(IMyService myService)
-    {
-        _myService = myService;
-    }
-
-    public IActionResult DoAction()
-    {
-        _myService.DoWork();
-        return Ok();
-    }
-}
-```
-
-### Висновок
-
-Dependency Injection полегшує заміну різних реалізацій інтерфейсу без зміни клієнтського коду, що значно спрощує модульне тестування і підтримку коду. Це один з ключових принципів для побудови додатків з високою якістю коду.
+Завдяки цим крокам, ви можете без проблем використовувати DI для сервісів у вашому проекті Nest.js.
 
 | Back | Forward |
 |---|---|
-| [Як реалізувати свій декоратор валідації?](/ua/middle/nestjs/how-to-implement-your-validation-decorator.md)  | [Create and import modules](/ua/middle/nestjs/create-and-import-modules.md) |
+| [Як реалізувати свій декоратор валідації?](/ua/middle/nestjs/how-to-implement-my-validation-decorator.md)  | [Create and import modules](/ua/middle/nestjs/create-modules.md) |

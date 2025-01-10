@@ -1,94 +1,94 @@
 #### * Use Express.js for SSR (Server-Side Rendering)
 
-Використання Express.js для серверного рендерінгу (SSR) може значно покращити швидкість завантаження ваших веб-сторінок і SEO. Об'єднуючи Express.js з бібліотекою чи фреймворком для рендерінгу на стороні сервера, ви можете передавати готові HTML-сторінки на клієнт. Давайте розглянемо простий приклад використання Handlebars як шаблонізатора з Express.js.
+### Використання Express.js для SSR (рендеринг на стороні сервера)
 
-### 1. Налаштування проекту
+Server-Side Rendering (SSR) — це техніка, яка дозволяє генерувати HTML-код на сервері та відправляти його на клієнт. Це завантаження HTML з сервера може покращити час першого завантаження сторінки та оптимізувати SEO, порівняно з клієнтським рендерингом.
 
-Спочатку створіть нову папку для вашого проекту і встановіть необхідні залежності:
+Для використання Express.js з SSR, виконайте наступні кроки:
 
-```bash
-mkdir express-ssr-app
-cd express-ssr-app
-npm init -y
-npm install express express-handlebars
-```
+1. **Ініціалізуйте проект:**
 
-### 2. Створіть структуру проекту
+   ```bash
+   mkdir my-app
+   cd my-app
+   npm init -y
+   npm install express
+   ```
 
-Створіть базову структуру директорій:
+2. **Створіть сервер з Express:**
 
-```
-express-ssr-app/
-│
-├── views/
-│   ├── layouts/
-│   │   └── main.handlebars
-│   └── home.handlebars
-└── server.js
-```
+   Створіть файл `server.js`:
 
-### 3. Налаштування Express.js і Handlebars
+   ```javascript
+   const express = require('express');
+   const app = express();
+   const port = 3000;
 
-Відредагуйте файл `server.js`, щоб налаштувати сервер Express.js з підтримкою Handlebars:
+   app.get('/', (req, res) => {
+     res.send('<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>SSR with Express</title></head><body><h1>Привіт, світ!</h1></body></html>');
+   });
 
-```javascript
-const express = require('express');
-const exphbs  = require('express-handlebars');
+   app.listen(port, () => {
+     console.log(`Сервер працює на http://localhost:${port}`);
+   });
+   ```
 
-const app = express();
+3. **Запустіть сервер:**
 
-// Налаштування Handlebars як двигуна рендерінгу
-app.engine('handlebars', exphbs());
-app.set('view engine', 'handlebars');
-app.set('views', './views');
+   Виконайте команду:
 
-// Налаштування маршруту
-app.get('/', (req, res) => {
-    res.render('home', { title: 'Головна сторінка', message: 'Ласкаво просимо до Express.js з SSR!' });
-});
+   ```bash
+   node server.js
+   ```
 
-// Запуск сервера
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Сервер запущено на: http://localhost:${PORT}`);
-});
-```
+   Відкрийте в браузері [http://localhost:3000](http://localhost:3000), і ви побачите статичний HTML, згенерований сервером.
 
-### 4. Створіть шаблони Handlebars
+4. **Інтегруйте шаблони:**
 
-В `views/layouts/main.handlebars` додайте базовий HTML-шаблон:
+   Щоб рендерити динамічний вміст, ми можемо використовувати шаблонізатори, такі як Pug або EJS. Ось приклад з використанням Pug.
 
-```handlebars
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{title}}</title>
-</head>
-<body>
-    {{{body}}}
-</body>
-</html>
-```
+   Встановіть Pug:
 
-В `views/home.handlebars` додайте контент для головної сторінки:
+   ```bash
+   npm install pug
+   ```
 
-```handlebars
-<h1>{{message}}</h1>
-<p>Це приклад рендерінгу на сервері за допомогою Express.js і Handlebars.</p>
-```
+   Змініть `server.js`:
 
-### 5. Запуск сервера
+   ```javascript
+   const express = require('express');
+   const app = express();
+   const port = 3000;
 
-Тепер запустіть сервер командою:
+   app.set('view engine', 'pug');
 
-```bash
-node server.js
-```
+   app.get('/', (req, res) => {
+     res.render('index', { title: 'SSR with Express', message: 'Привіт, світ!' });
+   });
 
-Відкрийте веб-браузер і перейдіть за адресою `http://localhost:3000`. Ви повинні побачити вашу серверно-рендерену HTML-сторінку.
+   app.listen(port, () => {
+     console.log(`Сервер працює на http://localhost:${port}`);
+   });
+   ```
 
-Цей приклад описує базове налаштування Express.js для серверного рендерінгу. Залежно від вимог вашого проекту, ви можете інтегрувати інші шаблонізатори або навіть фреймворки на зразок React, Vue чи Angular для SSR.
+   Створіть папку `views` і файл `views/index.pug`:
+
+   ```pug
+   doctype html
+   html(lang="en")
+     head
+       meta(charset="UTF-8")
+       title= title
+     body
+       h1= message
+   ```
+
+5. **Перезапустіть сервер** і оновіть сторінку в браузері, щоб побачити динамічно згенеровану сторінку.
+
+### Висновок
+
+Express.js є потужним фреймворком, що дозволяє легко реалізувати серверний рендеринг. З інтеграцією шаблонізаторів ви можете генерувати динамічні веб-сторінки з покращеними SEO характеристиками і швидкістю завантаження.
 
 | Back | Forward |
 |---|---|
-| [Integrate authentication mechanisms](/ua/senior/expressjs/integrate-authentication-mechanisms.md)  | [Implement multi-tenancy in Express applications](/ua/senior/expressjs/implement-multitenancy-in-express-applications.md) |
+| [Integrate authentication mechanisms](/ua/senior/expressjs/integrate-security-protocols.md)  | [Implement multi-tenancy in Express applications](/ua/senior/expressjs/implement-multitenancy-in-express-applications.md) |

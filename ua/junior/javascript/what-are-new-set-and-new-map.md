@@ -1,92 +1,60 @@
-#### 38. Що таке new Set() і new Map()?
+#### 50. Що таке new Set() і new Map()?
 
-У JavaScript `new Set()` і `new Map()` є двома різними типами колекцій, які використовуються для збереження унікальних значень та пар ключ-значення відповідно.
+У JavaScript `new Set()` та `new Map()` є конструкторами для створення колекцій даних специфічного типу.
 
-### `Set`
+### `new Set()`
 
-`Set` — це колекція унікальних значень. На відміну від масивів, у `Set` кожен елемент може з'являтися лише один раз і відсутні дублікати.
+`Set` — це колекція унікальних значень, тобто множина. Він може містити значення будь-яких типів даних, але жодне з них не повторюється.
 
-#### Основні методи і властивості `Set`:
+#### Основні методи та властивості Set:
 
-- **Створення:**  
-  ```javascript
-  const mySet = new Set();
-  ```
+- **`add(value)`**: додає нове значення в множину.
+- **`delete(value)`**: видаляє значення з множини.
+- **`has(value)`**: повертає `true`, якщо значення є в множині, інакше `false`.
+- **`clear()`**: видаляє всі значення з множини.
+- **`size`**: властивість, яка відображає кількість елементів у множині.
 
-- **Додавання елементів:**  
-  ```javascript
-  mySet.add(1);
-  mySet.add(2);
-  mySet.add(2); // Значення 2 буде проігноровано, оскільки вже існує
-  ```
+#### Приклад використання:
 
-- **Перевірка наявності елемента:**  
-  ```javascript
-  mySet.has(1); // true
-  mySet.has(3); // false
-  ```
+```javascript
+const mySet = new Set();
+mySet.add(1);
+mySet.add(2);
+mySet.add(2); // Це значення не буде додано повторно
+console.log(mySet.has(1)); // true
+console.log(mySet.size); // 2
+mySet.delete(1);
+console.log(mySet.has(1)); // false
+```
 
-- **Видалення елемента:**  
-  ```javascript
-  mySet.delete(2);
-  ```
+### `new Map()`
 
-- **Розмір колекції:**  
-  ```javascript
-  mySet.size; // 1
-  ```
+`Map` — це колекція пар ключ-значення, де ключі можуть бути будь-якого типу, включаючи об'єкти, функції тощо.
 
-- **Перебір елементів:**  
-  ```javascript
-  for (let item of mySet) console.log(item);
-  ```
+#### Основні методи та властивості Map:
 
-### `Map`
+- **`set(key, value)`**: додає пару ключ-значення до колекції.
+- **`get(key)`**: повертає значення, яке відповідає певному ключу.
+- **`has(key)`**: повертає `true`, якщо ключ є у колекції, інакше `false`.
+- **`delete(key)`**: видаляє елемент за ключем.
+- **`clear()`**: видаляє всі елементи з колекції.
+- **`size`**: властивість, яка показує кількість пар ключ-значення в колекції.
 
-`Map` — це колекція пар ключ-значення, де ключі можуть бути будь-якого типу, включаючи об’єкти.
+#### Приклад використання:
 
-#### Основні методи і властивості `Map`:
+```javascript
+const myMap = new Map();
+myMap.set('name', 'John');
+myMap.set('age', 30);
+console.log(myMap.get('name')); // 'John'
+console.log(myMap.has('age')); // true
+console.log(myMap.size); // 2
+myMap.delete('name');
+console.log(myMap.has('name')); // false
+```
 
-- **Створення:**  
-  ```javascript
-  const myMap = new Map();
-  ```
-
-- **Додавання пар ключ-значення:**  
-  ```javascript
-  myMap.set('key1', 'value1');
-  myMap.set('key2', 'value2');
-  ```
-
-- **Отримання значення за ключем:**  
-  ```javascript
-  myMap.get('key1'); // 'value1'
-  ```
-
-- **Перевірка наявності ключа:**  
-  ```javascript
-  myMap.has('key1'); // true
-  ```
-
-- **Видалення пари за ключем:**  
-  ```javascript
-  myMap.delete('key1');
-  ```
-
-- **Розмір колекції:**  
-  ```javascript
-  myMap.size; // 1
-  ```
-
-- **Перебір елементів:**  
-  ```javascript
-  for (let [key, value] of myMap) {
-    console.log(key, value);
-  }
-  ```
-
-І `Set`, і `Map` дозволяють керувати колекціями даних з високою продуктивністю і часто використовуються при роботі з великими обсягами даних, де важлива унікальність елементів та швидкий доступ до значень за ключами.
+Такі структури даних, як `Set` та `Map`, надають можливість зберігати дані з розширеними можливостями управління та покращеною ефективністю у випадках, коли потрібно забезпечити унікальність або працювати з ключами різного типу.
 
 | Back | Forward |
 |---|---|
-| [Наведіть структуру HTTP request/response.](/ua/junior/javascript/what-is-the-structure-of-an-http-requestresponse.md)  | [Що таке логічний оператор && та || і чим відрізняються ці оператори від логічного оператора «??».](/ua/junior/javascript/what-is-the-logical-operator-and-and-how-do-they-differ-from-the-logical-operator.md) |
+| [Наведіть структуру HTTP request/response.](/ua/junior/javascript/what-is-the-structure-of-an-http-request-and-response.md)  | [Що таке логічний оператор && та || і чим відрізняються ці оператори від логічного оператора «??».](/ua/junior/javascript/what-are-logical-operators-and-and-how-do-they-differ-from-the-logical-operator.md) |

@@ -1,136 +1,133 @@
 #### * Implement authentication using Passport.js and JWT
 
-Для реалізації автентифікації за допомогою Passport.js і JWT в Node.js можна скористатися такими кроками:
+Щоб реалізувати автентифікацію з використанням Passport.js і JWT у проекті Nest.js, виконайте наступні кроки:
 
-### Вимоги
-Перед тим, як почати, переконайтеся, що у вас є встановлені `Node.js`, `npm` та створений проект на `Express`.
+### 1. Встановіть необхідні пакети
 
-### Встановлення необхідних пакетів
+Спочатку вам потрібно встановити необхідні бібліотеки для роботи з JWT і Passport.js:
 
 ```bash
-npm install express passport passport-jwt jsonwebtoken bcryptjs
+npm install @nestjs/passport passport passport-jwt @nestjs/jwt
 ```
 
-### Налаштування проекту
+### 2. Налаштуйте модуль AuthModule
 
-#### 1. Створіть файл `config.js`, де зберігатиметься секретний ключ:
+Створіть модуль `AuthModule`, де ви будете налаштовувати всю логіку автентифікації.
 
-```javascript
-module.exports = {
-  secretOrKey: 'your_secret_key',
-};
+```typescript
+import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { AuthService } from './auth.service';
+import { JwtStrategy } from './jwt.strategy';
+import { UsersModule } from '../users/users.module';
+
+@Module({
+  imports: [
+    UsersModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.register({
+      secret: 'yourSecretKey', // зберігайте в .env для безпеки
+      signOptions: { expiresIn: '60s' },
+    }),
+  ],
+  providers: [AuthService, JwtStrategy],
+  exports: [AuthService],
+})
+export class AuthModule {}
 ```
 
-#### 2. Створіть файл `passport.js` для налаштування стратегії JWT:
+### 3. Створіть AuthService
 
-```javascript
-const { Strategy, ExtractJwt } = require('passport-jwt');
-const config = require('./config');
+AuthService буде містити логіку генерації JWT токену та перевірки користувача:
 
-const opts = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: config.secretOrKey,
-};
+```typescript
+import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { UsersService } from '../users/users.service';
 
-module.exports = passport => {
-  passport.use(
-    new Strategy(opts, (jwtPayload, done) => {
-      // Тут ви можете знайти користувача в базі даних за id з jwtPayload
-      const user = getUserFromDb(jwtPayload.id);
-      if (user) {
-        return done(null, user);
-      } else {
-        return done(null, false);
-      }
-    })
-  );
-};
+@Injectable()
+export class AuthService {
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
 
-// Імітація функції для отримання користувача з бази даних
-function getUserFromDb(id) {
-  // Інтеграція з вашою базою даних
-  return { id, name: 'John Doe' }; // Тимчасовий приклад даних
+  async validateUser(username: string, pass: string): Promise<any> {
+    const user = await this.usersService.findOne(username);
+    if (user && user.password === pass) {
+      const { password, ...result } = user;
+      return result;
+    }
+    return null;
+  }
+
+  async login(user: any) {
+    const payload = { username: user.username, sub: user.userId };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
+  }
 }
 ```
 
-#### 3. Створіть файл `server.js` з базовим налаштуванням сервера:
+### 4. Реалізуйте стратегію JWT
 
-```javascript
-const express = require('express');
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const config = require('./config');
+Створіть `JwtStrategy`, яка буде перевіряти і декодувати токени:
 
-// Підключення passport
-require('./passport')(passport);
+```typescript
+import { Injectable } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
 
-const app = express();
-app.use(express.json());
-
-// Роут для реєстрації (зберігає користувача в базу даних)
-app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
-
-  // Імітація процесу хешування паролю та збереження його в базу даних
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const user = { id: Date.now().toString(), username, password: hashedPassword };
-
-  // Повернення нового користувача
-  res.status(201).json(user);
-});
-
-// Роут для входу та генерації JWT токену
-app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-
-  // Імітація отримання користувача з бази даних
-  const user = getUserFromDbByUsername(username);
-  if (!user) {
-    return res.status(401).json({ message: 'Користувача не знайдено' });
+@Injectable()
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor() {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ignoreExpiration: false,
+      secretOrKey: 'yourSecretKey', // зберігайте в .env для безпеки
+    });
   }
 
-  // Перевірка пароля
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
-    return res.status(401).json({ message: 'Неправильний пароль' });
+  async validate(payload: any) {
+    return { userId: payload.sub, username: payload.username };
   }
-
-  // Генерація JWT токену
-  const payload = { id: user.id }; // Payload може містити інші дані
-  const token = jwt.sign(payload, config.secretOrKey, { expiresIn: '1h' });
-
-  res.json({ token: `Bearer ${token}` });
-});
-
-// Захищений роут доступний лише з валідним JWT токеном
-app.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.json({ message: 'Це захищений ресурс', user: req.user });
-});
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Сервер запущено на порті ${PORT}`);
-});
-
-// Імітація функції для отримання користувача з бази даних
-function getUserFromDbByUsername(username) {
-  // Інтеграція з вашою базою даних
-  if (username === 'John') {
-    return { id: '1', username: 'John', password: '$2y$10$somethinghashed' }; // Тимчасовий приклад даних
-  }
-  return null;
 }
 ```
 
-### Пояснення
+### 5. Використовуйте захист у контролерах
 
-- **Passport.js** використовується для лаконічної реалізації автентифікації в Node.js через різноманітні стратегії, включаючи JWT.
-- **jsonwebtoken** дозволяє генерувати та перевіряти JWT токени.
-- **bcryptjs** використовується для хешування та валідації паролів.
+Захистіть ваші маршрути за допомогою `@UseGuards(AuthGuard('jwt'))`.
 
-Цей приклад є базовим і можливе його розширення, наприклад, шляхом додавання інтеграції з реальною базою даних та налаштуванням авторизацій для різних типів дій.
+```typescript
+import { Controller, Get, Request, Post, UseGuards } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { AuthGuard } from '@nestjs/passport';
+
+@Controller()
+export class AppController {
+  constructor(private readonly authService: AuthService) {}
+
+  @UseGuards(AuthGuard('local'))
+  @Post('auth/login')
+  async login(@Request() req) {
+    return this.authService.login(req.user);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
+  }
+}
+```
+
+### 6. Створіть користувацький модуль для тестування
+
+Переконайтеся, що у вас є модуль UsersModule, який надає базову функціональність роботи з користувачами.
+
+Цей підхід дозволить вам реалізувати автентифікацію з використанням JWT у додатку Nest.js, забезпечуючи захист ваших API маршрутів. Не забудьте використовувати безпечні способи зберігання секретних ключів, наприклад, через `process.env` або спеціальні конфігураційні файли.
 
 | Back | Forward |
 |---|---|

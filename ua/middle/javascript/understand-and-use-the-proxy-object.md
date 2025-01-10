@@ -1,83 +1,61 @@
 #### * Understand and use the Proxy object
 
-Об'єкт `Proxy` в JavaScript дозволяє створити кастомізовану поведінку для операцій, виконуваних з об'єктами. Він може "перехоплювати" такі операції, як читання, запис, привласнення та інші. Це дає змогу контролювати доступ до об'єкта та маніпулювати ним.
+## Proxy об'єкт у JavaScript
 
-### Створення нового проксі
+`Proxy` об'єкт у JavaScript дозволяє створювати особливі об'єкти, які можуть перехоплювати та кастомізувати операції над іншими об'єктами, такі як читання, записання, перерахунок в циклі та інші. Це відбувається шляхом визначення певних "ловців" (traps) для різних операцій.
 
-Щоб створити проксі, ви використовуєте конструктор `Proxy`, який приймає два аргументи:
+### Створення Proxy
 
-1. **target**: об'єкт, який проксі обгортає.
-2. **handler**: об'єкт з методами-пастками (`traps`), які визначають поведінку проксі.
+`Proxy` об'єкт створюється за допомогою конструктора `Proxy`, який приймає два аргументи:
+
+1. **target**: об'єкт, для якого створюється Proxy.
+2. **handler**: об'єкт, що містить "ловці", які перехоплюють операції.
 
 ```javascript
-let targetObject = {
-  message1: "Hello",
-  message2: "World"
+const target = {
+  message: "Hello, world!"
 };
 
-let handler = {
-  get: function(target, property) {
-    if (property in target) {
-      return target[property];
-    } else {
-      return `Property ${property} is not found`;
-    }
+const handler = {
+  get(target, property, receiver) {
+    console.log(`Getting property: ${property}`);
+    return target[property];
+  },
+  set(target, property, value, receiver) {
+    console.log(`Setting property: ${property} to ${value}`);
+    target[property] = value;
+    return true; // Повертаємо true, щоб операція запису була успішною
   }
 };
 
-let proxy = new Proxy(targetObject, handler);
+const proxy = new Proxy(target, handler);
 
-console.log(proxy.message1); // Hello
-console.log(proxy.message2); // World
-console.log(proxy.message3); // Property message3 is not found
+console.log(proxy.message); // Виведе: Getting property: message
+                            //         Hello, world!
+
+proxy.message = "Hello, Proxy!"; // Виведе: Setting property: message to Hello, Proxy!
 ```
 
-### Основні пастки проксі
+### Використання ловців
 
-Ось кілька основних пасток, які можна використовувати з проксі:
+`Proxy` об'єкт підтримує багато різних ловців, деякі з них:
 
-- **`get(target, property, receiver)`**: перехоплює операції доступу до властивостей.
-- **`set(target, property, value, receiver)`**: перехоплює операції запису або встановлення властивостей.
-- **`has(target, property)`**: перехоплює перевірку властивостей оператором `in`.
-- **`deleteProperty(target, property)`**: перехоплює видалення властивостей за допомогою оператора `delete`.
-- **`ownKeys(target)`**: перехоплює запит ключів об'єкта, наприклад для `Object.keys()`.
-- **`apply(target, thisArg, argumentList)`**: перехоплює виклики функцій.
-- **`construct(target, argumentList, newTarget)`**: перехоплює операції з використанням оператора `new`.
+- `get`: викликається при читанні властивості.
+- `set`: викликається при записі у властивість.
+- `has`: перехоплює оператор `in`.
+- `deleteProperty`: перехоплює оператор `delete`.
+- `apply`: викликається при виклику функції.
+- `construct`: викликається при використанні оператора `new`.
 
-### Приклад пастки `set`
+### Практичні випадки використання
 
-Давайте розглянемо приклад, в якому ми використовуємо пастку `set` для обмеження встановлення властивостей об'єкта тільки числовими значеннями:
+1. **Валідація вводу**: Перевірка даних, які встановлюються в об'єкт.
+2. **Логування**: Логування викликів методів або доступу до властивостей.
+3. **Кешування**: Збереження результатів дорогих обчислень.
+4. **Спеціальна обробка відсутніх властивостей**: Наприклад, повернення значення за замовчуванням.
 
-```javascript
-let numberOnlyHandler = {
-  set: function(target, property, value) {
-    if (typeof value === 'number') {
-      target[property] = value;
-      return true;
-    } else {
-      console.error(`Property ${property} must be a number.`);
-      return false;
-    }
-  }
-};
-
-let numberProxy = new Proxy({}, numberOnlyHandler);
-
-numberProxy.age = 25; // Нормальна операція
-numberProxy.name = "John"; // Property name must be a number.
-```
-
-### Використання проксі
-
-Проксі можуть бути дуже корисними в різних ситуаціях, наприклад:
-
-- Валідація даних при доступі або модифікації об'єкта.
-- Логування або відлагодження.
-- Автоматичне заповнення обчислюваних значень.
-- Забезпечення безпеки за рахунок обмеження доступу до певних частин об'єкта.
-
-Проксі надають гнучкий та потужний механізм для управління поведінкою об'єктів у JavaScript, що дозволяє створювати більш динамічні та безпечні програми.
+`Proxy` об'єкти дуже потужні, але варто використовувати їх обережно, зважаючи на потенційні проблеми з продуктивністю та дебагінгом. Вони не є звичайним інструментом і часто використовуються в певних спеціальних випадках.
 
 | Back | Forward |
 |---|---|
-| [Analyze event loop performance](/ua/middle/javascript/analyze-event-loop-performance.md)  | [Implement module exports and imports for scalability](/ua/middle/javascript/implement-module-exports-and-imports-for-scalability.md) |
+| [Analyze event loop performance](/ua/middle/javascript/analyze-event-loop-performance.md)  | [Implement module exports and imports for scalability](/ua/middle/javascript/implement-module-exports-imports-scalability.md) |

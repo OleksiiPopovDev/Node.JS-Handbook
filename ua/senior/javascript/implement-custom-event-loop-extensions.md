@@ -1,61 +1,68 @@
 #### * Implement custom event loop extensions
 
-Реалізація розширень власного циклу подій може бути здійснена шляхом створення кастомного циклу подій на основі стандартного модуля Python `asyncio`. Ось приклад, як ви можете створити та розширити свій власний цикл подій:
+Реалізація власних розширень циклу подій (event loop) є більш складним завданням, яке зазвичай потребує глибокого розуміння функціонування JavaScript-рушія. Проте, базову імітацію або розширення циклу подій можна створити для освітніх цілей. Давайте спростимо це:
 
-### Власний цикл подій
+1. **Основи циклу подій**:
+    - Event Loop в JavaScript виконує код, коллбеки з черг макрозавдань (наприклад, setTimeout, setInterval) і мікрозавдань (наприклад, проміси та queueMicrotasks).
 
-```python
-import asyncio
+2. **Імітація простого циклу подій**:
+    - Ми можемо створити модель, що імітує механізм обробки черги завдань. Ось простий приклад:
 
-class CustomEventLoopPolicy(asyncio.DefaultEventLoopPolicy):
-    def new_event_loop(self):
-        # Створюємо наш кастомний цикл подій
-        loop = CustomEventLoop()
-        return loop
+```javascript
+class SimpleEventLoop {
+    constructor() {
+        this.taskQueue = [];
+        this.running = false;
+    }
 
-class CustomEventLoop(asyncio.SelectorEventLoop):
-    def __init__(self):
-        # Виклик конструктора базового класу
-        super().__init__()
+    addTask(task) {
+        this.taskQueue.push(task);
+    }
 
-    def custom_method(self):
-        print("This is a custom method in the event loop.")
+    run() {
+        if (this.running) return;
+        this.running = true;
+        
+        while (this.taskQueue.length > 0) {
+            const task = this.taskQueue.shift();
+            task();
+        }
 
-    def run_forever(self):
-        print("Custom event loop is starting...")
-        super().run_forever()
+        this.running = false;
+    }
+}
 
-    def run_until_complete(self, future):
-        print("Running custom run_until_complete...")
-        return super().run_until_complete(future)
+// Приклад використання
+const eventLoop = new SimpleEventLoop();
 
-# Застосування власного політика циклу подій
-asyncio.set_event_loop_policy(CustomEventLoopPolicy())
+eventLoop.addTask(() => {
+    console.log('Завдання 1');
+});
 
-async def main():
-    print("Hello from the custom event loop!")
-    loop = asyncio.get_event_loop()
-    loop.custom_method()
+eventLoop.addTask(() => {
+    console.log('Завдання 2');
+    eventLoop.addTask(() => {
+        console.log('Завдання 4');
+    });
+});
 
-    # Сімулювання деякої асинхронної операції
-    await asyncio.sleep(1)
-    print("Async operation completed.")
+eventLoop.addTask(() => {
+    console.log('Завдання 3');
+});
 
-# Запуск корутини за допомогою нашого кастомного циклу подій
-asyncio.run(main())
+eventLoop.run();
 ```
 
-### Пояснення
+3. **Пояснення**:
+   - Створюємо `SimpleEventLoop` клас, де `taskQueue` є масивом для завдань.
+   - `addTask` додає завдання до черги.
+   - `run` виконує всі завдання в черзі послідовно до порожнечі черги.
+   
+4. **Обмеження**:
+   - Цей приклад є спрощеною імітацією і не враховує асинхронні операції, такі як файлові операції, HTTP-запити, або розгляд черг мікрозавдань.
+   - Реальна реалізація event loop в JavaScript набагато складніша і компонується з браузером чи Node.js для обробки різного роду асинхронності.
 
-1. **CustomEventLoopPolicy**: Створюємо клас, що успадковує `asyncio.DefaultEventLoopPolicy` та перевизначає метод `new_event_loop`.
-
-2. **CustomEventLoop**: Створюємо власний цикл подій, що успадковується від `asyncio.SelectorEventLoop`. Додаємо власні методи або перевизначаємо існуючі, щоб змінити поведінку циклу подій.
-
-3. **Встановлення власної політики**: Застосовуємо власну політику циклу подій через `asyncio.set_event_loop_policy`.
-
-4. **Використання**: Створюємо асинхронну функцію `main`, яка використовує `asyncio.get_event_loop` для отримання та виконання методів кастомного циклу подій.
-
-Цей приклад демонструє основні принципи розширення циклу подій через створення власних класів, що успадковуються від `asyncio`. Ви можете додати додаткові методи або перевизначити існуючі для реалізації специфічної логіки, яка вам потрібна.
+Це базовий навчальний приклад, який допомагає зрозуміти, що таке черга завдань і як вони можуть бути оброблені у циклі, але не слід плутати його з повноцінним циклом подій, що використовує рушії JavaScript.
 
 | Back | Forward |
 |---|---|

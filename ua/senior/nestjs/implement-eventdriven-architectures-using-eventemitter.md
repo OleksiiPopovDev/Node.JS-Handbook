@@ -1,52 +1,60 @@
 #### * Implement event-driven architectures using EventEmitter
 
-Щоб реалізувати архітектуру, керовану подіями, за допомогою `EventEmitter` в Node.js, потрібно скористатися модулем `events`, який надає можливість створювати та управляти подіями. Ось простий приклад того, як це можна зробити:
+У Nest.js, `EventEmitter` можна використовувати для реалізації архітектури, заснованої на подіях. `EventEmitter` дозволяє різним частинам програми спілкуватися між собою, відправляючи та слухаючи події. Ось як можна реалізувати це:
 
-1. **Імпорт модуля `events`**: Спочатку потрібно імпортувати модуль `events`.
+1. **Встановлення пакету**: Спочатку потрібно встановити `@nestjs/event-emitter` пакет:
+   ```bash
+   npm install @nestjs/event-emitter
+   ```
 
-2. **Створити екземпляр `EventEmitter`**: Це дозволяє створювати та відправляти події.
+2. **Імпорт модуля**: Додайте `EventEmitterModule` у ваш додаток.
+   ```typescript
+   import { Module } from '@nestjs/common';
+   import { EventEmitterModule } from '@nestjs/event-emitter';
 
-3. **Додати слухачів подій**: Слухачі подій виконують певні функції у відповідь на подію.
+   @Module({
+     imports: [
+       EventEmitterModule.forRoot(), // імпортуйте модуль сюда
+     ],
+   })
+   export class AppModule {}
+   ```
 
-4. **Викликати (емітити) події**: Події можна викликати у визначений момент часу, щоб запустити слухачі.
+3. **Відправлення подій**: Використовуйте `EventEmitter2` для відправлення подій з одного з ваших сервісів або контролерів.
+   ```typescript
+   import { Injectable } from '@nestjs/common';
+   import { EventEmitter2 } from '@nestjs/event-emitter';
 
-Ось приклад, який демонструє ці кроки:
+   @Injectable()
+   export class UserService {
+     constructor(private eventEmitter: EventEmitter2) {}
 
-```javascript
-const EventEmitter = require('events');
+     createUser(user: any) {
+       // логіка створення користувача
+       
+       // відправлення події після створення користувача
+       this.eventEmitter.emit('user.created', user);
+     }
+   }
+   ```
 
-// Створюємо екземпляр EventEmitter
-const eventEmitter = new EventEmitter();
+4. **Підписка на події**: Використовуйте декоратор `@OnEvent` для прослуховування подій у вашому сервісі.
+   ```typescript
+   import { Injectable } from '@nestjs/common';
+   import { OnEvent } from '@nestjs/event-emitter';
 
-// Додаємо слухача для події 'greet'
-eventEmitter.on('greet', (name) => {
-    console.log(`Hello, ${name}!`);
-});
+   @Injectable()
+   export class NotificationService {
+     @OnEvent('user.created')
+     handleUserCreatedEvent(user: any) {
+       // обробка події, наприклад, відправлення email
+       console.log('Новий користувач створений:', user);
+     }
+   }
+   ```
 
-// Додаємо ще одного слухача для події 'greet'
-eventEmitter.on('greet', (name) => {
-    console.log(`Welcome, ${name}! Have a great day!`);
-});
-
-// Емітуємо подію 'greet', передаючи параметр 'John'
-eventEmitter.emit('greet', 'John');
-
-// Додаємо слухача для події 'farewell'
-eventEmitter.on('farewell', (name) => {
-    console.log(`Goodbye, ${name}. See you soon!`);
-});
-
-// Емітуємо подію 'farewell'
-eventEmitter.emit('farewell', 'John');
-```
-
-### Пояснення:
-- Ми створили екземпляр `EventEmitter`.
-- До нього було додано кілька слухачів для різних подій, таких як `'greet'` та `'farewell'`.
-- Події `'greet'` та `'farewell'` були викликані за допомогою методу `emit`, який запускає всі відповідні слухачі.
-
-Цей простий приклад демонструє, як можна побудувати базову архітектуру, керовану подіями, яка може стати основою для складніших систем.
+Таким чином, ви можете легко реалізувати архітектуру, засновану на подіях, в Nest.js, використовуючи `EventEmitter`. Цей підхід дає змогу відокремити бізнес-логіку від логіки обробки подій, що робить код чистішим і легшим для підтримки.
 
 | Back | Forward |
 |---|---|
-| [Understand CQRS (Command Query Responsibility Segregation) with Nest.js](/ua/senior/nestjs/understanding-cqrs-with-nestjs.md)  | [Handle microservices with @nestjs/microservices](/ua/senior/nestjs/handle-microservices-with-nestjs-microservices.md) |
+| [Understand CQRS (Command Query Responsibility Segregation) with Nest.js](/ua/senior/nestjs/understanding-cqrs-in-nestjs.md)  | [Handle microservices with @nestjs/microservices](/ua/senior/nestjs/handle-microservices-with-nestjsmicroservices.md) |

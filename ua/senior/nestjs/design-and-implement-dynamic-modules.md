@@ -1,68 +1,86 @@
 #### * Design and implement dynamic modules
 
-### Проєктування і реалізація динамічних модулів
+## Design and Implement Dynamic Modules in Nest.js
 
-Динамічні модулі — це компоненти, які можуть бути завантажені та взаємодіяти з основною програмою під час виконання без повторної компіляції всієї програми. Це дозволяє покращити гнучкість системи й полегшити оновлення або розширення її функціональності.
+Dynamic modules in Nest.js are a powerful feature that allow you to configure modules dynamically at runtime. They are useful for scenarios where configurations are dependent on runtime values such as application settings, environment variables, or database content that isn't available at compile time.
 
-#### Ключові етапи при проектуванні і реалізації:
+### Steps to Design and Implement a Dynamic Module
 
-1. **Визначення області застосування**:
-   - Розберіться, які частини системи можуть бути динамічними.
-   - Переконайтесь, що динамічні модулі мають чіткі межі відповідальності.
+1. **Create a Dynamic Module:**
 
-2. **Архітектурне планування**:
-   - Використовуйте такі патерни, як плагінова архітектура.
-   - Застосовуйте інтерфейси, щоб визначити контракти для модулів.
-   
-3. **Розділення на інтерфейси та реалізації**:
-   - Визначте набір інтерфейсів, які кожен модуль повинен реалізувати.
-   - Це сприяє слабкому зв'язку між основною програмою та модулями.
+   Define a static method called `forRoot()` or `forFeature()` inside your module class. This method will return a module configuration object.
 
-4. **Механізм завантаження модулів**:
-   - Використовуйте технології, що підтримують динамічну завантаженість, такі як Reflection у Java або `importlib` у Python.
-   - Забезпечте обробку помилок при завантаженні модулів.
+   ```typescript
+   import { Module, DynamicModule } from '@nestjs/common';
 
-5. **Розробка та тестування модулів**:
-   - Розробляйте кожен модуль окремо, дотримуючись визначених інтерфейсів.
-   - Створюйте модульні тести для перевірки кожного модуля.
+   @Module({})
+   export class MyDynamicModule {
+     static forRoot(options: ModuleOptions): DynamicModule {
+       return {
+         module: MyDynamicModule,
+         providers: [
+           {
+             provide: 'CONFIG_OPTIONS',
+             useValue: options,
+           },
+           MyService,
+         ],
+         exports: ['CONFIG_OPTIONS', MyService],
+       };
+     }
+   }
+   ```
 
-6. **Безпека та контроль версій**:
-   - Переконайтесь, що система може обробляти різні версії модулів.
-   - Забезпечте безпечне завантаження та виконання модулів.
+   The `forRoot()` method takes options as an argument and provides them to the module's providers, which can be used within the module.
 
-7. **Документація**:
-   - Забезпечте наявність документації для розробників модулів, щоб вони могли легко інтегрувати свої рішення з системою.
+2. **Define and Provide Configurable Services:**
 
-#### Приклад реалізації в Python:
+   Create services or providers within the module that utilize the configuration options. 
 
-```python
-# Інтерфейс модуля
-class Plugin:
-    def exec(self, *args, **kwargs):
-        raise NotImplementedError("Клас повинен реалізовувати метод exec.")
+   ```typescript
+   import { Injectable, Inject } from '@nestjs/common';
 
-# Приклад модуля
-class ExamplePlugin(Plugin):
-    def exec(self, data):
-        return f"Оброблені дані: {data}"
+   @Injectable()
+   export class MyService {
+     constructor(@Inject('CONFIG_OPTIONS') private options: ModuleOptions) {
+       console.log('Module Options:', options);
+     }
 
-# Завантаження та використання модулів
-import importlib
+     // Service logic here...
+   }
+   ```
 
-def load_plugin(module_name, class_name):
-    module = importlib.import_module(module_name)
-    return getattr(module, class_name)()
+   Use the `@Inject` decorator to inject the configuration options into your service.
 
-if __name__ == "__main__":
-    plugin = load_plugin("example_plugin", "ExamplePlugin")
-    result = plugin.exec("Деякі дані")
-    print(result)
-```
+3. **Integrate the Dynamic Module:**
 
-#### Висновок
+   Import the dynamic module and call its `forRoot()` method with the desired options wherever needed in your application.
 
-Використання динамічних модулів підвищує гнучкість та адаптивність програмного забезпечення. Це дозволяє швидко впроваджувати нові функції та оновлення, знижуючи при цьому ризик порушення основного коду. Основними принципами повинні бути чітка архітектура, розділення відповідальностей, безпека та тестованість.
+   ```typescript
+   import { Module } from '@nestjs/common';
+   import { MyDynamicModule } from './my-dynamic.module';
+
+   @Module({
+     imports: [
+       MyDynamicModule.forRoot({
+         key: 'value',
+         anotherKey: 'anotherValue',
+       }),
+     ],
+   })
+   export class AppModule {}
+   ```
+
+   This setup allows multiple configurations for the same module in different parts of the application if needed.
+
+4. **Dynamic Module Benefits:**
+
+   - **Flexibility**: Configure modules at runtime based on various parameters or conditions.
+   - **Reusability**: Create flexible modules that can be reused in different applications with different configurations.
+   - **Modularity**: Enhance modularity and separation of concerns by decoupling configuration logic from application logic.
+
+By implementing dynamic modules, you are enabling your Nest.js application to be more flexible and configurable, adapting to various runtime scenarios and requirements.
 
 | Back | Forward |
 |---|---|
-| [Build and manage microservice patterns in Nest.js](/ua/senior/nestjs/build-and-manage-microservice-patterns-in-nestjs.md)  | [Implement advanced GraphQL features (e.g., subscriptions, resolvers)](/ua/senior/nestjs/implement-advanced-graphql-features.md) |
+| [Build and manage microservice patterns in Nest.js](/ua/senior/nestjs/build-microservice-patterns-with-nestjs.md)  | [Implement advanced GraphQL features (e.g., subscriptions, resolvers)](/ua/senior/nestjs/implement-advanced-graphql-features.md) |

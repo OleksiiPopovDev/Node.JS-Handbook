@@ -1,113 +1,154 @@
 #### * Implement advanced GraphQL features (e.g., subscriptions, resolvers)
 
-## Впровадження розширених можливостей GraphQL: підписки та резолвери
+Щоб реалізувати розширені можливості GraphQL, такі як підписки (`subscriptions`) та вирішувачі (`resolvers`) в Nest.js, потрібно виконати наступні кроки:
 
-GraphQL - це потужний інструмент для побудови гнучких API. Однією з його сильних сторін є можливість реалізації розширених можливостей, таких як підписки та резолвери. Розглянемо, як вони працюють та як їх можна впровадити.
+### Підписки (Subscriptions)
 
-### Резолвери
+Підписки використовуються для отримання реального часу оновлень через WebSockets. Nest.js підтримує підписки через пакет `@nestjs/graphql` і `graphql-subscriptions`.
 
-Резолвери є функціями, які відповідають за отримання даних для окремих полів у запитах. Вони дозволяють вам контролювати де і як отримуються дані.
+#### Встановлення:
 
-#### Приклад:
+Спочатку, встановіть необхідні залежності:
 
-```js
-const { ApolloServer, gql } = require('apollo-server');
-
-// Схема типов
-const typeDefs = gql`
-  type Query {
-    hello: String
-    user(id: ID!): User
-  }
-
-  type User {
-    id: ID!
-    name: String
-  }
-`;
-
-// Постачальники резолвера
-const resolvers = {
-  Query: {
-    hello: () => 'Вітаємо у GraphQL!',
-    user: (_parent, args, context) => {
-      // Приклад простого отримання користувача за ідентифікатором
-      return context.dataSources.userAPI.getUserById(args.id);
-    }
-  }
-};
-
-// Ініціалізація сервера
-const server = new ApolloServer({ typeDefs, resolvers });
-// Запуск сервера
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+```bash
+npm install @nestjs/graphql graphql graphql-subscriptions apollo-server-express
 ```
 
-### Підписки
+#### Налаштування:
 
-Підписки дозволяють клієнтам отримувати оновлену інформацію в режимі реального часу за допомогою веб-сокетів. Це корисно для таких сценаріїв, як оновлення чату, оповіщення або відстеження стану.
+1. **GraphQL Модуль:**
 
-#### Приклад:
+   Налаштуйте `GraphQLModule`, щоб підтримувати підписки:
 
-1. **Оновіть схему**
+   ```typescript
+   import { Module } from '@nestjs/common';
+   import { GraphQLModule } from '@nestjs/graphql';
+   import { PubSub } from 'graphql-subscriptions';
 
-```js
-const typeDefs = gql`
-  type Query {
-    message: String
-  }
+   const pubSub = new PubSub();
 
-  type Subscription {
-    messageReceived: String
-  }
-`;
-```
+   @Module({
+     imports: [
+       GraphQLModule.forRoot({
+         autoSchemaFile: 'schema.gql',
+         installSubscriptionHandlers: true,
+       }),
+     ],
+     providers: [
+       // ваші провайдери
+       { provide: 'PUB_SUB', useValue: pubSub },
+     ],
+   })
+   export class AppModule {}
+   ```
 
-2. **Налаштування резолвера для підписки**
+2. **Визначення Схеми:**
 
-```js
-const { PubSub } = require('graphql-subscriptions');
-const pubsub = new PubSub();
-const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED';
+   Створіть визначення для вашої підписки в GraphQL схемі:
 
-const resolvers = {
-  Query: {
-    message: () => 'Останнє повідомлення'
-  },
-  Subscription: {
-    messageReceived: {
-      subscribe: () => pubsub.asyncIterator([MESSAGE_RECEIVED])
-    }
-  }
-};
+   ```graphql
+   type Subscription {
+     itemAdded: Item
+   }
 
-// Приклад публікації події (наприклад, може бути викликано, коли нове повідомлення отримано)
-pubsub.publish(MESSAGE_RECEIVED, { messageReceived: 'Нове повідомлення!' });
-```
+   type Item {
+     id: ID!
+     name: String!
+   }
+   ```
 
-3. **Запуск сервера з підписками**
+3. **Реалізація Підписки:**
 
-```js
-const { ApolloServer } = require('apollo-server');
+   Додайте реалізацію для підписки в резолвер:
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers
-});
+   ```typescript
+   import { Resolver, Subscription } from '@nestjs/graphql';
+   import { Inject } from '@nestjs/common';
+   import { PubSub } from 'graphql-subscriptions';
 
-// Запуск сервера
-server.listen().then(({ url, subscriptionsUrl }) => {
-  console.log(`🚀 Server ready at ${url}`);
-  console.log(`🚀 Subscriptions ready at ${subscriptionsUrl}`);
-});
-```
+   @Resolver(() => Item)
+   export class ItemResolver {
+     constructor(@Inject('PUB_SUB') private readonly pubSub: PubSub) {}
 
-### Висновок
+     @Subscription(() => Item)
+     itemAdded() {
+       return this.pubSub.asyncIterator('itemAdded');
+     }
+   }
+   ```
 
-Використання резолверів і підписок дозволяє вам створювати додатки, що реагують в режимі реального часу, полегшуючи обробку складних запитів і поточних даних. Використовуючи такі сервери, як Apollo Server, ви можете з легкістю інтегрувати ці можливості в ваш проект.
+4. **Тригери Підписок:**
+
+   Використовуйте `pubSub.publish` для відправки оновлень:
+
+   ```typescript
+   async addItem(item: Item): Promise<void> {
+     // логіка додавання item
+     this.pubSub.publish('itemAdded', { itemAdded: item });
+   }
+   ```
+
+### Вирішувачі (Resolvers)
+
+Вирішувачі є основою для реалізації логіки обробки запитів у GraphQL.
+
+#### Приклад Реалізації:
+
+1. **Визначення Схеми:**
+
+   Визначте типи та запити у вашій GraphQL схемі:
+
+   ```graphql
+   type Query {
+     item(id: ID!): Item
+     items: [Item]
+   }
+
+   type Item {
+     id: ID!
+     name: String!
+   }
+   ```
+
+2. **Створіть Резолвер:**
+
+   Створіть відповідні методи для обробки запитів та мутацій:
+
+   ```typescript
+   import { Resolver, Query, Args } from '@nestjs/graphql';
+
+   @Resolver(() => Item)
+   export class ItemResolver {
+     private items: Item[] = []; // це лише приклад, дані можуть бути з бази
+
+     @Query(() => Item)
+     item(@Args('id') id: string): Item {
+       return this.items.find(item => item.id === id);
+     }
+
+     @Query(() => [Item])
+     items(): Item[] {
+       return this.items;
+     }
+   }
+   ```
+
+3. **Додавання до Модуля:**
+
+   Переконайтеся, що резолвер включено до модуля:
+
+   ```typescript
+   import { Module } from '@nestjs/common';
+   import { ItemResolver } from './item.resolver';
+
+   @Module({
+     providers: [ItemResolver],
+   })
+   export class ItemModule {}
+   ```
+
+Ці приклади демонструють, як можна реалізувати розширені можливості GraphQL, такі як підписки та резолвери в Nest.js. Це врівень основи, на яких можна розвивати повноцінні додатки з підтримкою GraphQL.
 
 | Back | Forward |
 |---|---|
-| [Design and implement dynamic modules](/ua/senior/nestjs/design-and-implement-dynamic-modules.md)  | [Scale applications with Kubernetes and Docker in Nest.js projects](/ua/senior/nestjs/scale-applications-with-kubernetes-and-docker-in-nestjs-projects.md) |
+| [Design and implement dynamic modules](/ua/senior/nestjs/design-and-implement-dynamic-modules.md)  | [Scale applications with Kubernetes and Docker in Nest.js projects](/ua/senior/nestjs/scaling-applications-with-kubernetes-and-docker-in-nestjs-projects.md) |

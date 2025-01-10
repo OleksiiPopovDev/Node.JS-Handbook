@@ -1,72 +1,72 @@
 #### * Implement multi-tenancy in Express applications
 
-Для реалізації багатокористувацької архітектури (multi-tenancy) в Express-додатках є декілька підходів. Нижче наведено простий приклад реалізації цього через піддоменну стратегію. У цьому підході кожен клієнт (tenant) отримує свій піддомен.
+Реалізація багатокористувацької архітектури (multi-tenancy) в Express додатках може бути досягнута за допомогою різних підходів. Ось простий приклад на основі шаблонізації по піддоменах, де кожен піддомен представляє окремого користувача.
 
-### Попередні вимоги
+**Кроки для реалізації:**
 
-1. Використання Node.js та Express.
-2. Наявність бази даних з можливістю багатокористувацької підтримки (наприклад, MongoDB, PostgreSQL).
+1. **Створіть middleware для визначення tenant (орендаря):**
 
-### Кроки для реалізації
+   Спочатку ви повинні визначити, хто є поточним клієнтом (tenant). Це може бути зроблено за допомогою middleware, яке аналізує піддомен або певний параметр у запиті.
 
-1. **Налаштування Express-додатку:**
+   ```javascript
+   function tenantResolver(req, res, next) {
+     const host = req.headers.host;
+     const tenant = host.split('.')[0]; // Отримуйте піддомен як ім'я орендаря
 
-   Встановіть необхідні залежності:
-
-   ```sh
-   npm install express mongoose
+     req.tenant = tenant; // Зберігаємо ідентифікатор орендаря в запиті
+     next();
+   }
    ```
 
-2. **Створення серверу Express:**
+2. **Налаштуйте підключення до бази даних для кожного tenant:**
+
+   Наступним кроком є налаштування або вибір правильного підключення до бази даних на основі поточного орендаря.
+
+   ```javascript
+   const dbConnections = {};
+
+   function getDbConnection(tenant) {
+     if (!dbConnections[tenant]) {
+       // Створіть нове підключення до БД для орендаря
+       dbConnections[tenant] = createConnection({
+         host: 'localhost',
+         user: 'user',
+         password: 'password',
+         database: `${tenant}_db` // Наприклад, ім'я бази даних містить ім'я орендаря
+       });
+     }
+
+     return dbConnections[tenant];
+   }
+   ```
+
+3. **Використовуйте tenant-based дані у ваших маршрутах:**
+
+   Тепер, коли ви визначили орендаря і налаштували підключення до БД, можете створювати маршрути, які використовують ці дані.
 
    ```javascript
    const express = require('express');
    const app = express();
-   const mongoose = require('mongoose');
 
-   // Підключення до бази даних
-   const connectDb = (tenant) => {
-     const uri = `mongodb://localhost:27017/${tenant}`;
-     return mongoose.createConnection(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-   };
+   app.use(tenantResolver);
 
-   const getTenantFromSubdomain = (req) => {
-     const host = req.headers.host; // наприклад, tenant1.example.com
-     return host.split('.')[0]; // отримати 'tenant1'
-   };
+   app.get('/data', (req, res) => {
+     const db = getDbConnection(req.tenant);
 
-   // Middleware для визначення tenant
-   app.use((req, res, next) => {
-     const tenant = getTenantFromSubdomain(req);
-     req.dbConnection = connectDb(tenant); // Отримання з'єднання з відповідною БД
-     next();
+     db.query('SELECT * FROM some_table', (err, results) => {
+       if (err) {
+         return res.status(500).send('Database error');
+       }
+       res.json(results);
+     });
    });
 
-   app.get('/', (req, res) => {
-     res.send(`Привіт з бази ${req.dbConnection.name}`);
-   });
-
-   const PORT = process.env.PORT || 3000;
-   app.listen(PORT, () => {
-     console.log(`Сервер запущено на порту ${PORT}`);
+   app.listen(3000, () => {
+     console.log('Server is running on port 3000');
    });
    ```
 
-3. **Структура бази даних:**
-
-   Кожен клієнт може мати свою окрему базу даних або схему, якщо використовуєте PostgreSQL. У випадку MongoDB це може бути окрема колекція в одній базі даних або окрема база даних для кожного клієнта.
-
-4. **Обробка запитів:**
-
-   У цьому прикладі ми використовуємо піддомен для визначення поточного клієнта і підключаємося до відповідної бази даних на основі цього.
-
-### Рекомендації
-
-- **Безпека:** Забезпечте відповідний рівень автентифікації та авторизації для кожного клієнта.
-- **Оптимізація:** Якщо у вас багато клієнтів, розгляньте можливість використання пулу з'єднань до бази даних.
-- **Моніторинг:** За допомогою логів відслідковуйте діяльність кожного клієнта для запобігання перевищення ресурсів.
-
-Це базова концепція, яка може бути розширена додатковими вимогами залежно від специфіки вашого додатка.
+Це базова модель багатокористувацької архітектури. У більш складних випадках ви можете використовувати інші підходи, такі як ізоляція даних на рівні таблиць або навіть середовище з мікросервісами для кожного tenant. Обране рішення залежить від потреб вашої програми та вимог до масштабованості.
 
 | Back | Forward |
 |---|---|

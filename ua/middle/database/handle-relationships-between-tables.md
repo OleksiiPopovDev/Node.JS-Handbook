@@ -1,91 +1,69 @@
 #### * Handle relationships between tables (e.g., one-to-many, many-to-many)
 
-У реляційних базах даних взаємозв'язки між таблицями є ключовими для зберігання та управління даними. Нижче наведено основні типи зв'язків, їх особливості та реалізація:
+Для ефективного управління зв'язками між таблицями в реляційних базах даних використовуються такі концепції, як "один-до-багатьох" (one-to-many) і "багато-до-багатьох" (many-to-many). Нижче пояснюється, як ці зв'язки реалізуються:
 
-### 1. One-to-Many (один-до-багатьох)
+### Один-до-багатьох (One-to-Many)
+Цей зв'язок передбачає, що один запис в одній таблиці може бути пов'язаний з багатьма записами в іншій таблиці. Щоб реалізувати зв'язок "один-до-багатьох":
 
-#### Опис:
-Цей тип зв'язку означає, що один запис в одній таблиці може бути пов'язаний з багатьма записами в іншій таблиці.
+1. **Первинний ключ**: Основна таблиця містить первинний ключ (Primary Key), який однозначно ідентифікує кожен запис.
 
-#### Реалізація:
-- Таблиця «багатьох» містить зовнішній ключ, що посилається на первинний ключ таблиці «одного».
-  
+2. **Зовнішній ключ**: Залежна таблиця містить зовнішній ключ (Foreign Key), який посилається на первинний ключ основної таблиці.
+
 #### Приклад:
-Розглянемо дві таблиці: `Authors` та `Books`. Один автор може мати багато книг, але кожна книга належить лише одному автору.
+Припустимо, є дві таблиці: `Customers` і `Orders`.
+
+- **Customers**: Має первинний ключ `CustomerID`.
+- **Orders**: Має зовнішній ключ `CustomerID`, що посилається на `CustomerID` у таблиці `Customers`.
 
 ```sql
-CREATE TABLE Authors (
-    AuthorID INT PRIMARY KEY,
-    Name VARCHAR(100)
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    Name VARCHAR(255)
 );
 
-CREATE TABLE Books (
-    BookID INT PRIMARY KEY,
-    Title VARCHAR(100),
-    AuthorID INT,
-    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    OrderDate DATE,
+    CustomerID INT,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
 );
 ```
 
-### 2. Many-to-Many (багато-до-багатьох)
+### Багато-до-багатьох (Many-to-Many)
+Для реалізації зв'язку "багато-до-багатьох" використовується проміжна таблиця, яка містить зовнішні ключі для обох пов'язаних таблиць:
 
-#### Опис:
-У цьому випадку один запис в одній таблиці може бути пов'язаний з багатьма записами в іншій таблиці, і навпаки.
-
-#### Реалізація:
-- Створюється проміжна (сполучна) таблиця, яка містить зовнішні ключі до обох таблиць, які є частинами зв'язку. Ця таблиця може також містити додаткові атрибути.
+1. **Проміжна таблиця**: Ця таблиця реалізує зв'язок, містить два зовнішні ключі, які посилаються на первинні ключі двох інших таблиць.
 
 #### Приклад:
-Розглянемо таблиці `Students` та `Courses`, де студент може бути записаний на багато курсів, а курс можуть відвідувати багато студентів. Використовується проміжна таблиця `Enrollments`.
+Припустимо, є дві таблиці: `Students` і `Courses`.
+
+- **Students**: Має первинний ключ `StudentID`.
+- **Courses**: Має первинний ключ `CourseID`.
+- **Enrollments**: Проміжна таблиця з полями `StudentID` і `CourseID`, кожне з яких є зовнішнім ключем.
 
 ```sql
 CREATE TABLE Students (
     StudentID INT PRIMARY KEY,
-    Name VARCHAR(100)
+    Name VARCHAR(255)
 );
 
 CREATE TABLE Courses (
     CourseID INT PRIMARY KEY,
-    CourseName VARCHAR(100)
+    Title VARCHAR(255)
 );
 
 CREATE TABLE Enrollments (
     StudentID INT,
     CourseID INT,
-    EnrollmentDate DATE,
-    PRIMARY KEY (StudentID, CourseID),
     FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
-    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
+    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID),
+    PRIMARY KEY (StudentID, CourseID)
 );
 ```
 
-### 3. One-to-One (один-до-одного)
-
-#### Опис:
-Цей тип зв'язку означає, що один запис в одній таблиці є пов'язаним тільки з одним записом в іншій таблиці.
-
-#### Реалізація:
-- Один з підходів — обидві таблиці мають такий самий первинний ключ, який одночасно є і зовнішнім ключем.
-
-#### Приклад:
-Розглянемо таблиці `Users` та `UserProfiles`, де кожен користувач має лише один профіль.
-
-```sql
-CREATE TABLE Users (
-    UserID INT PRIMARY KEY,
-    Username VARCHAR(100)
-);
-
-CREATE TABLE UserProfiles (
-    ProfileID INT PRIMARY KEY,
-    UserID INT,
-    Address VARCHAR(255),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
-);
-```
-
-Ці структури забезпечують цілісність даних і допомагають оптимізувати запити, відповідно до зв'язків між даними.
+### Підсумок
+Зв'язки в реляційних базах даних дозволяють структурувати дані так, щоб вони були взаємопов'язані, що забезпечує гнучкість і цілісність даних. Використання первинних і зовнішніх ключів є основним підходом для реалізації зв'язків між таблицями.
 
 | Back | Forward |
 |---|---|
-| [Implement database indexing](/ua/middle/database/implement-database-indexing.md)  | [Implement secure REST APIs](/ua/middle/database/implement-secure-rest-apis.md) |
+| [Implement database indexing](/ua/middle/database/create-database-indexes.md)  | [Implement secure REST APIs](/ua/middle/database/implement-secure-rest-apis.md) |

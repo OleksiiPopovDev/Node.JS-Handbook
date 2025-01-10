@@ -1,126 +1,118 @@
-#### * Create RESTful APIs using controllers
+#### 83. Create RESTful APIs using controllers
 
-Створення RESTful API за допомогою контролерів зазвичай передбачає використання фреймворків, таких як ASP.NET, Django, Spring, Express.js тощо. Нижче наведено приклад, як створити простий RESTful API з використанням Express.js в Node.js.
+Щоб створити RESTful API використовуючи контролери в Nest.js, необхідно виконати кілька кроків. Розглянемо їх на прикладі створення простого CRUD додатку:
 
-### Кроки для створення RESTful API з контролерами в Express.js
+### 1. Встановити Nest.js
 
-1. **Встановлення та ініціалізація проекту**
+Спершу переконайтеся, що ви маєте Nest CLI, він спростить процес створення структур:
 
-   Спочатку переконайтеся, що у вас встановлений Node.js і npm. Створіть нову папку для проекту і виконайте ініціалізацію npm:
+```bash
+npm i -g @nestjs/cli
+nest new project-name
+```
 
-   ```bash
-   mkdir my-restful-api
-   cd my-restful-api
-   npm init -y
-   ```
+### 2. Створення контролера
 
-2. **Встановлення Express**
+Nest.js використовує декоратори для визначення маршрутів у контролерах.
 
-   Встановіть Express.js:
+#### Генеруємо контролер:
 
-   ```bash
-   npm install express
-   ```
+```bash
+nest generate controller items
+```
 
-3. **Створення базової структури**
+Це створить новий файл контролера `items.controller.ts`.
 
-   Створіть такі файли та папки для структури:
+#### Приклад контролера:
 
-   ```
-   my-restful-api/
-   ├── controllers/
-   │   └── userController.js
-   ├── routes/
-   │   └── userRoutes.js
-   ├── app.js
-   └── package.json
-   ```
+```typescript
+import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { CreateItemDto } from './dto/create-item.dto';
+import { UpdateItemDto } from './dto/update-item.dto';
 
-4. **Написання контролера**
+@Controller('items')
+export class ItemsController {
+  @Get()
+  findAll() {
+    return 'Це поверне всі елементи';
+  }
 
-   У `controllers/userController.js` створіть контролер для управління діями:
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return `Це поверне елемент з id: ${id}`;
+  }
 
-   ```javascript
-   // controllers/userController.js
+  @Post()
+  create(@Body() createItemDto: CreateItemDto) {
+    return 'Це створить новий елемент';
+  }
 
-   exports.getAllUsers = (req, res) => {
-     res.status(200).json({ message: "Retrieving all users" });
-   };
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateItemDto: UpdateItemDto) {
+    return `Це оновить елемент з id: ${id}`;
+  }
 
-   exports.getUserById = (req, res) => {
-     const userId = req.params.id;
-     res.status(200).json({ message: `Retrieving user with ID: ${userId}` });
-   };
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return `Це видалить елемент з id: ${id}`;
+  }
+}
+```
 
-   exports.createUser = (req, res) => {
-     const newUser = req.body;
-     res.status(201).json({ message: "User created", user: newUser });
-   };
+### 3. Визначення DTO (Data Transfer Objects)
 
-   exports.updateUser = (req, res) => {
-     const userId = req.params.id;
-     res.status(200).json({ message: `User with ID: ${userId} updated` });
-   };
+DTO використовуються для визначення структури даних, що передаються.
 
-   exports.deleteUser = (req, res) => {
-     const userId = req.params.id;
-     res.status(200).json({ message: `User with ID: ${userId} deleted` });
-   };
-   ```
+#### Приклад DTO:
 
-5. **Визначення маршрутів**
+```typescript
+// create-item.dto.ts
+export class CreateItemDto {
+  readonly name: string;
+  readonly description: string;
+  readonly price: number;
+}
 
-   У `routes/userRoutes.js` налаштуйте маршрути:
+// update-item.dto.ts
+export class UpdateItemDto {
+  readonly name?: string;
+  readonly description?: string;
+  readonly price?: number;
+}
+```
 
-   ```javascript
-   // routes/userRoutes.js
+### 4. Реєстрація контролера в модулі
 
-   const express = require('express');
-   const router = express.Router();
-   const userController = require('../controllers/userController');
+Після створення контролера, його необхідно зареєструвати в модулі.
 
-   router.get('/users', userController.getAllUsers);
-   router.get('/users/:id', userController.getUserById);
-   router.post('/users', userController.createUser);
-   router.put('/users/:id', userController.updateUser);
-   router.delete('/users/:id', userController.deleteUser);
+```typescript
+import { Module } from '@nestjs/common';
+import { ItemsController } from './items.controller';
 
-   module.exports = router;
-   ```
+@Module({
+  controllers: [ItemsController],
+})
+export class ItemsModule {}
+```
 
-6. **Налаштування сервера**
+### 5. Додавання модуля до загального додатку
 
-   У `app.js` налаштуйте сервіс Express:
+Після цього, не забудьте додати новий модуль в `app.module.ts`.
 
-   ```javascript
-   // app.js
+```typescript
+import { Module } from '@nestjs/common';
+import { ItemsModule } from './items/items.module';
 
-   const express = require('express');
-   const app = express();
-   const userRoutes = require('./routes/userRoutes');
+@Module({
+  imports: [ItemsModule],
+})
+export class AppModule {}
+```
 
-   // Middleware для парсінгу JSON
-   app.use(express.json());
+### Висновок
 
-   // Використання маршрутів
-   app.use('/api', userRoutes);
-
-   const PORT = process.env.PORT || 3000;
-   app.listen(PORT, () => {
-     console.log(`Server is running on port ${PORT}`);
-   });
-   ```
-
-7. **Запуск сервера**
-
-   Запустіть сервер, використовуючи команду:
-
-   ```bash
-   node app.js
-   ```
-
-Тепер ви маєте простий RESTful API з основними CRUD операціями для користувачів. Ви можете розвивати його далі, додаючи більше логіки обробки, перевірки даних, аутентифікацію тощо.
+Тепер у вас є базовий RESTful API з контролером, що забезпечує повний набір класичних CRUD операцій. За реальної розробки додатку попрацюйте над інтеграцією сервісів для обробки бізнес-логіки та підключення до бази даних для зберігання даних.
 
 | Back | Forward |
 |---|---|
-| [Write simple unit tests for services and controllers](/ua/junior/nestjs/write-simple-unit-tests-for-services-and-controllers.md)  | [Use Nest.js CLI for project generation and scaffolding](/ua/junior/nestjs/use-the-nestjs-cli-for-project-creation.md) |
+| [Write simple unit tests for services and controllers](/ua/junior/nestjs/what-are-some-simple-unit-tests-for-services-and-controllers.md)  | [Use Nest.js CLI for project generation and scaffolding](/ua/junior/nestjs/use-the-nestjs-cli-for-project-generation-and-scaffolding.md) |

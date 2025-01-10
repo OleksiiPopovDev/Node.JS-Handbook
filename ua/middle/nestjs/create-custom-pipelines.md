@@ -1,102 +1,51 @@
 #### * Create custom pipes
 
-У Angular, Pipe - це інструмент для перетворення даних у відображенні. Створення власних кастомних pipes дозволяє реалізовувати специфічні перетворення під ваші потреби.
+Для створення кастомних (власних) пайпів у Nest.js ми можемо використовувати інтерфейс `PipeTransform`. Пайпи в Nest.js переважно використовуються для трансформації або валідації даних перед обробкою запиту контролером.
 
-Ось кроки для створення кастомного pipe в Angular:
+Ось приклад, як можна створити простий кастомний пайп:
 
-### 1. Створення нового pipe:
+1. **Створіть файл Пайпу:** Почнемо з створення файлу, де буде зберігатись наш пайп, наприклад `parse-int.pipe.ts`.
 
-За допомогою Angular CLI ви можете створити pipe, використовуючи команду:
-
-```bash
-ng generate pipe customPipeName
-```
-
-Або скорочено:
-
-```bash
-ng g p customPipeName
-```
-
-Це створить файл `custom-pipe-name.pipe.ts` та додасть клас Pipe у проект.
-
-### 2. Реалізація логіки pipe:
-
-Після створення, ви можете реалізувати власну логіку у методі `transform` в класі pipe. Нижче наведено приклад:
+2. **Імплементуйте PipeTransform:** Реалізуйте інтерфейс `PipeTransform` у вашому класі.
 
 ```typescript
-import { Pipe, PipeTransform } from '@angular/core';
+import { PipeTransform, Injectable, ArgumentMetadata, BadRequestException } from '@nestjs/common';
 
-@Pipe({
-  name: 'customPipeName'
-})
-export class CustomPipeNamePipe implements PipeTransform {
-
-  transform(value: any, ...args: any[]): any {
-    // Ваша логіка перетворення
-    return modifiedValue;
+@Injectable()
+export class ParseIntPipe implements PipeTransform<string, number> {
+  transform(value: string, metadata: ArgumentMetadata): number {
+    const val = parseInt(value, 10);
+    if (isNaN(val)) {
+      throw new BadRequestException('Validation failed');
+    }
+    return val;
   }
 }
 ```
 
-### 3. Використання pipe в компоненті:
+- **`transform` Метод:** Основний метод, який виконує трансформацію чи валідацію значення.
+- **`ArgumentMetadata` параметр:** Додає контексту щодо метаданих аргументу, який є корисним для більш специфічних перевірок.
 
-Щоб використовувати pipe у вашому компоненті, просто додайте його в список declarations в модулі, наприклад `app.module.ts`:
+3. **Зареєструйте та використовуйте ваш Пайп у контролері або маршруті:**
 
-```typescript
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { CustomPipeNamePipe } from './custom-pipe-name.pipe';
-
-@NgModule({
-  declarations: [
-    // інші компоненти
-    CustomPipeNamePipe
-  ],
-  imports: [
-    BrowserModule,
-    // інші модулі
-  ],
-  providers: [],
-  bootstrap: [/* головний компонент */]
-})
-export class AppModule { }
-```
-
-Далі ви можете використовувати pipe в шаблонах компонентів таким чином:
-
-```html
-<p>{{ someValue | customPipeName:arg1:arg2 }}</p>
-```
-
-### 4. Приклад реалізації:
-
-Припустимо, вам потрібно реалізувати pipe, який перетворює текст у верхній регістр, але навпаки:
+Тепер, коли ви створили пайп, його можна використовувати у вашому контролері.
 
 ```typescript
-import { Pipe, PipeTransform } from '@angular/core';
+import { Controller, Get, Query, UsePipes } from '@nestjs/common';
+import { ParseIntPipe } from './parse-int.pipe';
 
-@Pipe({
-  name: 'reverseUpperCase'
-})
-export class ReverseUpperCasePipe implements PipeTransform {
-
-  transform(value: string): string {
-    if (!value) return '';
-    return value.split('').reverse().join('').toUpperCase();
+@Controller('numbers')
+export class NumbersController {
+  @Get()
+  async findOne(@Query('id', ParseIntPipe) id: number) {
+    return `Number id is ${id}`;
   }
 }
 ```
 
-Застосування в шаблоні:
+У цьому прикладі `ParseIntPipe` буде автоматично викликано до того, як значення `id` передадуть у `findOne` метод. Якщо `id` не конвертується в число, буде кинуто помилку `BadRequestException`.
 
-```html
-<p>{{ 'hello' | reverseUpperCase }}</p>
-```
-
-Результат: `OLLEH`
-
-Після реалізації кастомного pipe ви зможете використовувати його для специфічних трансформацій і легко інтегрувати в ваш Angular проект.
+Таким чином, ви можете створювати пайпи, які будуть корисні для різних задач, таких як валідація, трансформація даних чи їхнє структурування.
 
 | Back | Forward |
 |---|---|

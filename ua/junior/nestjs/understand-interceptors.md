@@ -1,55 +1,69 @@
-#### * Understand interceptors
+#### 80. Understand interceptors
 
-Інтерсептори (interceptors) — це концепція в програмуванні, яка дозволяє перехоплювати і обробляти запити або відповіді під час їх передачі між клієнтом і сервером. Вони часто використовуються в веб-розробці в контексті роботи з HTTP запитами.
+### Інтерцептори в Nest.js
 
-### Основні цілі інтерсепторів:
+Інтерцептори в Nest.js є одним з важливих механізмів, що дозволяє перехоплювати процеси обробки запитів або відповідей в додатку. Вони працюють подібно до проміжних прошарків (middleware), але призначені для роботи на специфічному етапі обробки.
 
-1. **Обробка запитів та відповідей**: Інтерсептори можуть модифікувати або доповнювати запити перед їх надсиланням, а також обробляти відповіді перед їх поверненням клієнту.
+#### Основні функції інтерцепторів:
 
-2. **Аутентифікація та авторизація**: Вони можуть використовуватися для додавання токенів аутентифікації до HTTP заголовків або перевірки прав доступу.
+1. **Трансформація даних**:
+   - Інтерцептори дозволяють змінювати вхідні запити або вихідні відповіді. Наприклад, ви можете використовувати інтерцептори для форматування відповідей перед тим, як вони будуть відправлені клієнту.
 
-3. **Логування та налагодження**: Полегшення процесу логування запитів і відповідей. Це може бути корисним для моніторингу або налагодження додатків.
+2. **Ведення логування**:
+   - Інтерцептори можуть бути використані для логування метаданих запиту, часу обробки, простеження та інших важливих аспектів.
 
-4. **Робота з помилками**: Інтерсептори можуть обробляти глобальні помилки і робити відповідні дії (наприклад, перезапит у разі помилки мережі).
+3. **Кешування**:
+   - Можуть застосовуватися для кешування результатів запитів, економлячи ресурси сервера й зменшуючи навантаження на API.
 
-### Приклад у Angular:
+4. **Помилкові операції**:
+   - Інтерцептори здатні обробляти помилки, що виникають під час виконання будь-якої операції у відповідь на запит.
 
-В Angular інтерсептори використовуються для обробки всіх HTTP запитів, які проходять через `HttpClient`. Нижче наведено приклад простого інтерсептора, що додає токен до кожного запиту:
+#### Створення інтерцептора:
+
+Для створення інтерцептора в Nest.js, вам потрібно створити клас, що імплементує інтерфейс `NestInterceptor`:
 
 ```typescript
-import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
+import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const authToken = 'your-auth-token-here';
-    const authReq = req.clone({
-      setHeaders: { Authorization: `Bearer ${authToken}` }
-    });
-    return next.handle(authReq);
+export class LoggingInterceptor implements NestInterceptor {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    console.log('Before...');
+
+    const now = Date.now();
+    return next
+      .handle()
+      .pipe(
+        tap(() => console.log(`After... ${Date.now() - now}ms`)),
+      );
   }
 }
 ```
 
-### Підключення інтерсептора:
+#### Додавання інтерцептора до контролера або методу:
 
-Для використання інтерсептора в Angular, потрібно додати його до провайдерів у `app.module.ts`:
+Ви можете додати інтерцептор як до всього контролера, так і до окремого методу за допомогою декораторів `@UseInterceptors`:
 
 ```typescript
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './auth.interceptor';
+import { Controller, Get, UseInterceptors } from '@nestjs/common';
 
-@NgModule({
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-  ],
-})
-export class AppModule {}
+@Controller('cats')
+@UseInterceptors(LoggingInterceptor) // Додаємо інтерцептор до всього контролера
+export class CatsController {
+  @Get()
+  @UseInterceptors(LoggingInterceptor) // Або можна додати лише до методу
+  findAll() {
+    return [];
+  }
+}
 ```
 
-Таким чином, інтерсептори дозволяють розширювати та налаштовувати обробку HTTP запитів без впливу на код, що генерує ці запити або обробляє відповіді.
+#### Висновок:
+
+Інтерцептори є потужним інструментом у Nest.js, які забезпечують додатковий рівень контролю як над обробкою вхідних запитів, так і над відповідями. Вони дозволяють дотримуватися принципів DRY (Don't Repeat Yourself) та записувати логіку, яка може бути повторно використана через різні частини додатку.
 
 | Back | Forward |
 |---|---|
-| [Understand guards](/ua/junior/nestjs/understand-guards.md)  | [Understand basic usage of controllers](/ua/junior/nestjs/understand-controller-basics.md) |
+| [Understand guards](/ua/junior/nestjs/understand-guards.md)  | [Understand basic usage of controllers](/ua/junior/nestjs/what-is-a-controller.md) |

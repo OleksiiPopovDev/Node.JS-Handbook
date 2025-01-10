@@ -1,109 +1,121 @@
-#### * Use the built-in fs module for file operations
+#### 25. Use the built-in fs module for file operations
 
-Модуль `fs` в Node.js — це вбудований модуль, який дозволяє виконувати операції з файлами. Нижче наведено кілька прикладів основних операцій з використанням модуля `fs`.
+Node.js має вбудований модуль `fs` (file system), який надає можливість роботи з файловою системою. Використовуючи `fs`, ви можете створювати, читати, оновлювати, видаляти файли та каталоги. Нижче наведено приклади використання найбільш поширених методів.
 
-### Читання файлів
+### Імпорт модуля fs
 
-Для читання файлів можна використовувати метод `fs.readFile`.
+Щоб використовувати `fs`, спочатку імпортуємо його:
 
 ```javascript
 const fs = require('fs');
+```
 
-// Асинхронне читання файлу
+### Читання файлу
+
+- **Асинхронний спосіб**:
+
+```javascript
 fs.readFile('example.txt', 'utf8', (err, data) => {
-    if (err) {
-        console.error(err);
-        return;
-    }
-    console.log(data);
-});
-
-// Синхронне читання файлу
-try {
-    const data = fs.readFileSync('example.txt', 'utf8');
-    console.log(data);
-} catch (err) {
+  if (err) {
     console.error(err);
+    return;
+  }
+  console.log(data);
+});
+```
+
+- **Синхронний спосіб**:
+
+```javascript
+try {
+  const data = fs.readFileSync('example.txt', 'utf8');
+  console.log(data);
+} catch (err) {
+  console.error(err);
 }
 ```
 
-### Запис файлів
+### Запис у файл
 
-Для запису файлів використовується метод `fs.writeFile`.
+- **Асинхронний спосіб**:
 
 ```javascript
-const fs = require('fs');
-
-// Асинхронний запис у файл
-fs.writeFile('example.txt', 'Hello, world!', (err) => {
-    if (err) {
-        console.error(err);
-        return;
-    }
-    console.log('File has been written');
-});
-
-// Синхронний запис у файл
-try {
-    fs.writeFileSync('example.txt', 'Hello, world!');
-    console.log('File has been written');
-} catch (err) {
+fs.writeFile('example.txt', 'Hello, Node.js!', (err) => {
+  if (err) {
     console.error(err);
+    return;
+  }
+  console.log('Файл збережено!');
+});
+```
+
+- **Синхронний спосіб**:
+
+```javascript
+try {
+  fs.writeFileSync('example.txt', 'Hello, Node.js!');
+  console.log('Файл збережено!');
+} catch (err) {
+  console.error(err);
 }
 ```
 
-### Апдейт файлів
+### Додавання до файлу
 
-Для додавання до файлу можна використовувати метод `fs.appendFile`.
+- **Асинхронний спосіб**:
 
 ```javascript
-const fs = require('fs');
-
-// Асинхронний апдейт файлу
-fs.appendFile('example.txt', '\nHello again!', (err) => {
-    if (err) {
-        console.error(err);
-        return;
-    }
-    console.log('Content has been appended');
-});
-
-// Синхронний апдейт файлу
-try {
-    fs.appendFileSync('example.txt', '\nHello again!');
-    console.log('Content has been appended');
-} catch (err) {
+fs.appendFile('example.txt', '\nNew line of text', (err) => {
+  if (err) {
     console.error(err);
+    return;
+  }
+  console.log('Текст додано!');
+});
+```
+
+- **Синхронний спосіб**:
+
+```javascript
+try {
+  fs.appendFileSync('example.txt', '\nNew line of text');
+  console.log('Текст додано!');
+} catch (err) {
+  console.error(err);
 }
 ```
 
-### Видалення файлів
+### Видалення файлу
 
-Для видалення файлів використовується метод `fs.unlink`.
+- **Асинхронний спосіб**:
 
 ```javascript
-const fs = require('fs');
-
-// Асинхронне видалення файлу
 fs.unlink('example.txt', (err) => {
-    if (err) {
-        console.error(err);
-        return;
-    }
-    console.log('File has been deleted');
-});
-
-// Синхронне видалення файлу
-try {
-    fs.unlinkSync('example.txt');
-    console.log('File has been deleted');
-} catch (err) {
+  if (err) {
     console.error(err);
+    return;
+  }
+  console.log('Файл видалено!');
+});
+```
+
+- **Синхронний спосіб**:
+
+```javascript
+try {
+  fs.unlinkSync('example.txt');
+  console.log('Файл видалено!');
+} catch (err) {
+  console.error(err);
 }
 ```
 
-Це лише базові приклади використання модуля `fs`. Node.js пропонує багато інших функцій для роботи з файлами, такими як перегляд директорій, зміна атрибутів файлів і прав доступу, і багато іншого.
+### Інші операції
+
+Модуль `fs` також надає можливості для роботи з директоріями, читання метаданих файлів, зміни прав доступу тощо.
+
+Для коректної роботи та продуктивності у великих проєктах, зазвичай рекомендується використовувати асинхронні версії методів, або застосовувати обіцянки (promises), які можуть забезпечити більш зручний та зрозумілий код шляхом `util.promisify` або використанням бібліотек, таких як `fs.promises`, що починаючи з Node.js 10.x надає вже встроєні обіцянки для fs методів.
 
 | Back | Forward |
 |---|---|
-| [Read and process large files](/ua/junior/nodejs/reading-large-files.md)  | [Understand Node.js package managers (NPM/Yarn/PNPM)](/ua/junior/nodejs/understand-nodejs-package-managers-npmyarnpnpm.md) |
+| [Read and process large files](/ua/junior/nodejs/read-massive-data-sets.md)  | [Understand Node.js package managers (NPM/Yarn/PNPM)](/ua/junior/nodejs/26-understanding-nodejs-package-managers-npm-yarn-pnpm.md) |

@@ -1,95 +1,96 @@
 #### * Handle file uploads with Nest.js
 
-У Nest.js можна обробляти завантаження файлів за допомогою пакету `@nestjs/platform-express`, який базується на бібліотеці `multer`. Ось кроки для налаштування завантаження файлів у вашому проекті:
+Щоб обробляти завантаження файлів у Nest.js, можна використовувати пакет `@nestjs/platform-express`, який інтегрується з бібліотекою `multer` для завантаження файлів. Ось, як це можна зробити:
 
-### 1. Встановлення необхідних залежностей
+1. **Встановлення залежностей**:
 
-По-перше, переконайтеся, що у вас встановлений `@nestjs/platform-express` та `multer`:
+   Спочатку встановіть необхідний пакет:
 
-```bash
-npm install @nestjs/platform-express multer
-```
+   ```bash
+   npm install --save @nestjs/platform-express
+   ```
 
-### 2. Створення контролера для обробки завантаження файлів
+2. **Створення контролера**:
 
-Далі створіть новий контролер, що міститиме ендпоінт для обробки завантаження файлів:
+   Додайте контролер, який буде відповідати за обробку завантаження файлів. Використовуйте декоратор `@UseInterceptors` з `FileInterceptor` з `@nestjs/platform-express`.
 
-```ts
-// file-upload.controller.ts
-import { Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+   ```typescript
+   import { Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+   import { FileInterceptor } from '@nestjs/platform-express';
 
-@Controller('upload')
-export class FileUploadController {
-  @Post('file')
-  @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    console.log(file); // Тут ви можете обробити файл
-    return {
-      message: 'File uploaded successfully',
-      fileName: file.originalname,
-    };
-  }
-}
-```
+   @Controller('upload')
+   export class UploadController {
+     @Post('file')
+     @UseInterceptors(FileInterceptor('file'))
+     uploadFile(@UploadedFile() file: Express.Multer.File) {
+       console.log(file);
+       return {
+         filename: file.filename,
+         originalname: file.originalname,
+       };
+     }
+   }
+   ```
 
-### 3. Додавання контролера до модуля
+   У цьому прикладі, `@Post('file')` створює маршрут для завантаження файлів. Декоратор `@UploadedFile()` дозволяє отримати доступ до завантаженого файлу.
 
-Не забудьте додати контролер у відповідний модуль, щоб Nest.js міг його використовувати:
+3. **Конфігурація збереження файлу (опціонально)**:
 
-```ts
-// app.module.ts
-import { Module } from '@nestjs/common';
-import { FileUploadController } from './file-upload.controller';
+   Ви можете налаштувати місце збереження файлу, формат імені файлу, розмір тощо:
 
-@Module({
-  controllers: [FileUploadController],
-})
-export class AppModule {}
-```
+   ```typescript
+   import { Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+   import { FileInterceptor } from '@nestjs/platform-express';
+   import { diskStorage } from 'multer';
+   import { extname } from 'path';
 
-### 4. Налаштування multer (за бажанням)
+   @Controller('upload')
+   export class UploadController {
+     @Post('file')
+     @UseInterceptors(FileInterceptor('file', {
+       storage: diskStorage({
+         destination: './uploads', // Папка для збереження файлів
+         filename: (req, file, callback) => {
+           const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+           const ext = extname(file.originalname); // Розширення файлу
+           callback(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
+         }
+       }),
+     }))
+     uploadFile(@UploadedFile() file: Express.Multer.File) {
+       console.log(file);
+       return {
+         filename: file.filename,
+         originalname: file.originalname,
+       };
+     }
+   }
+   ```
 
-Ви можете передавати додаткові налаштування для `multer`, такі як обмеження розміру файлів, папка для збереження тощо:
+4. **Перевірка заборонених файлів (опціонально)**:
 
-```ts
-// file-upload.controller.ts
-import { Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
+   Ви можете додати перевірку на заборонені типи файлів або інші обмеження, додавши функцію `fileFilter` до конфігурації `FileInterceptor`.
 
-@Controller('upload')
-export class FileUploadController {
-  @Post('file')
-  @UseInterceptors(FileInterceptor('file', {
-    storage: diskStorage({
-      destination: './uploads', // Папка збереження файлів
-      filename: (req, file, callback) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const ext = extname(file.originalname);
-        callback(null, file.fieldname + '-' + uniqueSuffix + ext);
-      },
-    }),
-    limits: {
-      fileSize: 1024 * 1024 * 5, // 5 MB
-    },
-  }))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
-    return {
-      message: 'File uploaded successfully',
-      fileName: file.filename,
-    };
-  }
-}
-```
+   ```typescript
+   @UseInterceptors(FileInterceptor('file', {
+     storage: diskStorage({
+       destination: './uploads',
+       filename: (req, file, callback) => {
+         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+         const ext = extname(file.originalname);
+         callback(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
+       }
+     }),
+     fileFilter: (req, file, callback) => {
+       if (!file.mimetype.match(/\/(jpg|jpeg|png)$/)) {
+         return callback(new Error('Only image files are allowed!'), false);
+       }
+       callback(null, true);
+     },
+   }))
+   ```
 
-### 5. Тестування
-
-Запустіть ваш додаток і скористайтеся інструментами, такими як Postman або CURL, щоб протестувати завантаження файлів, надіславши HTTP POST запит на `http://localhost:3000/upload/file` із файлом.
-
-Це базова реалізація завантаження файлів у Nest.js. Ви можете налаштовувати логіку під ваші потреби, додаючи перевірки типу файлів, логіку обробки і збереження в базі даних тощо.
+Ця реалізація дозволяє завантажувати файли з певними обмеженнями і зберігати їх у вказаній директорії. Переконайтеся, що директорія `./uploads` вже існує або створіть її перед завантаженням файлів.
 
 | Back | Forward |
 |---|---|

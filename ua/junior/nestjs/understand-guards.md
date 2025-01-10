@@ -1,44 +1,80 @@
-#### * Understand guards
+#### 79. Understand guards
 
-У контексті програмування, "guards" або "захисники" — це структурні елементи (часто умови, що перевіряються), які допомагають контролювати потік виконання коду або забезпечувати виконання спеціальних умов перед виконанням певного блоку коду. Ось кілька прикладів, коли використовуються захисники в різних мовах програмування:
+## Guards у Nest.js
 
-1. **Мови з підтримкою функціонального програмування (наприклад, Haskell):**
-   У Haskell guards часто використовуються в визначеннях функцій для перевірки умов:
+### Що таке Guards?
 
-   ```haskell
-   factorial n
-     | n == 0    = 1
-     | n > 0     = n * factorial (n - 1)
-     | otherwise = error "Негативне число"
-   ```
+Guards у Nest.js – це конструкції, які дозволяють визначити, чи може обробник маршруту обробити поточний запит. Вони є частиною процесу роутингу, де ви можете виконати попередню авторизацію та аутентифікацію, перш ніж взаємодіяти з бізнес-логікою вашого додатка.
 
-2. **Swift:**
-   У Swift існує концепція "guard statements", яка дозволяє перевірити умову і вийти з функції/методу/циклу, якщо ця умова не виконується. Це особливо корисно для раннього виходу або перевірки вхідних значень.
+### Як працюють Guards?
 
-   ```swift
-   func process(value: Int?) {
-       guard let value = value else {
-           print("Значення відсутнє")
-           return
-       }
-       print("Значення: \(value)")
-   }
-   ```
+Guards реалізують інтерфейс `CanActivate`, який містить метод `canActivate()`. Цей метод повертає значення `true` або `false`, або ж проміс, що резолвиться до `true` або `false`. Якщо повертається `true`, Nest.js дозволяє проходження запиту до відповідного обробника маршруту. Якщо `false`, запит блокується, і може повертатись відповідний HTTP код помилки, як 403 (Forbidden).
 
-3. **JavaScript:**
-   У JavaScript для реалізації подібної поведінки можуть використовуватися умовні оператори.
+### Приклад створення Guard
 
-   ```javascript
-   function checkAccess(level) {
-     if (level < 1) {
-       console.log("Немає доступу");
-       return;
-     }
-     console.log("Доступ надано");
-   }
-   ```
+Ось простий приклад створення Guard:
 
-Захисники допомагають зробити код більш читабельним, оскільки вони дозволяють чітко визначати місця, де перевіряються важливі умови, і заздалегідь виходити з функцій чи циклів, якщо не виконуються критичні передумови для подальшого виконання коду.
+```typescript
+import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Observable } from 'rxjs';
+
+@Injectable()
+export class AuthGuard implements CanActivate {
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    const request = context.switchToHttp().getRequest();
+    return this.validateRequest(request);
+  }
+
+  validateRequest(request: any): boolean {
+    // Використовуйте свою логіку аутентифікації
+    return !!request.headers.authorization;
+  }
+}
+```
+
+### Використання Guards
+
+Guards можуть застосовуватись на рівні контролера або окремого маршруту. Ось як ви можете застосувати Guard до всього контролера:
+
+```typescript
+import { Controller, Get, UseGuards } from '@nestjs/common';
+import { AuthGuard } from './auth.guard';
+
+@Controller('cats')
+@UseGuards(AuthGuard)
+export class CatsController {
+  @Get()
+  findAll() {
+    return 'This action returns all cats';
+  }
+}
+```
+
+Або ж до окремого маршруту:
+
+```typescript
+import { Controller, Get, UseGuards } from '@nestjs/common';
+import { AuthGuard } from './auth.guard';
+
+@Controller('cats')
+export class CatsController {
+  @Get()
+  @UseGuards(AuthGuard)
+  findAll() {
+    return 'This action returns all cats';
+  }
+}
+```
+
+### Коли використовувати Guards?
+
+Guards є потужним інструментом, коли вам потрібно виконати попередню перевірку або авторизацію на рівні обробника маршруту. Вони особливо корисні для реалізації обмеження доступу на базі ролей, перевірки токенів та інших завдань, які вимагають рішення щодо доступу до ресурсу.
+
+### Висновки
+
+Guards у Nest.js є важливим механізмом, який дозволяє захистити ваші маршрути шляхом перевірки запитів перед передачею їх в обробник. Це ефективний спосіб застосування загальних правил авторизації та аутентифікації по всьому додатку.
 
 | Back | Forward |
 |---|---|

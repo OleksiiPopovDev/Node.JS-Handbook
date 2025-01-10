@@ -1,116 +1,95 @@
 #### * Create GraphQL APIs using @nestjs/graphql
 
-Створення GraphQL API за допомогою `@nestjs/graphql` у NestJS є досить зручним завдяки вбудованим механізмам платформи. Ось покрокова інструкція, як це зробити:
+Створення GraphQL API з використанням пакету `@nestjs/graphql` вимагає декількох ключових кроків. Нижче наведено основні етапи створення GraphQL API в Nest.js:
 
-### Кроки створення GraphQL API
+### 1. Встановлення необхідних пакетів
 
-1. **Інсталяція необхідних пакетів:**
-
-   Спочатку вам необхідно встановити основні пакети, які потрібні для роботи з GraphQL у NestJS. Виконайте наступну команду:
-
-   ```bash
-   npm install @nestjs/graphql graphql-tools graphql apollo-server-express
-   ```
-
-2. **Налаштування модуля GraphQL:**
-
-   Додайте GraphQL модуль до вашої програми. Відкрийте файл `app.module.ts` та додайте наступний код:
-
-   ```typescript
-   import { Module } from '@nestjs/common';
-   import { GraphQLModule } from '@nestjs/graphql';
-   import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-   import { join } from 'path';
-   import { YourModule } from './your/your.module';
-
-   @Module({
-     imports: [
-       GraphQLModule.forRoot<ApolloDriverConfig>({
-         driver: ApolloDriver,
-         autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-       }),
-       YourModule,
-     ],
-   })
-   export class AppModule {}
-   ```
-
-   У цьому прикладі параметр `autoSchemaFile` вказує шлях, за яким автоматично генерується GraphQL схема.
-
-3. **Створення GraphQL типів:**
-
-   Створіть файл, де будуть знаходитись ваші GraphQL типи. Наприклад, `user.type.ts`.
-
-   ```typescript
-   import { ObjectType, Field, Int } from '@nestjs/graphql';
-
-   @ObjectType()
-   export class User {
-     @Field(() => Int)
-     id: number;
-
-     @Field()
-     name: string;
-
-     @Field()
-     email: string;
-   }
-   ```
-
-4. **Створення резолверів:**
-
-   Резолвери обробляють запити та повертають дані. Створіть файл резолвера, наприклад `user.resolver.ts`.
-
-   ```typescript
-   import { Resolver, Query, Args } from '@nestjs/graphql';
-   import { User } from './user.type';
-
-   @Resolver(() => User)
-   export class UserResolver {
-     @Query(() => [User])
-     async users(): Promise<User[]> {
-       // У реальному випадку тут може бути доступ до БД
-       return [
-         { id: 1, name: 'John Doe', email: 'john@example.com' },
-         { id: 2, name: 'Jane Doe', email: 'jane@example.com' },
-       ];
-     }
-
-     @Query(() => User, { nullable: true })
-     async user(@Args('id', { type: () => Int }) id: number): Promise<User> {
-       // У реальному випадку тут може бути доступ до БД
-       const users = [
-         { id: 1, name: 'John Doe', email: 'john@example.com' },
-         { id: 2, name: 'Jane Doe', email: 'jane@example.com' },
-       ];
-       return users.find(user => user.id === id);
-     }
-   }
-   ```
-
-5. **Імпорт резолвера до модуля:**
-
-   Додайте резолвер у ваш модуль, наприклад, у `your.module.ts`.
-
-   ```typescript
-   import { Module } from '@nestjs/common';
-   import { UserResolver } from './user.resolver';
-
-   @Module({
-     providers: [UserResolver],
-   })
-   export class YourModule {}
-   ```
-
-### Запуск та тестування
-
-Після налаштування ви можете запустити вашу програму, виконуючи команду:
+Спочатку необхідно встановити пакети `@nestjs/graphql`, `graphql` та, за бажанням, `apollo-server-express` для роботи з Apollo Server:
 
 ```bash
-npm run start
+npm install @nestjs/graphql graphql apollo-server-express
 ```
 
-GraphQL Playground буде доступний за адресою `http://localhost:3000/graphql`, де ви зможете тестувати ваші запити.
+### 2. Налаштування модуля GraphQL
+
+Після встановлення пакетів, потрібно налаштувати модуль GraphQL в вашому додатку. Зазвичай це робиться в `AppModule`.
+
+```typescript
+import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
+
+@Module({
+  imports: [
+    GraphQLModule.forRoot({
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'), // автоматично генерує файл схеми
+      sortSchema: true, // для впорядкування полів схеми,
+      playground: true, // включення GraphQL Playground
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+### 3. Створення об'єктів (Type Definitions)
+
+Створіть клас об’єкта (Type) та додайте декоратори для визначення полів. Наприклад, створення типу для об'єкта `User`:
+
+```typescript
+import { ObjectType, Field, Int } from '@nestjs/graphql';
+
+@ObjectType()
+export class User {
+  @Field(type => Int)
+  id: number;
+
+  @Field()
+  username: string;
+
+  @Field()
+  email: string;
+}
+```
+
+### 4. Створення GraphQL Resolver
+
+Тепер створіть `Resolver`, який буде обробляти запити до вашого GraphQL API. Це вирішувач для запитів `User`:
+
+```typescript
+import { Resolver, Query } from '@nestjs/graphql';
+import { User } from './user.model';
+
+@Resolver(of => User)
+export class UserResolver {
+  @Query(returns => [User])
+  getUsers(): User[] {
+    // Тут реалізуйте отримання даних з бази даних або іншого джерела
+    return [];
+  }
+}
+```
+
+### 5. Підключення Resolver до модуля
+
+Додайте `Resolver` до `imports` масиву в модулі Nest.js:
+
+```typescript
+import { Module } from '@nestjs/common';
+import { UserResolver } from './user.resolver';
+
+@Module({
+  providers: [UserResolver],
+})
+export class UserModule {}
+```
+
+### 6. Використання GraphQL Playground
+
+Якщо ввімкнено параметр `playground`, ви можете перейти до `/graphql` в вашому браузері і тестувати створені резолвери.
+
+### Висновок
+
+Після виконання цих кроків, ви матимете базовий GraphQL API, який можна розширювати шляхом додавання нових типів, запитів та мутацій згідно з вашими бізнес-вимогами.
 
 | Back | Forward |
 |---|---|

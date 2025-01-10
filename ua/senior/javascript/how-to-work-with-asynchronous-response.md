@@ -1,71 +1,74 @@
 #### 229. Як працювати з асинхронною відповіддю?
 
-Працювати з асинхронною відповіддю означає обробляти операції, що можуть зайняти певний час (наприклад, запити до сервера або виконання тривалих обчислень), в фоновому режимі, не блокуючи основний потік виконання програми. В JavaScript, для роботи з асинхронними операціями найчастіше використовуються `Promises`, `async/await`, або колбеки. Ось як можна працювати з кожним з них:
+В JavaScript для роботи з асинхронними відповідями використовується кілька підходів. Ось основні з них:
 
-### 1. Використання `Promises`
-
-`Promise` - це об'єкт, що представляє успішно виконану або відхилену асинхронну операцію і значення, яке вона повернула:
+### 1. Колбеки (Callbacks)
+Це традиційний спосіб обробки асинхронних операцій. Ви передаєте функцію зворотного виклику, яка буде виконана після завершення асинхронної операції.
 
 ```javascript
-// Створення промісу
-let myPromise = new Promise((resolve, reject) => {
-  // Асинхронна операція
+function fetchData(callback) {
   setTimeout(() => {
-    resolve("Успіх!");
-  }, 2000);
-});
+    const data = { name: "John", age: 30 };
+    callback(data);
+  }, 1000);
+}
 
-// Використання промісу
-myPromise.then(result => {
-  console.log(result); // "Успіх!"
-}).catch(error => {
+fetchData((response) => {
+  console.log(response);
+});
+```
+
+### 2. Проміси (Promises)
+Проміси забезпечують більш зручний механізм управління асинхронними операціями, дозволяючи уникати "callback hell".
+
+```javascript
+function fetchData() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const data = { name: "John", age: 30 };
+      resolve(data);
+    }, 1000);
+  });
+}
+
+fetchData().then((response) => {
+  console.log(response);
+}).catch((error) => {
   console.error(error);
 });
 ```
 
-### 2. Використання `async/await`
-
-`async/await` є синтаксичним цукром для роботи з промісами, що дозволяє працювати з асинхронним кодом в більш простому та читабельному вигляді:
+### 3. `async/await`
+Це синтаксичний цукор над промісами, що дозволяє писати асинхронний код в імперативному стилі, що значно полегшує його читання та розуміння.
 
 ```javascript
-// Функція з async
 async function fetchData() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const data = { name: "John", age: 30 };
+      resolve(data);
+    }, 1000);
+  });
+}
+
+async function getData() {
   try {
-    // Очікуємо результат промісу
-    let result = await myPromise;
-    console.log(result); // "Успіх!"
+    const response = await fetchData();
+    console.log(response);
   } catch (error) {
     console.error(error);
   }
 }
 
-fetchData();
+getData();
 ```
 
-### 3. Використання колбеків
+### 4. Обробка помилок
+При роботі з асинхронними операціями важливо коректно обробляти можливі помилки. Для цього використовуються `catch` у випадку з промісами і конструкція `try...catch` з `async/await`.
 
-Колбеки - це старий спосіб обробки асинхронних операцій в JavaScript, хоча вони вже не так популярні через складність в обробці помилок і підтримці коду (проблема "колбек-хелл"):
-
-```javascript
-function fetchDataWithCallback(callback) {
-  setTimeout(() => {
-    callback(null, "Успіх!");
-  }, 2000);
-}
-
-fetchDataWithCallback((error, result) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log(result); // "Успіх!"
-  }
-});
-```
-
-### Висновок
-
-Вибір того чи іншого підходу залежить від специфіки проекту, але `async/await` зазвичай вважається найзручнішим завдяки читабельності та простоті.
+### Підсумок
+Обрання підходу залежить від конкретної ситуації та вашого стилю програмування. `async/await` зазвичай надає код, який легше читати, але все ще потребує розуміння того, як працюють проміси.
 
 | Back | Forward |
 |---|---|
-| [Як зрозуміти, чи є у вашому коді/застосунку витоки пам’яті (memory leaks)?](/ua/senior/javascript/how-to-detect-memory-leaks-in-codeapp.md)  | [Як можна отримати інкапсуляцію всередині класу без використання Typescript?](/ua/senior/javascript/how-to-achieve-encapsulation-within-a-class-without-using-typescript.md) |
+| [Як зрозуміти, чи є у вашому коді/застосунку витоки пам’яті (memory leaks)?](/ua/senior/javascript/how-to-understand-if-there-are-memory-leaks-in-your-codeapp.md)  | [Як можна отримати інкапсуляцію всередині класу без використання Typescript?](/ua/senior/javascript/can-encapsulation-be-achieved-within-a-class-without-using-typescript.md) |
