@@ -4,21 +4,18 @@ import path from "path";
 import fs from "fs";
 
 export class CreateFoldersTask extends AbstractHandler {
-    public async handle(questions: QuestionDto[]): Promise<QuestionDto[]> {
-        const progressBar = this.progressBar('creating dir', questions.length);
-        for (const question of questions) {
-            question.folderPath =  path.join(
-                this.formatFileName(question.level!),
-                this.formatFileName(question.topic!)
-            );
-            if (!fs.existsSync(question.folderPath)) {
-                fs.mkdirSync(question.folderPath, {recursive: true});
-                progressBar.interrupt(`Folder created successfully:\t${question.folderPath}`);
-            }
-            progressBar.tick();
+    public async handle(question: QuestionDto): Promise<QuestionDto> {
+        question.folderPath = path.join(
+            'ua',
+            this.formatFileName(question.level!),
+            this.formatFileName(question.topic!)
+        );
+        if (!fs.existsSync(question.folderPath)) {
+            fs.mkdirSync(question.folderPath, {recursive: true});
+            this.progressBar?.interrupt(`Folder created successfully:\t${question.folderPath}`);
         }
 
-        return super.handle(questions);
+        return super.handle(question);
     }
 
     private formatFileName = (input: string): string => {

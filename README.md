@@ -3,60 +3,60 @@
 ---
 ## Junior
 ### Node.js
-1. [Що таке Node.js?](/junior/nodejs/1-what-is-nodejs.md)
-2. [Які основні переваги та недоліки використання Node.js?](./junior/nodejs/what-are-the-main-advantages-and-disadvantages-of-using-nodejs.md)
-3. [Для яких завдань Node.js не підходить?](./junior/nodejs/what-tasks-is-nodejs-not-suitable-for.md)
-4. [Які в Node.js головні компоненти?](./junior/nodejs/what-are-the-main-components-of-a-nodejs-application.md)
-5. [Яким чином Node.js сервер здатен обробляти одночасно багато паралельних запитів від клієнтів, маючи лише один thread?](./junior/nodejs/5-how-does-a-nodejs-server-handle-multiple-concurrent-requests-from-clients-in-parallel-using-only-one-thread.md)
-6. [Чи можливо використовувати кілька потоків (threads)? За допомогою яких модулів це реалізовано?](./junior/nodejs/is-it-possible-to-use-multiple-threads-how-is-this-implemented-with-which-modules.md)
-7. [Node.js інтерпретує чи компілює код програми?](./junior/nodejs/7-compiled.md)
-8. [Як зчитувати великі файли за допомогою Node.js?](./junior/nodejs/how-to-read-large-files-with-nodejs.md)
-9. [Що таке libuv i v8? Яке їхнє призначення?](./junior/nodejs/what-is-libuv-and-v8-what-are-they-used-for.md)
-10. [Яка різниця між microtasks і macrotasks? Наведіть приклади таких завдань.](./junior/nodejs/what-is-the-difference-between-a-microtask-and-a-macro-task-provide-examples-of-each-type-of-task.md)
-11. [Що таке стрим (stream)?](./junior/nodejs/what-is-a-stream.md)
-12. [Які види стримів ви знаєте?](./junior/nodejs/12-what-types-of-strains-do-you-know.md)
-13. [Що таке event loop? З яких компонентів складається і як працює?](./junior/nodejs/what-is-an-event-loop-its-components-and-how-does-it-work.md)
-14. [Що таке логування і моніторинг?](./junior/nodejs/what-is-logging-and-monitoring.md)
-15. [Чим відрізняється моноліт від мікросервісу?](./junior/nodejs/whats-the-difference-between-a-monolith-and-microservice.md)
-16. [В чому різниця між такими ключовими словами мови, як string і String?](./junior/nodejs/whats-the-difference-between-keywords-like-string-and-string.md)
-* [Understand Node.js basics](./junior/nodejs/learn-the-basics-of-nodejs.md)
-* [Explain Node.js benefits and limitations](./junior/nodejs/what-are-the-benefits-and-limitations-of-nodejs.md)
-* [Identify unsuitable use cases](./junior/nodejs/unusual-usage.md)
-* [Understand single-thread model](./junior/nodejs/understand-singlethread-model.md)
-* Explain multi-threading capabilities
-* Understand middleware purpose
-* Transition between middleware layers
-* Read and process large files
-* Use the built-in fs module for file operations
-* Understand Node.js package managers (NPM/Yarn/PNPM)
+1. [Що таке Node.js?](./ua/junior/nodejs/what-is-nodejs.md)
+2. [Які основні переваги та недоліки використання Node.js?](./ua/junior/nodejs/2-what-are-the-main-advantages-and-disadvantages-of-using-nodejs.md)
+3. [Для яких завдань Node.js не підходить?](./ua/junior/nodejs/what-tasks-is-nodejs-not-suited-for.md)
+4. [Які в Node.js головні компоненти?](./ua/junior/nodejs/what-are-the-main-components-of-nodejs.md)
+5. [Яким чином Node.js сервер здатен обробляти одночасно багато паралельних запитів від клієнтів, маючи лише один thread?](./ua/junior/nodejs/how-does-a-nodejs-server-handle-multiple-parallel-client-requests-with-only-one-thread-simultaneously.md)
+6. [Чи можливо використовувати кілька потоків (threads)? За допомогою яких модулів це реалізовано?](./ua/junior/nodejs/can-multiple-threads-be-used-which-modules-are-used-to-implement-this.md)
+7. [Node.js інтерпретує чи компілює код програми?](./ua/junior/nodejs/does-nodejs-interpret-or-compile-code.md)
+8. [Як зчитувати великі файли за допомогою Node.js?](./ua/junior/nodejs/how-to-read-large-files-with-nodejs.md)
+9. [Що таке libuv i v8? Яке їхнє призначення?](./ua/junior/nodejs/what-are-libuv-and-v8-what-is-their-purpose.md)
+10. [Яка різниця між microtasks і macrotasks? Наведіть приклади таких завдань.](./ua/junior/nodejs/whats-the-difference-between-microtasks-and-macrotasks-give-examples.md)
+11. [Що таке стрим (stream)?](./ua/junior/nodejs/what-is-a-stream.md)
+12. [Які види стримів ви знаєте?](./ua/junior/nodejs/what-types-of-straps-do-you-know.md)
+13. [Що таке event loop? З яких компонентів складається і як працює?](./ua/junior/nodejs/what-is-an-event-loop-what-are-its-components-and-how-does-it-work.md)
+14. [Що таке логування і моніторинг?](./ua/junior/nodejs/what-is-logging-and-monitoring.md)
+15. [Чим відрізняється моноліт від мікросервісу?](./ua/junior/nodejs/what-distinguishes-a-monolith-from-a-microservice.md)
+16. [В чому різниця між такими ключовими словами мови, як string і String?](./ua/junior/nodejs/16-what-is-the-difference-between-key-words-in-a-language-such-as-string-and-string.md)
+* [Understand Node.js basics](./ua/junior/nodejs/understand-nodejs-basics.md)
+* [Explain Node.js benefits and limitations](./ua/junior/nodejs/what-are-the-advantages-and-disadvantages-of-using-nodejs.md)
+* [Identify unsuitable use cases](./ua/junior/nodejs/identify-inappropriate-uses.md)
+* [Understand single-thread model](./ua/junior/nodejs/understand-singlethread-model.md)
+* [Explain multi-threading capabilities](./ua/junior/nodejs/explain-multithreading-capabilities.md)
+* [Understand middleware purpose](./ua/junior/nodejs/what-is-middleware.md)
+* [Transition between middleware layers](./ua/junior/nodejs/transition-between-middleware-layers.md)
+* [Read and process large files](./ua/junior/nodejs/read-and-process-large-files.md)
+* [Use the built-in fs module for file operations](./ua/junior/nodejs/use-the-builtin-fs-module-for-file-operations.md)
+* [Understand Node.js package managers (NPM/Yarn/PNPM)](./ua/junior/nodejs/understand-javascript-package-managers.md)
 
 ### Express.js
-17. Для чого використовують middleware?
-18. Як переходити з однієї middleware в іншу?
-19. Як пріоритизувати middleware?
-20. Як організувати error handler?
-* Basic routing with Express.js
-* Handle errors with Express.js middleware
+17. [Для чого використовують middleware?](./ua/junior/expressjs/for-what-purposes-are-middlewares-used.md)
+18. [Як переходити з однієї middleware в іншу?](./ua/junior/expressjs/how-do-i-pass-data-between-middlewares.md)
+19. [Як пріоритизувати middleware?](./ua/junior/expressjs/how-to-prioritize-middleware.md)
+20. [Як організувати error handler?](./ua/junior/expressjs/how-to-organize-an-error-handler.md)
+* [Basic routing with Express.js](./ua/junior/expressjs/basic-routing-with-express.md)
+* [Handle errors with Express.js middleware](./ua/junior/expressjs/how-to-handle-errors.md)
 
 ### JavaScript
-21. Що таке асинхронність і асинхронний код?
-22. Яка відмінність між var, let і const? Чому варто використовувати const, якщо змінна не буде змінюватися далі в коді?
-23. Як відкласти виконання функції на конкретний час?
-24. Які ви знаєте способи оголошення функції?
-25. Що таке анонімна функція?
-26. Наведіть приклади функції, що самовикликається.
-27. У чому різниця між function expression і function declaration?
-28. Як з JS масиву чисел отримати інший масив, де залишаться тільки числа понад 10? Яку функцію масиву для цього використовувати?
-29. Як видалити елемент масиву та об’єкта?
-30. Для чого призначений тип void?
-31. Де і для чого використовують super()?
-32. Для чого потрібен this і в яких випадках його використовувати?
-33. Що таке NaN і як його використати?
-34. Що таке NPM? Які аналоги ви знаєте?
-35. В чому переваги і недоліки NPM проти Yarn/PNPM?
-36. Які методи Promise API ви знаєте? Яка різниця між ними?
-37. Наведіть структуру HTTP request/response.
-38. Що таке new Set() і new Map()?
+21. [Що таке асинхронність і асинхронний код?](./ua/junior/javascript/what-is-asynchronicity-and-asynchronous-code.md)
+22. [Яка відмінність між var, let і const? Чому варто використовувати const, якщо змінна не буде змінюватися далі в коді?](./ua/junior/javascript/what-is-the-difference-between-var-let-and-const-why-should-we-use-const-if-a-variable-will-not-be-changed-further-in-code.md)
+23. [Як відкласти виконання функції на конкретний час?](./ua/junior/javascript/how-to-delay-function-execution.md)
+24. [Які ви знаєте способи оголошення функції?](./ua/junior/javascript/what-methods-are-you-familiar-with-to-declare-a-function.md)
+25. [Що таке анонімна функція?](./ua/junior/javascript/what-is-an-anonymous-function.md)
+26. [Наведіть приклади функції, що самовикликається.](./ua/junior/javascript/what-is-an-example-of-a-recursive-function.md)
+27. [У чому різниця між function expression і function declaration?](./ua/junior/javascript/what-is-the-difference-between-a-function-expression-and-a-function-declaration.md)
+28. [Як з JS масиву чисел отримати інший масив, де залишаться тільки числа понад 10? Яку функцію масиву для цього використовувати?](./ua/junior/javascript/how-to-filter-array-of-numbers-in-javascript-to-get-an-array-with-only-numbers-above-10.md)
+29. [Як видалити елемент масиву та об’єкта?](./ua/junior/javascript/how-to-delete-array-element-and-object.md)
+30. [Для чого призначений тип void?](./ua/junior/javascript/what-is-the-purpose-of-the-void-type.md)
+31. [Де і для чого використовують super()?](./ua/junior/javascript/in-what-place-and-for-what-purpose-is-the-super-function-used.md)
+32. [Для чого потрібен this і в яких випадках його використовувати?](./ua/junior/javascript/what-is-the-purpose-of-this-and-when-should-it-be-used.md)
+33. [Що таке NaN і як його використати?](./ua/junior/javascript/what-is-nan-and-how-to-use-it.md)
+34. [Що таке NPM? Які аналоги ви знаєте?](./ua/junior/javascript/what-is-npm-do-you-know-any-alternatives.md)
+35. [В чому переваги і недоліки NPM проти Yarn/PNPM?](./ua/junior/javascript/what-are-the-advantages-and-disadvantages-of-using-npm-versus-yarnpnpm.md)
+36. [Які методи Promise API ви знаєте? Яка різниця між ними?](./ua/junior/javascript/what-methods-of-the-promise-api-do-you-know-and-what-is-the-difference-between-them.md)
+37. [Наведіть структуру HTTP request/response.](./ua/junior/javascript/what-is-the-http-requestresponse-structure.md)
+38. [Що таке new Set() і new Map()?](./ua/junior/javascript/what-is-the-purpose-of-new-set-and-new-map.md)
 39. Що таке логічний оператор && та || і чим відрізняються ці оператори від логічного оператора «??».
 * Understand async workflows
 * Differentiate var, let, and const

@@ -1,29 +1,27 @@
+import {QuestionDto} from "./question.dto";
+import OpenAI from "openai";
 import {AbstractHandler} from "./handler.abstract.js";
-import {QuestionDto} from "./question.dto.js";
-import BBPromise from "bluebird";
-import prompts from "./prompts.json" assert { type: "json" };
 
-export class AnswerQuestionsTask extends AbstractHandler{
-    public async handle(questions: QuestionDto[]): Promise<QuestionDto[]> {
-        const progressBar = this.progressBar('answering', questions.length);
-        const answeredQuestions = await BBPromise.map(questions, async (question) => {
-            try {
-                const answerQuery = await this.llamaQuery(prompts.answer.replace(
-                    '{{QUESTION}}',
-                    question.question || ''
-                ));
-                question.answer = answerQuery.data.message.content;
-            } catch (error) {
-                console.error('Error:', error);
-            }
+const openai = new OpenAI({apiKey: ''});
 
-            progressBar.tick();
+export class AnswerQuestionsTask extends AbstractHandler {
+    public async handle(question: QuestionDto): Promise<QuestionDto> {
+        try {
+            const response = await openai.chat.completions.create({
+                model: "gpt-4o-2024-08-06",
+                messages: [
+                    {role: "system", content: "Відповідай лише українською мовою та в форматі markdown"},
+                    {
+                        role: "user",
+                        content: question.question || '',
+                    },
+                ],
+            });
+            question.answer = response?.choices[0]?.message.content || '';
+        } catch (error) {
+            console.error('Error:', error);
+        }
 
-            return question;
-        }, {
-            concurrency: 2,
-        });
-
-        return super.handle(answeredQuestions);
+        return super.handle(question);
     }
 }

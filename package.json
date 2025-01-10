@@ -19,7 +19,7 @@
     "bluebird": "^3.7.2",
     "class-validator": "^0.14.1",
     "commander": "^12.1.0",
-    "openai": "^4.76.3",
+    "openai": "^4.77.3",
     "progress": "^2.0.3"
   },
   "devDependencies": {

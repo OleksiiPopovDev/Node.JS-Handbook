@@ -1,11 +1,9 @@
-import { AbstractHandler } from "./handler.abstract.js";
 import { QuestionDto } from "./question.dto.js";
 import fs from "fs";
 import path from "path";
 
-export class UpdateReadmeTask extends AbstractHandler {
-    public async handle(questions: QuestionDto[]): Promise<QuestionDto[]> {
-        const progressBar = this.progressBar('updating link', questions.length);
+export class UpdateReadmeService {
+    public async run(questions: QuestionDto[]): Promise<void> {
         const mdFilePath = path.resolve('README.md');
         const fileContent = fs.readFileSync(mdFilePath, 'utf-8');
 
@@ -26,8 +24,5 @@ export class UpdateReadmeTask extends AbstractHandler {
         });
 
         fs.writeFileSync(mdFilePath, updatedLines.join('\n'), 'utf-8');
-        progressBar.tick();
-
-        return super.handle(questions);
     }
 }
