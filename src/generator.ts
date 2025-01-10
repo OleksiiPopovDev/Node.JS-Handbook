@@ -20,7 +20,7 @@ program
     .action(async () => {
         const parseQuestionsService = new ParseQuestionsService();
         const updateReadmeService = new UpdateReadmeService();
-        const questions = parseQuestionsService.run().splice(0, 50);
+        const questions = parseQuestionsService.run();//.splice(0, 50);
 
         const createFoldersTask = new CreateFoldersTask();
         const translateQuestionsTask = new TranslateQuestionsTask();
@@ -34,7 +34,7 @@ program
         await BBPromise.map(questions, async (question: QuestionDto): Promise<void> => {
             createFoldersTask
                 .setNext(translateQuestionsTask)
-                // .setNext(answerQuestionsTask)
+                .setNext(answerQuestionsTask)
                 .setNext(prepareMdContentTask)
                 .setNext(createMdFilesTask)
 
@@ -42,7 +42,7 @@ program
 
             createFoldersTask.progressBar?.interrupt(`File name generated successfully:\t${processedQuestion.fileName}`);
             createFoldersTask.progressBar?.tick();
-        }, {concurrency: 1});
+        }, {concurrency: 5});
 
         await updateReadmeService.run(questions);
         const questionsWithLink = parseQuestionsService.run(true)
@@ -65,7 +65,7 @@ program
                 .replace('{{NEXT_TOPIC}}', nextTopicLink ?? '{{NEXT_TOPIC}}');
 
             fs.writeFileSync(filePath, content, 'utf8');
-        }, {concurrency: 1});
+        }, {concurrency: 5});
 
 
         console.log(`Finished processing ${questions.length} questions!`);

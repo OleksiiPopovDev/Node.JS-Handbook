@@ -4,418 +4,418 @@
 ## Junior
 ### Node.js
 1. [Що таке Node.js?](./ua/junior/nodejs/what-is-nodejs.md)
-2. [Які основні переваги та недоліки використання Node.js?](./ua/junior/nodejs/2-what-are-the-main-advantages-and-disadvantages-of-using-nodejs.md)
-3. [Для яких завдань Node.js не підходить?](./ua/junior/nodejs/what-tasks-is-nodejs-not-suited-for.md)
-4. [Які в Node.js головні компоненти?](./ua/junior/nodejs/what-are-the-main-components-of-nodejs.md)
-5. [Яким чином Node.js сервер здатен обробляти одночасно багато паралельних запитів від клієнтів, маючи лише один thread?](./ua/junior/nodejs/how-does-a-nodejs-server-handle-multiple-parallel-client-requests-with-only-one-thread-simultaneously.md)
-6. [Чи можливо використовувати кілька потоків (threads)? За допомогою яких модулів це реалізовано?](./ua/junior/nodejs/can-multiple-threads-be-used-which-modules-are-used-to-implement-this.md)
-7. [Node.js інтерпретує чи компілює код програми?](./ua/junior/nodejs/does-nodejs-interpret-or-compile-code.md)
-8. [Як зчитувати великі файли за допомогою Node.js?](./ua/junior/nodejs/how-to-read-large-files-with-nodejs.md)
-9. [Що таке libuv i v8? Яке їхнє призначення?](./ua/junior/nodejs/what-are-libuv-and-v8-what-is-their-purpose.md)
-10. [Яка різниця між microtasks і macrotasks? Наведіть приклади таких завдань.](./ua/junior/nodejs/whats-the-difference-between-microtasks-and-macrotasks-give-examples.md)
+2. [Які основні переваги та недоліки використання Node.js?](./ua/junior/nodejs/what-are-the-main-advantages-and-disadvantages-of-using-nodejs.md)
+3. [Для яких завдань Node.js не підходить?](./ua/junior/nodejs/what-tasks-is-nodejs-not-suitable-for.md)
+4. [Які в Node.js головні компоненти?](./ua/junior/nodejs/what-are-the-main-components-in-nodejs.md)
+5. [Яким чином Node.js сервер здатен обробляти одночасно багато паралельних запитів від клієнтів, маючи лише один thread?](./ua/junior/nodejs/how-does-a-nodejs-server-handle-multiple-parallel-requests-from-clients-simultaneously-using-only-one-thread.md)
+6. [Чи можливо використовувати кілька потоків (threads)? За допомогою яких модулів це реалізовано?](./ua/junior/nodejs/6-can-multiple-threads-be-used-if-so-what-modules-are-used-to-implement-this.md)
+7. [Node.js інтерпретує чи компілює код програми?](./ua/junior/nodejs/7-does-nodejs-interpret-or-compile-code.md)
+8. [Як зчитувати великі файли за допомогою Node.js?](./ua/junior/nodejs/how-to-read-large-files-in-nodejs.md)
+9. [Що таке libuv i v8? Яке їхнє призначення?](./ua/junior/nodejs/what-are-libuv-and-v8-and-what-is-their-purpose.md)
+10. [Яка різниця між microtasks і macrotasks? Наведіть приклади таких завдань.](./ua/junior/nodejs/whats-the-difference-between-microtasks-and-macrotasks-provide-examples.md)
 11. [Що таке стрим (stream)?](./ua/junior/nodejs/what-is-a-stream.md)
-12. [Які види стримів ви знаєте?](./ua/junior/nodejs/what-types-of-straps-do-you-know.md)
-13. [Що таке event loop? З яких компонентів складається і як працює?](./ua/junior/nodejs/what-is-an-event-loop-what-are-its-components-and-how-does-it-work.md)
+12. [Які види стримів ви знаєте?](./ua/junior/nodejs/what-types-of-streams-do-you-know.md)
+13. [Що таке event loop? З яких компонентів складається і як працює?](./ua/junior/nodejs/13-what-is-an-event-loop-components-and-how-it-works.md)
 14. [Що таке логування і моніторинг?](./ua/junior/nodejs/what-is-logging-and-monitoring.md)
-15. [Чим відрізняється моноліт від мікросервісу?](./ua/junior/nodejs/what-distinguishes-a-monolith-from-a-microservice.md)
-16. [В чому різниця між такими ключовими словами мови, як string і String?](./ua/junior/nodejs/16-what-is-the-difference-between-key-words-in-a-language-such-as-string-and-string.md)
-* [Understand Node.js basics](./ua/junior/nodejs/understand-nodejs-basics.md)
-* [Explain Node.js benefits and limitations](./ua/junior/nodejs/what-are-the-advantages-and-disadvantages-of-using-nodejs.md)
-* [Identify unsuitable use cases](./ua/junior/nodejs/identify-inappropriate-uses.md)
+15. [Чим відрізняється моноліт від мікросервісу?](./ua/junior/nodejs/what-is-the-difference-between-a-monolith-and-a-microservice.md)
+16. [В чому різниця між такими ключовими словами мови, як string і String?](./ua/junior/nodejs/what-is-the-difference-between-keywords-like-string-and-string.md)
+* [Understand Node.js basics](./ua/junior/nodejs/learn-nodejs-fundamentals.md)
+* [Explain Node.js benefits and limitations](./ua/junior/nodejs/what-are-advantages-and-disadvantages-of-nodejs.md)
+* [Identify unsuitable use cases](./ua/junior/nodejs/determine-inapplicable-scenarios.md)
 * [Understand single-thread model](./ua/junior/nodejs/understand-singlethread-model.md)
 * [Explain multi-threading capabilities](./ua/junior/nodejs/explain-multithreading-capabilities.md)
 * [Understand middleware purpose](./ua/junior/nodejs/what-is-middleware.md)
 * [Transition between middleware layers](./ua/junior/nodejs/transition-between-middleware-layers.md)
-* [Read and process large files](./ua/junior/nodejs/read-and-process-large-files.md)
+* [Read and process large files](./ua/junior/nodejs/reading-large-files.md)
 * [Use the built-in fs module for file operations](./ua/junior/nodejs/use-the-builtin-fs-module-for-file-operations.md)
-* [Understand Node.js package managers (NPM/Yarn/PNPM)](./ua/junior/nodejs/understand-javascript-package-managers.md)
+* [Understand Node.js package managers (NPM/Yarn/PNPM)](./ua/junior/nodejs/understand-nodejs-package-managers-npmyarnpnpm.md)
 
 ### Express.js
-17. [Для чого використовують middleware?](./ua/junior/expressjs/for-what-purposes-are-middlewares-used.md)
-18. [Як переходити з однієї middleware в іншу?](./ua/junior/expressjs/how-do-i-pass-data-between-middlewares.md)
+17. [Для чого використовують middleware?](./ua/junior/expressjs/what-is-the-purpose-of-middleware.md)
+18. [Як переходити з однієї middleware в іншу?](./ua/junior/expressjs/how-to-pass-between-middleware.md)
 19. [Як пріоритизувати middleware?](./ua/junior/expressjs/how-to-prioritize-middleware.md)
-20. [Як організувати error handler?](./ua/junior/expressjs/how-to-organize-an-error-handler.md)
+20. [Як організувати error handler?](./ua/junior/expressjs/how-to-organize-error-handlers.md)
 * [Basic routing with Express.js](./ua/junior/expressjs/basic-routing-with-express.md)
-* [Handle errors with Express.js middleware](./ua/junior/expressjs/how-to-handle-errors.md)
+* [Handle errors with Express.js middleware](./ua/junior/expressjs/how-to-handle-errors-in-expressjs.md)
 
 ### JavaScript
-21. [Що таке асинхронність і асинхронний код?](./ua/junior/javascript/what-is-asynchronicity-and-asynchronous-code.md)
-22. [Яка відмінність між var, let і const? Чому варто використовувати const, якщо змінна не буде змінюватися далі в коді?](./ua/junior/javascript/what-is-the-difference-between-var-let-and-const-why-should-we-use-const-if-a-variable-will-not-be-changed-further-in-code.md)
-23. [Як відкласти виконання функції на конкретний час?](./ua/junior/javascript/how-to-delay-function-execution.md)
-24. [Які ви знаєте способи оголошення функції?](./ua/junior/javascript/what-methods-are-you-familiar-with-to-declare-a-function.md)
+21. [Що таке асинхронність і асинхронний код?](./ua/junior/javascript/what-is-asynchronous-programming-and-asynchronous-code.md)
+22. [Яка відмінність між var, let і const? Чому варто використовувати const, якщо змінна не буде змінюватися далі в коді?](./ua/junior/javascript/whats-the-difference-between-var-let-and-const-why-should-i-use-const-if-a-variable-wont-change-later-in-code.md)
+23. [Як відкласти виконання функції на конкретний час?](./ua/junior/javascript/how-to-delay-function-execution-by-a-certain-time.md)
+24. [Які ви знаєте способи оголошення функції?](./ua/junior/javascript/what-methods-of-declaring-functions-do-you-know.md)
 25. [Що таке анонімна функція?](./ua/junior/javascript/what-is-an-anonymous-function.md)
-26. [Наведіть приклади функції, що самовикликається.](./ua/junior/javascript/what-is-an-example-of-a-recursive-function.md)
-27. [У чому різниця між function expression і function declaration?](./ua/junior/javascript/what-is-the-difference-between-a-function-expression-and-a-function-declaration.md)
-28. [Як з JS масиву чисел отримати інший масив, де залишаться тільки числа понад 10? Яку функцію масиву для цього використовувати?](./ua/junior/javascript/how-to-filter-array-of-numbers-in-javascript-to-get-an-array-with-only-numbers-above-10.md)
-29. [Як видалити елемент масиву та об’єкта?](./ua/junior/javascript/how-to-delete-array-element-and-object.md)
-30. [Для чого призначений тип void?](./ua/junior/javascript/what-is-the-purpose-of-the-void-type.md)
-31. [Де і для чого використовують super()?](./ua/junior/javascript/in-what-place-and-for-what-purpose-is-the-super-function-used.md)
-32. [Для чого потрібен this і в яких випадках його використовувати?](./ua/junior/javascript/what-is-the-purpose-of-this-and-when-should-it-be-used.md)
+26. [Наведіть приклади функції, що самовикликається.](./ua/junior/javascript/what-are-examples-of-selfreferential-functions.md)
+27. [У чому різниця між function expression і function declaration?](./ua/junior/javascript/whats-the-difference-between-function-expression-and-function-declaration.md)
+28. [Як з JS масиву чисел отримати інший масив, де залишаться тільки числа понад 10? Яку функцію масиву для цього використовувати?](./ua/junior/javascript/how-to-filter-a-javascript-array-to-keep-only-numbers-above-10-using-an-array-method.md)
+29. [Як видалити елемент масиву та об’єкта?](./ua/junior/javascript/how-to-delete-an-array-item-and-object.md)
+30. [Для чого призначений тип void?](./ua/junior/javascript/what-is-the-purpose-of-a-void-type.md)
+31. [Де і для чого використовують super()?](./ua/junior/javascript/what-is-the-purpose-and-usage-of-the-super-function.md)
+32. [Для чого потрібен this і в яких випадках його використовувати?](./ua/junior/javascript/what-is-the-purpose-of-this-and-when-to-use-it.md)
 33. [Що таке NaN і як його використати?](./ua/junior/javascript/what-is-nan-and-how-to-use-it.md)
-34. [Що таке NPM? Які аналоги ви знаєте?](./ua/junior/javascript/what-is-npm-do-you-know-any-alternatives.md)
-35. [В чому переваги і недоліки NPM проти Yarn/PNPM?](./ua/junior/javascript/what-are-the-advantages-and-disadvantages-of-using-npm-versus-yarnpnpm.md)
-36. [Які методи Promise API ви знаєте? Яка різниця між ними?](./ua/junior/javascript/what-methods-of-the-promise-api-do-you-know-and-what-is-the-difference-between-them.md)
-37. [Наведіть структуру HTTP request/response.](./ua/junior/javascript/what-is-the-http-requestresponse-structure.md)
-38. [Що таке new Set() і new Map()?](./ua/junior/javascript/what-is-the-purpose-of-new-set-and-new-map.md)
-39. Що таке логічний оператор && та || і чим відрізняються ці оператори від логічного оператора «??».
-* Understand async workflows
-* Differentiate var, let, and const
-* Use Map and Set effectively
-* Understand event loop fundamentals
-* Handle errors with try-catch and Promise chains
-* Write simple DOM manipulation code
-* Understand JavaScript module system (ESM and CommonJS)
+34. [Що таке NPM? Які аналоги ви знаєте?](./ua/junior/javascript/what-is-npm-what-alternatives-do-you-know.md)
+35. [В чому переваги і недоліки NPM проти Yarn/PNPM?](./ua/junior/javascript/what-are-the-advantages-and-disadvantages-of-npm-versus-yarn-pnpm.md)
+36. [Які методи Promise API ви знаєте? Яка різниця між ними?](./ua/junior/javascript/what-are-the-methods-of-the-promise-api-that-you-know-and-what-is-the-difference-between-them.md)
+37. [Наведіть структуру HTTP request/response.](./ua/junior/javascript/what-is-the-structure-of-an-http-requestresponse.md)
+38. [Що таке new Set() і new Map()?](./ua/junior/javascript/what-are-new-set-and-new-map.md)
+39. [Що таке логічний оператор && та || і чим відрізняються ці оператори від логічного оператора «??».](./ua/junior/javascript/what-is-the-logical-operator-and-and-how-do-they-differ-from-the-logical-operator.md)
+* [Understand async workflows](./ua/junior/javascript/understand-async-workflows.md)
+* [Differentiate var, let, and const](./ua/junior/javascript/what-is-the-difference-between-var-let-and-const.md)
+* [Use Map and Set effectively](./ua/junior/javascript/use-data-structures-efficiently.md)
+* [Understand event loop fundamentals](./ua/junior/javascript/understand-the-event-loop-basics.md)
+* [Handle errors with try-catch and Promise chains](./ua/junior/javascript/how-to-handle-errors-in-programming-using-trycatch-blocks-and-promise-chains.md)
+* [Write simple DOM manipulation code](./ua/junior/javascript/write-simple-dom-manipulation-code.md)
+* [Understand JavaScript module system (ESM and CommonJS)](./ua/junior/javascript/understand-javascript-module-systems.md)
 
 ### Database
-40. Для чого потрібні бази даних у застосунках?
-41. Що таке ORM і для чого її використовують?
-42. Що таке міграція даних? Для чого вона потрібна?
-43. Що таке транзакція?
-44. Як оновити значення колонки в таблиці?
-45. За допомогою чого можна відфільтрувати таблицю Users за параметром віку?
-* Understand ORM basics
-* Implement data migrations
-* Filter and query tables
-* Understand relational vs non-relational databases
+40. [Для чого потрібні бази даних у застосунках?](./ua/junior/database/what-are-databases-used-for-in-applications.md)
+41. [Що таке ORM і для чого її використовують?](./ua/junior/database/what-is-an-orm-and-what-is-it-used-for.md)
+42. [Що таке міграція даних? Для чого вона потрібна?](./ua/junior/database/what-is-data-migration-and-why-do-i-need-it.md)
+43. [Що таке транзакція?](./ua/junior/database/what-is-a-transaction.md)
+44. [Як оновити значення колонки в таблиці?](./ua/junior/database/how-to-update-column-value-in-table.md)
+45. [За допомогою чого можна відфільтрувати таблицю Users за параметром віку?](./ua/junior/database/45-what-can-be-used-to-filter-the-users-table-by-age.md)
+* [Understand ORM basics](./ua/junior/database/understand-object-relational-mapping-basics.md)
+* [Implement data migrations](./ua/junior/database/implement-data-migrations.md)
+* [Filter and query tables](./ua/junior/database/filtering-and-querying-data.md)
+* [Understand relational vs non-relational databases](./ua/junior/database/understand-relational-vs-nonrelational-databases.md)
 
 ### WEB
-46. Що таке Cross-Origin Resource Sharing (CORS)? Де трапляється?
-47. Як отримати помилку CORS у консолі розробника?
-48. Назвіть основні HTTP-методи RESTful або CRUD застосунків.
-49. Що таке DNS?
-* Understand CORS and HTTP methods
-* Understand basic RESTful principles
-* Use tools like Postman to test APIs
+46. [Що таке Cross-Origin Resource Sharing (CORS)? Де трапляється?](./ua/junior/web/what-is-crossorigin-resource-sharing-cors-and-where-does-it-occur.md)
+47. [Як отримати помилку CORS у консолі розробника?](./ua/junior/web/how-to-get-a-cors-error-in-the-developer-console.md)
+48. [Назвіть основні HTTP-методи RESTful або CRUD застосунків.](./ua/junior/web/what-are-the-main-http-methods-for-a-restful-or-crud-application.md)
+49. [Що таке DNS?](./ua/junior/web/what-is-a-dns.md)
+* [Understand CORS and HTTP methods](./ua/junior/web/understand-cors-and-http-methods.md)
+* [Understand basic RESTful principles](./ua/junior/web/understand-basic-restful-principles.md)
+* [Use tools like Postman to test APIs](./ua/junior/web/use-tools-like-postman-to-test-apis.md)
 
 ### Nest.js
-* Understand Dependency Injection (DI) basics
-* Define providers
-* Understand pipes
-* Understand guards
-* Understand interceptors
-* Understand basic usage of controllers
-* Write simple unit tests for services and controllers
-* Create RESTful APIs using controllers
-* Use Nest.js CLI for project generation and scaffolding
-* Basic usage of decorators like @Controller, @Get, @Post
+* [Understand Dependency Injection (DI) basics](./ua/junior/nestjs/understand-dependency-injection-basics.md)
+* [Define providers](./ua/junior/nestjs/define-providers.md)
+* [Understand pipes](./ua/junior/nestjs/understand-pipes.md)
+* [Understand guards](./ua/junior/nestjs/understand-guards.md)
+* [Understand interceptors](./ua/junior/nestjs/understand-interceptors.md)
+* [Understand basic usage of controllers](./ua/junior/nestjs/understand-controller-basics.md)
+* [Write simple unit tests for services and controllers](./ua/junior/nestjs/write-simple-unit-tests-for-services-and-controllers.md)
+* [Create RESTful APIs using controllers](./ua/junior/nestjs/create-restful-apis-using-controllers.md)
+* [Use Nest.js CLI for project generation and scaffolding](./ua/junior/nestjs/use-the-nestjs-cli-for-project-creation.md)
+* [Basic usage of decorators like @Controller, @Get, @Post](./ua/junior/nestjs/basic-usage-of-decorators-like-controller-getmapping-postmapping.md)
 
 ---
 ## Middle
 ### Node.js
-66. Назвіть переваги Node.js, якщо порівнювати з іншими технологіями для розробки серверних застосунків.
-67. Для яких задач ви використали б кілька процесів/потоків (processes/threads)?
-68. У чому полягає різниця паралельного та асинхронного програмування на прикладі серверних застосунків?
-69. Які типи асинхронних операцій здатен виконувати Node.js?
-70. Які модулі Node.js ви знаєте? Яке їхнє основне призначення?
-71. Яка різниця між операційними помилками та помилками програміста?
-72. Які сервіси можна використати для моніторингу і логування?
-73. Що таке libuv? Назвіть його складові.
-74. Які існують шаблони розподілених транзакцій?
-75. Чи можливо програмно контролювати виділення і звільнення пам’яті в Node.js програмі?
-76. Поясніть, що таке Garbage Collector.
-77. Що означає «витік пам’яті» процеса? Як цьому запобігти?
-78. Як налагодити heap out of memory?
-79. Як налаштувати кешування?
-80. Які є варіанти використання модулів child_process, worker_threads і cluster?
-81. Яка різниця у використанні ES modules і CommonJS модулів?
-82. Для чого і як використовують клас EventEmitter з базового модуля ’node:events’?
-83. Скільки ядер процесора залучені при виконанні Node.js програми за замовчуванням?
-84. Що таке middleware? Якщо ми пишемо свій middleware, чому саме там, чому не в коді сервісу?
-85. Що таке EventEmitter в Node.js?
-86. Яке призначення файлу package.json для Node.js проєктів?
-87. Як можна за допомогою Node.js app прочитати файл з логами із файлової системи? Як прочитати файл, який займає понад 300 мегабайтів?
-88. Поясніть цикл подій у Node.js.
-89. Що таке і навіщо потрібен Thread Pool (Worker Pool)?
-90. SIGTERM vs SIGINT: які їхні переваги та недоліки?
-91. Що таке backpressure у контексті стримів? Як з цим боротись?
-92. Для чого потрібні stream.PassThrough і pipe (pipeline)? Наведіть приклади використання.
-93. Як використовувати події ’data’, ’end’, ’error’, ’finish’ у стримах Node.js?
-94. Як обробити помилки при роботі зі стримами в Node.js?
-95. Наведіть приклади роботи зі стримами різних типів.
-96. Чи працювали ви з pino?
-* Utilize multi-threading effectively
-* Stream large files efficiently
-* Explain roles of libuv and V8 in Node.js
-* Optimize task scheduling
-* Use child_process and worker_threads for parallel processing
-* Handle real-time communication using WebSocket or Socket.io
-* Manage environment variables securely
-* Understand and handle backpressure in streams
-* Implement caching strategies (Redis, MemoryCache)
+66. [Назвіть переваги Node.js, якщо порівнювати з іншими технологіями для розробки серверних застосунків.](./ua/middle/nodejs/what-are-the-advantages-of-nodejs-compared-to-other-technologies-for-serverside-application-development.md)
+67. [Для яких задач ви використали б кілька процесів/потоків (processes/threads)?](./ua/middle/nodejs/for-what-tasks-have-you-used-multiple-processesthreads.md)
+68. [У чому полягає різниця паралельного та асинхронного програмування на прикладі серверних застосунків?](./ua/middle/nodejs/whats-the-difference-between-parallel-and-asynchronous-programming.md)
+69. [Які типи асинхронних операцій здатен виконувати Node.js?](./ua/middle/nodejs/what-types-of-asynchronous-operations-can-nodejs-perform.md)
+70. [Які модулі Node.js ви знаєте? Яке їхнє основне призначення?](./ua/middle/nodejs/what-modules-of-nodejs-do-you-know-what-is-their-main-purpose.md)
+71. [Яка різниця між операційними помилками та помилками програміста?](./ua/middle/nodejs/what-is-the-difference-between-runtime-errors-and-programmer-errors.md)
+72. [Які сервіси можна використати для моніторингу і логування?](./ua/middle/nodejs/what-services-can-be-used-for-monitoring-and-logging.md)
+73. [Що таке libuv? Назвіть його складові.](./ua/middle/nodejs/what-is-libuv-name-its-components.md)
+74. [Які існують шаблони розподілених транзакцій?](./ua/middle/nodejs/what-are-the-existing-distributed-transaction-patterns.md)
+75. [Чи можливо програмно контролювати виділення і звільнення пам’яті в Node.js програмі?](./ua/middle/nodejs/is-it-possible-to-programatically-manage-memory-allocation-and-deallocation-in-a-nodejs-program.md)
+76. [Поясніть, що таке Garbage Collector.](./ua/middle/nodejs/what-is-a-garbage-collector.md)
+77. [Що означає «витік пам’яті» процеса? Як цьому запобігти?](./ua/middle/nodejs/what-is-a-memory-leak-and-how-can-it-be-prevented.md)
+78. [Як налагодити heap out of memory?](./ua/middle/nodejs/how-to-fix-heap-out-of-memory.md)
+79. [Як налаштувати кешування?](./ua/middle/nodejs/how-to-configure-caching.md)
+80. [Які є варіанти використання модулів child_process, worker_threads і cluster?](./ua/middle/nodejs/what-are-the-usage-scenarios-for-the-childprocess-workerthreads-and-cluster-modules.md)
+81. [Яка різниця у використанні ES modules і CommonJS модулів?](./ua/middle/nodejs/what-is-the-difference-between-using-es-modules-and-commonjs-modules.md)
+82. [Для чого і як використовують клас EventEmitter з базового модуля ’node:events’?](./ua/middle/nodejs/what-is-the-purpose-and-how-are-events-used-with-the-eventemitter-class-from-the-nodeevents-module.md)
+83. [Скільки ядер процесора залучені при виконанні Node.js програми за замовчуванням?](./ua/middle/nodejs/how-many-cpu-cores-are-utilized-by-default-when-running-a-nodejs-program.md)
+84. [Що таке middleware? Якщо ми пишемо свій middleware, чому саме там, чому не в коді сервісу?](./ua/middle/nodejs/what-is-a-middleware-if-we-write-our-own-middleware-why-not-in-the-service-code-itself.md)
+85. [Що таке EventEmitter в Node.js?](./ua/middle/nodejs/what-is-an-eventemitter-in-nodejs.md)
+86. [Яке призначення файлу package.json для Node.js проєктів?](./ua/middle/nodejs/what-is-the-purpose-of-a-packagejson-file-for-nodejs-projects.md)
+87. [Як можна за допомогою Node.js app прочитати файл з логами із файлової системи? Як прочитати файл, який займає понад 300 мегабайтів?](./ua/middle/nodejs/how-to-read-a-log-file-using-nodejs-application-from-the-file-system-how-to-read-a-very-large-file-over-300-mb.md)
+88. [Поясніть цикл подій у Node.js.](./ua/middle/nodejs/what-are-the-lifecycle-events-in-nodejs.md)
+89. [Що таке і навіщо потрібен Thread Pool (Worker Pool)?](./ua/middle/nodejs/what-is-a-thread-pool-and-why-do-we-need-it.md)
+90. [SIGTERM vs SIGINT: які їхні переваги та недоліки?](./ua/middle/nodejs/comparing-sigterm-and-sigint-signals.md)
+91. [Що таке backpressure у контексті стримів? Як з цим боротись?](./ua/middle/nodejs/what-is-backpressure-in-the-context-of-streams-and-how-to-deal-with-it.md)
+92. [Для чого потрібні stream.PassThrough і pipe (pipeline)? Наведіть приклади використання.](./ua/middle/nodejs/what-are-streampassthrough-and-pipeline-for-provide-examples-of-usage.md)
+93. [Як використовувати події ’data’, ’end’, ’error’, ’finish’ у стримах Node.js?](./ua/middle/nodejs/how-to-use-events-data-end-error-finish-in-nodejs-streams.md)
+94. [Як обробити помилки при роботі зі стримами в Node.js?](./ua/middle/nodejs/how-to-handle-errors-when-working-with-streams-in-nodejs.md)
+95. [Наведіть приклади роботи зі стримами різних типів.](./ua/middle/nodejs/what-are-some-examples-of-working-with-different-types-of-streams.md)
+96. [Чи працювали ви з pino?](./ua/middle/nodejs/have-you-worked-with-pino.md)
+* [Utilize multi-threading effectively](./ua/middle/nodejs/use-threads-efficiently.md)
+* [Stream large files efficiently](./ua/middle/nodejs/stream-large-files-efficiently.md)
+* [Explain roles of libuv and V8 in Node.js](./ua/middle/nodejs/what-are-the-roles-of-libuv-and-v8-in-nodejs.md)
+* [Optimize task scheduling](./ua/middle/nodejs/scheduling-optimization.md)
+* [Use child_process and worker_threads for parallel processing](./ua/middle/nodejs/utilize-childprocess-and-workerthreads-for-concurrent-execution.md)
+* [Handle real-time communication using WebSocket or Socket.io](./ua/middle/nodejs/handle-realtime-communication-using-websocket-or-socketio.md)
+* [Manage environment variables securely](./ua/middle/nodejs/manage-environment-variables-securely.md)
+* [Understand and handle backpressure in streams](./ua/middle/nodejs/understand-and-handle-backpressure-in-streams.md)
+* [Implement caching strategies (Redis, MemoryCache)](./ua/middle/nodejs/implement-caching-strategies-redis-memorycache.md)
 
 ### Nest.js
-97. Як описати приєднання до бази даних?
-98. Як реалізувати свій декоратор валідації?
-* Implement DI in services
-* Create and import modules
-* Implement custom providers
-* Create custom pipes
-* Implement custom guards
-* Write and execute integration tests
-* Use testing libraries such as Jest for coverage
-* Understand WebSocket implementation in Nest.js
-* Handle file uploads with Nest.js
-* Create GraphQL APIs using @nestjs/graphql
-* Implement authentication using Passport.js and JWT
+97. [Як описати приєднання до бази даних?](./ua/middle/nestjs/how-to-connect-database.md)
+98. [Як реалізувати свій декоратор валідації?](./ua/middle/nestjs/how-to-implement-your-validation-decorator.md)
+* [Implement DI in services](./ua/middle/nestjs/implement-dependency-injection-in-services.md)
+* [Create and import modules](./ua/middle/nestjs/create-and-import-modules.md)
+* [Implement custom providers](./ua/middle/nestjs/implement-custom-providers.md)
+* [Create custom pipes](./ua/middle/nestjs/create-custom-pipelines.md)
+* [Implement custom guards](./ua/middle/nestjs/implement-custom-guards.md)
+* [Write and execute integration tests](./ua/middle/nestjs/write-unit-tests.md)
+* [Use testing libraries such as Jest for coverage](./ua/middle/nestjs/use-testing-libraries-like-jest-for-coverage.md)
+* [Understand WebSocket implementation in Nest.js](./ua/middle/nestjs/understand-websocket-implementation-in-nestjs.md)
+* [Handle file uploads with Nest.js](./ua/middle/nestjs/handle-file-uploads-with-nestjs.md)
+* [Create GraphQL APIs using @nestjs/graphql](./ua/middle/nestjs/create-graphql-apis-using-nestjsgraphql.md)
+* [Implement authentication using Passport.js and JWT](./ua/middle/nestjs/implement-authentication-using-passportjs-and-jwt.md)
 
 ### Express.js
-* Prioritize middleware execution
-* Create modular routing systems
-* Integrate with templating engines (e.g., EJS, Handlebars)
-* Optimize transactional workflows
+* [Prioritize middleware execution](./ua/middle/expressjs/execute-middleware-first.md)
+* [Create modular routing systems](./ua/middle/expressjs/create-modular-routing-systems.md)
+* [Integrate with templating engines (e.g., EJS, Handlebars)](./ua/middle/expressjs/integrate-with-templating-engines-like-ejs-or-handlebars.md)
+* [Optimize transactional workflows](./ua/middle/expressjs/optimizing-transactional-workflows.md)
 
 ### JavaScript
-99. Чому в JavaScript не рекомендують робити довгих обчислень у runtime?
-100. Чи гарантовано setTimeout викличе функцію через заданий час? Від чого це залежить?
-101. Що таке Promises?
-102. Яка різниця між Promise.allSettled, Promise.race і Promise.any?
-103. Що таке callback у JavaScript?
-104. Чи кращі Promises за callback підхід? Чому?
-105. Що таке замикання/closure?
-106. Поясніть переваги та недоліки використання «use strict».
-107. Наведіть приклад блокування циклу подій.
-108. Яка різниця між abstract і interface?
-109. Що таке Web Workers? Для чого їх використовують?
-110. Які особливості передачі даними між worker’ами та основним потоком?
-111. Які обмеження накладаються на потік Web Workers?
-112. Окрім використання оператора ‘return’, як ще можна повернути результат виконання з функції (процедури)?
-* Implement async patterns
-* Use advanced array and object methods (reduce, map, filter)
-* Use const for immutability
-* Design efficient data structures
-* Analyze event loop performance
-* Understand and use the Proxy object
-* Implement module exports and imports for scalability
+99. [Чому в JavaScript не рекомендують робити довгих обчислень у runtime?](./ua/middle/javascript/why-is-it-not-recommended-to-perform-long-computations-at-runtime-in-javascript.md)
+100. [Чи гарантовано setTimeout викличе функцію через заданий час? Від чого це залежить?](./ua/middle/javascript/is-it-guaranteed-that-settimeout-will-call-the-function-after-a-specified-time-what-does-this-depend-on.md)
+101. [Що таке Promises?](./ua/middle/javascript/what-are-promises.md)
+102. [Яка різниця між Promise.allSettled, Promise.race і Promise.any?](./ua/middle/javascript/whats-the-difference-between-promiseallsettled-promiserace-and-promiseany.md)
+103. [Що таке callback у JavaScript?](./ua/middle/javascript/what-is-a-callback-in-javascript.md)
+104. [Чи кращі Promises за callback підхід? Чому?](./ua/middle/javascript/are-promises-better-than-callbacks-why.md)
+105. [Що таке замикання/closure?](./ua/middle/javascript/what-is-a-closure.md)
+106. [Поясніть переваги та недоліки використання «use strict».](./ua/middle/javascript/what-are-the-benefits-and-drawbacks-of-using-use-strict.md)
+107. [Наведіть приклад блокування циклу подій.](./ua/middle/javascript/provide-an-example-of-event-loop-blocking.md)
+108. [Яка різниця між abstract і interface?](./ua/middle/javascript/what-is-the-difference-between-abstract-and-interface.md)
+109. [Що таке Web Workers? Для чого їх використовують?](./ua/middle/javascript/what-are-web-workers-used-for.md)
+110. [Які особливості передачі даними між worker’ами та основним потоком?](./ua/middle/javascript/what-are-the-features-of-data-transmission-between-workers-and-main-thread.md)
+111. [Які обмеження накладаються на потік Web Workers?](./ua/middle/javascript/what-are-the-limitations-imposed-on-a-web-worker-stream.md)
+112. [Окрім використання оператора ‘return’, як ще можна повернути результат виконання з функції (процедури)?](./ua/middle/javascript/what-else-can-you-return-from-a-function-besides-using-the-return-operator.md)
+* [Implement async patterns](./ua/middle/javascript/implement-asynchronous-codepatterns.md)
+* [Use advanced array and object methods (reduce, map, filter)](./ua/middle/javascript/use-advanced-array-and-object-methods-reduce-map-filter.md)
+* [Use const for immutability](./ua/middle/javascript/use-const-for-immutability.md)
+* [Design efficient data structures](./ua/middle/javascript/design-efficient-data-structures.md)
+* [Analyze event loop performance](./ua/middle/javascript/analyze-event-loop-performance.md)
+* [Understand and use the Proxy object](./ua/middle/javascript/understand-and-use-the-proxy-object.md)
+* [Implement module exports and imports for scalability](./ua/middle/javascript/implement-module-exports-and-imports-for-scalability.md)
 
 ### Microservices
-113. Яка різниця між Monolith/SOA/Microservices?
-114. Назвіть переваги і недоліки мікросервісної архітектури.
-115. Як забезпечити стійкість і можливість масштабування мікросервісів?
-116. Як відстежувати несправності?
+113. [Яка різниця між Monolith/SOA/Microservices?](./ua/middle/microservices/whats-the-difference-between-monolith-soa-and-microservices.md)
+114. [Назвіть переваги і недоліки мікросервісної архітектури.](./ua/middle/microservices/what-are-the-benefits-and-drawbacks-of-microservice-architecture.md)
+115. [Як забезпечити стійкість і можливість масштабування мікросервісів?](./ua/middle/microservices/how-to-ensure-stability-and-scalability-of-microservices.md)
+116. [Як відстежувати несправності?](./ua/middle/microservices/how-to-track-malfunctions.md)
 
 ### DevOps
-117. Що таке CI (безперервна інтеграція)?
-118. Як використовують Docker?
-119. У чому різниця між blue/green розгортанням і rolling розгортанням.
+117. [Що таке CI (безперервна інтеграція)?](./ua/middle/devops/what-is-ci-continuous-integration.md)
+118. [Як використовують Docker?](./ua/middle/devops/how-do-they-use-docker.md)
+119. [У чому різниця між blue/green розгортанням і rolling розгортанням.](./ua/middle/devops/what-is-the-difference-between-bluegreen-deployment-and-rolling-deployment.md)
 
 ### Networking
-120. Як браузер дізнається, яку сторінку завантажити за адресою домену?
-121. Яка різниця між HTTP і HTTPS?
-122. Яким чином HTTPS робить вебзастосунок безпечнішим?
-123. Що таке Socket? Яка різниця між Socket і long polling?
-124. Який популярний архітектурний спосіб розробки API ви знаєте?
-125. Яка різниця між GraphQL і REST?
-126. Яким чином ви б спроєктували API для bulk delete?
+120. [Як браузер дізнається, яку сторінку завантажити за адресою домену?](./ua/middle/networking/how-does-the-browser-determine-which-page-to-download-for-a-domain-address.md)
+121. [Яка різниця між HTTP і HTTPS?](./ua/middle/networking/what-is-the-difference-between-http-and-https.md)
+122. [Яким чином HTTPS робить вебзастосунок безпечнішим?](./ua/middle/networking/how-does-https-make-a-web-application-more-secure.md)
+123. [Що таке Socket? Яка різниця між Socket і long polling?](./ua/middle/networking/what-is-a-socket-whats-the-difference-between-a-socket-and-long-polling.md)
+124. [Який популярний архітектурний спосіб розробки API ви знаєте?](./ua/middle/networking/whats-a-wellknown-architectural-approach-to-api-development.md)
+125. [Яка різниця між GraphQL і REST?](./ua/middle/networking/whats-the-difference-between-graphql-and-rest.md)
+126. [Яким чином ви б спроєктували API для bulk delete?](./ua/middle/networking/how-would-you-design-an-api-for-bulk-deletion.md)
 
 ### System Design
-127. Що таке теорема CAP?
-128. Чим горизонтальне масштабування відрізняється від вертикального масштабування?
-129. Що ви розумієте під балансуванням навантаження? Чому це важливо при проєктуванні системи?
-130. Яка концепція sync/async зв’язку між сервісами в архітектурі мікросервісу?
-131. Які ви знаєте популярні методології реалізації async-зв’язку між сервісами в архітектурі мікросервісу? Які є плюси та мінуси?
+127. [Що таке теорема CAP?](./ua/middle/system-design/what-is-the-cap-theorem.md)
+128. [Чим горизонтальне масштабування відрізняється від вертикального масштабування?](./ua/middle/system-design/what-is-the-difference-between-horizontal-and-vertical-zooming.md)
+129. [Що ви розумієте під балансуванням навантаження? Чому це важливо при проєктуванні системи?](./ua/middle/system-design/what-do-you-understand-by-load-balancing-why-is-this-important-during-system-design.md)
+130. [Яка концепція sync/async зв’язку між сервісами в архітектурі мікросервісу?](./ua/middle/system-design/what-is-the-concept-of-syncasync-communication-between-services-in-microservices-architecture.md)
+131. [Які ви знаєте популярні методології реалізації async-зв’язку між сервісами в архітектурі мікросервісу? Які є плюси та мінуси?](./ua/middle/system-design/what-are-the-popular-methodologies-for-implementing-async-communication-between-services-in-microservices-architecture-what-are-their-pros-and-cons.md)
 
 ### Security
-132. Які типи чутливості вебзастосунків ви знаєте?
-133. Як захиститися від XSS?
-134. Як захистити cookie?
-135. Що таке CORS?
-136. Що таке Content Security Policy?
+132. [Які типи чутливості вебзастосунків ви знаєте?](./ua/middle/security/what-types-of-web-application-sensitivity-do-you-know.md)
+133. [Як захиститися від XSS?](./ua/middle/security/how-to-protect-against-xss.md)
+134. [Як захистити cookie?](./ua/middle/security/how-to-protect-cookies.md)
+135. [Що таке CORS?](./ua/middle/security/what-is-cors.md)
+136. [Що таке Content Security Policy?](./ua/middle/security/what-is-content-security-policy.md)
 
 ### Testing
-137. Навіщо писати тести?
-138. Чому юніти мають бути базою в піраміді тестування?
-139. Для чого потрібне інтеграційне тестування?
-140. Навіщо потрібне юніт-тестування?
-141. Навіщо потрібне E2E-тестування?
-142. Наведіть приклад поганих інтеграційних і юніт-тестів.
-143. Яким чином ви б протестували складний запит до бази даних у класі репозиторію?
-144. Які б типи/обсяг тестів ви обрали для абсолютно нової системи без будь-яких обмежень з боку замовника?
+137. [Навіщо писати тести?](./ua/middle/testing/why-write-tests.md)
+138. [Чому юніти мають бути базою в піраміді тестування?](./ua/middle/testing/why-units-must-be-the-base-of-a-testing-pyramid.md)
+139. [Для чого потрібне інтеграційне тестування?](./ua/middle/testing/what-is-the-purpose-of-integration-testing.md)
+140. [Навіщо потрібне юніт-тестування?](./ua/middle/testing/why-is-unit-testing-needed.md)
+141. [Навіщо потрібне E2E-тестування?](./ua/middle/testing/what-is-the-purpose-of-endtoend-testing.md)
+142. [Наведіть приклад поганих інтеграційних і юніт-тестів.](./ua/middle/testing/what-is-a-bad-integration-test.md)
+143. [Яким чином ви б протестували складний запит до бази даних у класі репозиторію?](./ua/middle/testing/how-would-you-protest-a-complex-database-query-in-the-repository-class.md)
+144. [Які б типи/обсяг тестів ви обрали для абсолютно нової системи без будь-яких обмежень з боку замовника?](./ua/middle/testing/what-typestests-volumes-did-you-select-for-brand-new-system-with-no-client-constraints.md)
 
 ### Database
-145. Що таке транзакції в базах даних? Для чого вони потрібні?
-146. Які рівні ізоляції транзакцій бувають? Плюси і мінуси?
-147. Що таке foreign key? Яку роль він виконує?
-148. Що таке JOIN?
-149. Чим LEFT відрізняється від INNER?
-150. Які переваги бази даних SQL, якщо порівнювати з базою даних NoSQL?
-151. Коли слід використовувати базу даних NoSQL замість реляційної бази даних?
-152. Як індекс бази даних може підвищити продуктивність?
-153. Які мінуси додавання індексів?
-154. Які типи індексів існують і яка різниця між ними?
-155. Що таке властивість ACID у базі даних?
-156. Як створити index для бази даних, якщо вона реляційна?
-* Optimize query performance
-* Implement database indexing
-* Handle relationships between tables (e.g., one-to-many, many-to-many)
-* Implement secure REST APIs
+145. [Що таке транзакції в базах даних? Для чого вони потрібні?](./ua/middle/database/what-are-transactions-in-databases-and-what-is-their-purpose.md)
+146. [Які рівні ізоляції транзакцій бувають? Плюси і мінуси?](./ua/middle/database/what-are-the-levels-of-transaction-isolation-advantages-and-disadvantages.md)
+147. [Що таке foreign key? Яку роль він виконує?](./ua/middle/database/what-is-a-foreign-key-and-what-role-does-it-play.md)
+148. [Що таке JOIN?](./ua/middle/database/what-is-a-join.md)
+149. [Чим LEFT відрізняється від INNER?](./ua/middle/database/what-is-the-difference-between-left-and-inner.md)
+150. [Які переваги бази даних SQL, якщо порівнювати з базою даних NoSQL?](./ua/middle/database/what-are-the-benefits-of-a-sql-database-compared-to-a-nosql-database.md)
+151. [Коли слід використовувати базу даних NoSQL замість реляційної бази даних?](./ua/middle/database/when-to-use-a-nosql-database-instead-of-relational-databases.md)
+152. [Як індекс бази даних може підвищити продуктивність?](./ua/middle/database/how-can-a-database-index-improve-performance.md)
+153. [Які мінуси додавання індексів?](./ua/middle/database/what-are-the-disadvantages-of-adding-indices.md)
+154. [Які типи індексів існують і яка різниця між ними?](./ua/middle/database/what-are-the-types-of-indexes-that-exist-and-how-do-they-differ.md)
+155. [Що таке властивість ACID у базі даних?](./ua/middle/database/what-is-the-acid-property-in-databases.md)
+156. [Як створити index для бази даних, якщо вона реляційна?](./ua/middle/database/how-to-create-an-index-for-a-relational-database.md)
+* [Optimize query performance](./ua/middle/database/improve-query-speed.md)
+* [Implement database indexing](./ua/middle/database/implement-database-indexing.md)
+* [Handle relationships between tables (e.g., one-to-many, many-to-many)](./ua/middle/database/handle-relationships-between-tables.md)
+* [Implement secure REST APIs](./ua/middle/database/implement-secure-rest-apis.md)
 
 ## Strong Middle
 ### Questions for a systems programmer
-160. Які ви знаєте проблеми, баги та вузькі місця у Node.js?
-161. Які ви знаєте вбудовані засоби серіалізації у Node.js, аналогічні до JSON, але для бінарної серіалізації?
-162. Чому Node.js не однопотоковий? Доведіть, що він ніколи не був однопотоковим?
-163. Чим замінити deprecated: fs.exists?
-164. Що таке back pressure для стримів? Що спричинила б його відсутність?
-165. Що таке MessagePort і BroadcastChannel?
-166. Чим відрізняються fs.stat, fs.fstat, fs.lstat?
-167. Як пов’язані node:async_hooks і AsyncLocalStorage?
-168. Чого не вистачає у ESM, що підтримується у CJS?
-169. Як стежити за змінами файлів і директорій на диску? Які з цим можуть виникати проблеми?
-170. Що можна робити за допомогою node:vm?
-171. Як захистити SharedArrayBuffer від запису з різних worker_threads?
-172. Доведіть, що будь-який модуль у Node.js при завантаженні огортається у функцію і створює замикання?
-173. Де використовують патерн Revealing constructor (відкритий конструктор)?
-174. Як зробити перевизначення write для екземпляру Writable без створення класу спадкоємця?
-175. У чому причина повільності викликів з JavaScript коду до аддонів на C, C++ чи під’єднаних через N-API?
-176. Навіщо потрібен WASI та які можливості він дає?
-177. Для чого використовують new Error.captureStackTrace?
-178. Які ви знаєте deprecated API та якою є стратегія їх виведення з використання?
-179. Чому важливо виконувати правило eslint: consistent-return з огляду на оптимізацію v8?
+160. [Які ви знаєте проблеми, баги та вузькі місця у Node.js?](./ua/strong-middle/questions-for-a-systems-programmer/what-issues-and-bugs-are-you-familiar-with-in-nodejs.md)
+161. [Які ви знаєте вбудовані засоби серіалізації у Node.js, аналогічні до JSON, але для бінарної серіалізації?](./ua/strong-middle/questions-for-a-systems-programmer/what-builtin-serialization-utilities-in-nodejs-are-similar-to-json-but-for-binary-serialization.md)
+162. [Чому Node.js не однопотоковий? Доведіть, що він ніколи не був однопотоковим?](./ua/strong-middle/questions-for-a-systems-programmer/162-why-is-nodejs-not-singlethreaded-prove-that-it-was-never-singlethreaded.md)
+163. [Чим замінити deprecated: fs.exists?](./ua/strong-middle/questions-for-a-systems-programmer/what-to-replace-deprecated-fsexists.md)
+164. [Що таке back pressure для стримів? Що спричинила б його відсутність?](./ua/strong-middle/questions-for-a-systems-programmer/what-is-back-pressure-for-streams-and-what-would-cause-its-absence.md)
+165. [Що таке MessagePort і BroadcastChannel?](./ua/strong-middle/questions-for-a-systems-programmer/what-is-messageport-and-broadcastchannel.md)
+166. [Чим відрізняються fs.stat, fs.fstat, fs.lstat?](./ua/strong-middle/questions-for-a-systems-programmer/what-is-the-difference-between-fsstat-fsfstat-fslstat.md)
+167. [Як пов’язані node:async_hooks і AsyncLocalStorage?](./ua/strong-middle/questions-for-a-systems-programmer/what-is-the-relationship-between-asynchooks-and-asynclocalstorage.md)
+168. [Чого не вистачає у ESM, що підтримується у CJS?](./ua/strong-middle/questions-for-a-systems-programmer/what-is-missing-from-esm-thats-supported-in-cjs.md)
+169. [Як стежити за змінами файлів і директорій на диску? Які з цим можуть виникати проблеми?](./ua/strong-middle/questions-for-a-systems-programmer/how-to-monitor-file-and-directory-changes-on-disk-and-what-problems-may-arise.md)
+170. [Що можна робити за допомогою node:vm?](./ua/strong-middle/questions-for-a-systems-programmer/what-can-you-do-with-node-vm.md)
+171. [Як захистити SharedArrayBuffer від запису з різних worker_threads?](./ua/strong-middle/questions-for-a-systems-programmer/whats-the-best-way-to-protect-a-sharedarraybuffer-from-being-written-from-different-worker-threads.md)
+172. [Доведіть, що будь-який модуль у Node.js при завантаженні огортається у функцію і створює замикання?](./ua/strong-middle/questions-for-a-systems-programmer/proof-that-any-module-in-nodejs-is-wrapped-as-a-function-and-creates-closures-when-loaded.md)
+173. [Де використовують патерн Revealing constructor (відкритий конструктор)?](./ua/strong-middle/questions-for-a-systems-programmer/what-is-the-use-case-for-the-revealing-constructor-pattern.md)
+174. [Як зробити перевизначення write для екземпляру Writable без створення класу спадкоємця?](./ua/strong-middle/questions-for-a-systems-programmer/how-to-make-a-write-redefinition-for-a-writable-instance-without-creating-a-subclass.md)
+175. [У чому причина повільності викликів з JavaScript коду до аддонів на C, C++ чи під’єднаних через N-API?](./ua/strong-middle/questions-for-a-systems-programmer/what-is-the-reason-for-slow-function-calls-from-javascript-code-to-cc-addons-or-napi-connected-ones.md)
+176. [Навіщо потрібен WASI та які можливості він дає?](./ua/strong-middle/questions-for-a-systems-programmer/why-is-wasi-needed-and-what-capabilities-does-it-provide.md)
+177. [Для чого використовують new Error.captureStackTrace?](./ua/strong-middle/questions-for-a-systems-programmer/what-is-the-purpose-of-using-new-errorcapturestacktrace.md)
+178. [Які ви знаєте deprecated API та якою є стратегія їх виведення з використання?](./ua/strong-middle/questions-for-a-systems-programmer/what-deprecated-apis-do-you-know-and-what-strategy-would-be-used-to-retire-them.md)
+179. [Чому важливо виконувати правило eslint: consistent-return з огляду на оптимізацію v8?](./ua/strong-middle/questions-for-a-systems-programmer/why-is-it-important-to-follow-the-eslint-rule-consistentreturn-in-regards-to-v8-optimization.md)
 
 ### Questions for an application programmer on Node.js
-180. Чому потрібно додавати префікс node при завантаженні вбудованих модулів?
-181. Що можна зробити за допомогою for await з request: IncomingMessage?
-182. Як скопіювати теку з вкладеними файлами та іншими теками за допомогою node:fs?
-183. Навіщо використовують AbortController? В яких API він підтримується?
-184. Чим сучасним замінити node:domain API?
-185. Яке API реалізує nodejs/undici?
-186. Коли ми можемо використовувати синхронні версії операцій з файлами з node:fs замість асинхронних? На що звертати увагу, ухвалюючи таке рішення?
-187. Наведіть найкращі практики для обробки помилок в асинхронному коді.
-188. Як у проєктах на Node.js можуть з’явитися вразливості з (на вибір): XSS, Path traversal, SQLI, CSRF? Як від них захищатися?
-189. Як можливі race conditions при асинхронному програмуванні?
-190. Які є плюси та мінуси розділення коду на .js та окремо тайпінги .d.ts?
-191. Наведіть кілька типових патернів проєктування з GoF і приклади їхнього використання у Node.js.
-192. Який паттерн з GoF реалізує EventEmitter?
-193. У чому полягає проблема товстих контролерів?
-194. Наведіть приклади протікання абстракцій у типових системах на базі Node.js.
-195. Як можна створити singleton за допомогою системи модульності у Node.js?
-196. Наведіть приклад патерну adapter з вбудованих бібліотек.
-197. Для чого нам потрібні такі поля Error: error.cause, error.code, error.message, error.stack?
+180. [Чому потрібно додавати префікс node при завантаженні вбудованих модулів?](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/what-is-the-reason-for-adding-a-node-prefix-when-loading-native-modules.md)
+181. [Що можна зробити за допомогою for await з request: IncomingMessage?](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/what-can-be-done-with-for-await-on-a-request-incomingmessage.md)
+182. [Як скопіювати теку з вкладеними файлами та іншими теками за допомогою node:fs?](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/how-to-copy-a-directory-with-nested-files-and-directories-using-nodefs.md)
+183. [Навіщо використовують AbortController? В яких API він підтримується?](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/what-is-the-purpose-of-using-abortcontroller-which-apis-does-it-support.md)
+184. [Чим сучасним замінити node:domain API?](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/what-is-a-modern-replacement-for-the-nodedomain-api.md)
+185. [Яке API реалізує nodejs/undici?](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/what-api-does-nodejsundici-implement.md)
+186. [Коли ми можемо використовувати синхронні версії операцій з файлами з node:fs замість асинхронних? На що звертати увагу, ухвалюючи таке рішення?](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/when-to-use-synchronous-file-operations-with-fs-in-nodejs-instead-of-asynchronous-ones.md)
+187. [Наведіть найкращі практики для обробки помилок в асинхронному коді.](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/what-are-best-practices-for-error-handling-in-asynchronous-code.md)
+188. [Як у проєктах на Node.js можуть з’явитися вразливості з (на вибір): XSS, Path traversal, SQLI, CSRF? Як від них захищатися?](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/how-can-vulnerabilities-such-as-xss-path-traversal-sqli-and-csrf-appear-in-nodejs-projects-and-how-to-protect-against-them.md)
+189. [Як можливі race conditions при асинхронному програмуванні?](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/how-possible-race-conditions-during-asynchronous-programming.md)
+190. [Які є плюси та мінуси розділення коду на .js та окремо тайпінги .d.ts?](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/what-are-the-pros-and-cons-of-splitting-code-into-js-and-separate-typings-dts-files.md)
+191. [Наведіть кілька типових патернів проєктування з GoF і приклади їхнього використання у Node.js.](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/provide-several-typical-design-patterns-from-gof-and-examples-of-their-use-in-nodejs.md)
+192. [Який паттерн з GoF реалізує EventEmitter?](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/192-which-gof-pattern-implements-eventemitter.md)
+193. [У чому полягає проблема товстих контролерів?](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/whats-the-problem-with-fat-controllers.md)
+194. [Наведіть приклади протікання абстракцій у типових системах на базі Node.js.](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/what-are-examples-of-abstraction-in-typical-nodejs-systems.md)
+195. [Як можна створити singleton за допомогою системи модульності у Node.js?](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/how-can-i-create-a-singleton-using-the-module-system-in-nodejs.md)
+196. [Наведіть приклад патерну adapter з вбудованих бібліотек.](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/provide-example-of-adapter-pattern-from-builtin-libraries.md)
+197. [Для чого нам потрібні такі поля Error: error.cause, error.code, error.message, error.stack?](./ua/strong-middle/questions-for-an-application-programmer-on-nodejs/what-are-these-fields-errorcause-errorcode-errormessage-errorstack-used-for.md)
 
 ## Senior
 ### Node.js
-198. Які найбільші проблеми платформи Node.js?
-199. Скільки потоків Node.js використовує для роботи? Яким чином можна регулювати цю кількість?
-200. Чи є в Node.js можливість виконувати скрипти, написані іншими мовами?
-201. Чи є різниця у виконанні microtasks/macrotasks залежно від версій Node.js?
-202. Як працювати із вбудованими Node.js функціями, реалізованими через callback інтерфейс в async/await стилі?
-203. У чому полягає різниця між require/module.exports і ES6-модулями?
-204. З яких стадій складається цикл event loop в libuv?
-205. Яким чином бібліотека libuv досягає неблокуючого вводу і виводу?
-206. Що таке гарантії доставки повідомлень та якими вони бувають?
-207. У яких випадках ви застосували б асинхронний зв’язок між двома системами?
-208. Чи можна замінити в V8 в Node.js?
-209. Як налаштувати логування і моніторинг? Які найкращі практики ви знаєте?
-210. Як би ви використали стрими для покращення продуктивності вебзастосунку?
-* Use middleware for advanced request handling
-* Implement custom logging systems (e.g., Winston, Pino)
-* Use performance monitoring tools (e.g., Prometheus, New Relic)
-* Secure Node.js applications (e.g., helmet.js, sanitization libraries)
-* Analyze event loop behavior
-* Design advanced task prioritization
-* Debug task execution issues
-* Handle distributed systems communication in Node.js
-* Use clustering for high-availability Node.js applications
-* Contribute to the Node.js ecosystem
-* Implement custom threading solutions
-* Optimize file handling systems
+198. [Які найбільші проблеми платформи Node.js?](./ua/senior/nodejs/what-are-the-biggest-problems-of-the-nodejs-platform.md)
+199. [Скільки потоків Node.js використовує для роботи? Яким чином можна регулювати цю кількість?](./ua/senior/nodejs/how-many-threads-does-nodejs-use-for-operation-how-to-control-this-number.md)
+200. [Чи є в Node.js можливість виконувати скрипти, написані іншими мовами?](./ua/senior/nodejs/yes-is-there-the-ability-in-nodejs-to-execute-scripts-written-in-other-languages.md)
+201. [Чи є різниця у виконанні microtasks/macrotasks залежно від версій Node.js?](./ua/senior/nodejs/do-task-types-vary-in-execution-between-nodejs-versions.md)
+202. [Як працювати із вбудованими Node.js функціями, реалізованими через callback інтерфейс в async/await стилі?](./ua/senior/nodejs/how-to-work-with-builtin-nodejs-functions-implemented-through-the-callback-interface-in-an-asyncawait-style.md)
+203. [У чому полягає різниця між require/module.exports і ES6-модулями?](./ua/senior/nodejs/what-is-the-difference-between-requiremoduleexports-and-es6-modules.md)
+204. [З яких стадій складається цикл event loop в libuv?](./ua/senior/nodejs/which-stages-make-up-the-event-loop-cycle-in-libuv.md)
+205. [Яким чином бібліотека libuv досягає неблокуючого вводу і виводу?](./ua/senior/nodejs/how-does-the-library-libuv-achieve-nonblocking-input-and-output.md)
+206. [Що таке гарантії доставки повідомлень та якими вони бувають?](./ua/senior/nodejs/what-are-delivery-guarantees-and-how-do-they-work.md)
+207. [У яких випадках ви застосували б асинхронний зв’язок між двома системами?](./ua/senior/nodejs/when-would-you-apply-an-asynchronous-connection-between-two-systems.md)
+208. [Чи можна замінити в V8 в Node.js?](./ua/senior/nodejs/can-be-replaced-in-v8-of-nodejs.md)
+209. [Як налаштувати логування і моніторинг? Які найкращі практики ви знаєте?](./ua/senior/nodejs/how-to-configure-logging-and-monitoring-what-are-best-practices-you-know.md)
+210. [Як би ви використали стрими для покращення продуктивності вебзастосунку?](./ua/senior/nodejs/how-would-you-use-streams-to-improve-the-performance-of-a-web-application.md)
+* [Use middleware for advanced request handling](./ua/senior/nodejs/use-middleware-for-complex-requests-processing.md)
+* [Implement custom logging systems (e.g., Winston, Pino)](./ua/senior/nodejs/implement-a-custom-logging-system-such-as-winston-or-pino.md)
+* [Use performance monitoring tools (e.g., Prometheus, New Relic)](./ua/senior/nodejs/use-performance-monitoring-tools-like-prometheus-and-new-relic.md)
+* [Secure Node.js applications (e.g., helmet.js, sanitization libraries)](./ua/senior/nodejs/secure-nodejs-applications.md)
+* [Analyze event loop behavior](./ua/senior/nodejs/analyze-event-loop-behavior.md)
+* [Design advanced task prioritization](./ua/senior/nodejs/design-advanced-task-prioritization.md)
+* [Debug task execution issues](./ua/senior/nodejs/debugging-task-execution-problems.md)
+* [Handle distributed systems communication in Node.js](./ua/senior/nodejs/handling-distributed-systems-communication-in-nodejs.md)
+* [Use clustering for high-availability Node.js applications](./ua/senior/nodejs/use-clustering-for-highavailability-nodejs-applications.md)
+* [Contribute to the Node.js ecosystem](./ua/senior/nodejs/join-the-nodejs-community.md)
+* [Implement custom threading solutions](./ua/senior/nodejs/implement-custom-threading-solutions.md)
+* [Optimize file handling systems](./ua/senior/nodejs/optimize-file-management.md)
 
 ### Nest.js
-* Use advanced decorators and custom modules
-* Integrate third-party libraries into the framework
-* Understand CQRS (Command Query Responsibility Segregation) with Nest.js
-* Implement event-driven architectures using EventEmitter
-* Handle microservices with @nestjs/microservices
-* Integrate Nest.js with cloud services like AWS or Google Cloud
-* Build and manage microservice patterns in Nest.js
-* Design and implement dynamic modules
-* Implement advanced GraphQL features (e.g., subscriptions, resolvers)
-* Scale applications with Kubernetes and Docker in Nest.js projects
-* Debug and enhance DI performance
-* Implement advanced module hierarchies
-* Design complex provider patterns
-* Debug pipe execution
-* Design complex guard strategies
+* [Use advanced decorators and custom modules](./ua/senior/nestjs/utilize-sophisticated-function-decorators-and-bespoke-libraries.md)
+* [Integrate third-party libraries into the framework](./ua/senior/nestjs/integrate-external-libraries-into-the-system.md)
+* [Understand CQRS (Command Query Responsibility Segregation) with Nest.js](./ua/senior/nestjs/understanding-cqrs-with-nestjs.md)
+* [Implement event-driven architectures using EventEmitter](./ua/senior/nestjs/implement-eventdriven-architectures-using-eventemitter.md)
+* [Handle microservices with @nestjs/microservices](./ua/senior/nestjs/handle-microservices-with-nestjs-microservices.md)
+* [Integrate Nest.js with cloud services like AWS or Google Cloud](./ua/senior/nestjs/integrate-nestjs-with-cloud-services.md)
+* [Build and manage microservice patterns in Nest.js](./ua/senior/nestjs/build-and-manage-microservice-patterns-in-nestjs.md)
+* [Design and implement dynamic modules](./ua/senior/nestjs/design-and-implement-dynamic-modules.md)
+* [Implement advanced GraphQL features (e.g., subscriptions, resolvers)](./ua/senior/nestjs/implement-advanced-graphql-features.md)
+* [Scale applications with Kubernetes and Docker in Nest.js projects](./ua/senior/nestjs/scale-applications-with-kubernetes-and-docker-in-nestjs-projects.md)
+* [Debug and enhance DI performance](./ua/senior/nestjs/improve-dependency-injection-performance.md)
+* [Implement advanced module hierarchies](./ua/senior/nestjs/implement-advanced-module-hierarchies.md)
+* [Design complex provider patterns](./ua/senior/nestjs/design-complex-provider-patterns.md)
+* [Debug pipe execution](./ua/senior/nestjs/debug-pipeline-execution.md)
+* [Design complex guard strategies](./ua/senior/nestjs/design-complex-security-protocols.md)
 
 ### Express.js
-* Build complex middleware systems
-* Integrate authentication mechanisms
-* Use Express.js for SSR (Server-Side Rendering)
-* Implement multi-tenancy in Express applications
-* Build middleware systems optimized for performance
-* Implement advanced SSR or CSR pipelines
+* [Build complex middleware systems](./ua/senior/expressjs/build-complex-middleware-systems.md)
+* [Integrate authentication mechanisms](./ua/senior/expressjs/integrate-authentication-mechanisms.md)
+* [Use Express.js for SSR (Server-Side Rendering)](./ua/senior/expressjs/use-expressjs-for-serverside-rendering.md)
+* [Implement multi-tenancy in Express applications](./ua/senior/expressjs/implement-multitenancy-in-express-applications.md)
+* [Build middleware systems optimized for performance](./ua/senior/expressjs/build-highperformance-middleware-systems.md)
+* [Implement advanced SSR or CSR pipelines](./ua/senior/expressjs/implement-advanced-serverside-rendering-ssr-or-clientside-rendering-csr-pipelines.md)
 
 ### Architecture
-211. Які є способи масштабувати Node.js сервер?
-212. Які є переваги кластеризації Node.js застосунку? Які проблеми можуть виникнути?
-213. У чому основна різниця чи схожість у роботі вебсерверів на Node.js або, наприклад, на Apache (PHP)?
-214. Що таке методологія Twelve-Factor App?
-215. Які показники моніторингу найважливіші?
-216. Опишіть дизайн-паттерн SAGA. Яка різниця між транзакцією та операцією компенсації в SAGA, в SOA?
-217. Що таке авторизація та аутентифікація?
-218. Express vs Nest.js: які переваги і недоліки кожного фреймворку? Коли який доцільніше використовувати?
-219. Що таке CLS і де варто його використовувати?
-220. Що таке graceful shutdown? Як його імплементувати?
-221. Наведіть приклади імплементації GoF патернів у Node.js і фреймворках.
-222. Порівняйте MessageQ, RabbitMQ і Kafka.
-223. Які проблеми розв’язує serverless?
+211. [Які є способи масштабувати Node.js сервер?](./ua/senior/architecture/what-are-the-ways-to-scale-a-nodejs-server.md)
+212. [Які є переваги кластеризації Node.js застосунку? Які проблеми можуть виникнути?](./ua/senior/architecture/what-are-the-advantages-of-clustering-a-nodejs-application-what-issues-may-occur.md)
+213. [У чому основна різниця чи схожість у роботі вебсерверів на Node.js або, наприклад, на Apache (PHP)?](./ua/senior/architecture/what-is-the-main-difference-or-similarity-in-working-web-servers-on-nodejs-versus-apache-php.md)
+214. [Що таке методологія Twelve-Factor App?](./ua/senior/architecture/what-is-the-twelvefactor-app-methodology.md)
+215. [Які показники моніторингу найважливіші?](./ua/senior/architecture/what-are-the-most-important-monitoring-indicators.md)
+216. [Опишіть дизайн-паттерн SAGA. Яка різниця між транзакцією та операцією компенсації в SAGA, в SOA?](./ua/senior/architecture/describe-the-design-pattern-saga-what-is-the-difference-between-a-transaction-and-a-compensation-operation-in-saga-in-soa.md)
+217. [Що таке авторизація та аутентифікація?](./ua/senior/architecture/what-are-authentication-and-authorization.md)
+218. [Express vs Nest.js: які переваги і недоліки кожного фреймворку? Коли який доцільніше використовувати?](./ua/senior/architecture/comparison-of-express-and-nestjs-frameworks.md)
+219. [Що таке CLS і де варто його використовувати?](./ua/senior/architecture/what-is-cls-and-where-should-it-be-used.md)
+220. [Що таке graceful shutdown? Як його імплементувати?](./ua/senior/architecture/220-what-is-a-graceful-shutdown-how-to-implement-it.md)
+221. [Наведіть приклади імплементації GoF патернів у Node.js і фреймворках.](./ua/senior/architecture/provide-examples-of-implementing-gof-patterns-in-nodejs-and-frameworks.md)
+222. [Порівняйте MessageQ, RabbitMQ і Kafka.](./ua/senior/architecture/compare-messageq-rabbitmq-and-kafka.md)
+223. [Які проблеми розв’язує serverless?](./ua/senior/architecture/what-problems-does-serverless-solve.md)
 
 ### JavaScript
-224. З якою швидкістю витягуватимуться дані за ключем зі звичайного JavaScript об’єкта? Поясніть, що це за структура даних і як вона працює?
-225. Чим JS відрізняється від багатопотокових мов?
-226. Що таке функції вищого порядку?
-227. Назвіть об’єкти першого класу.
-228. Як зрозуміти, чи є у вашому коді/застосунку витоки пам’яті (memory leaks)?
-229. Як працювати з асинхронною відповіддю?
-230. Як можна отримати інкапсуляцію всередині класу без використання Typescript?
-* Optimize code for the event loop
-* Use advanced JavaScript design patterns (Observer, Singleton, Factory)
-* Handle memory leaks in JavaScript
-* Optimize async systems
-* Debug event loop bottlenecks
-* Implement TypeScript for JavaScript projects
-* Write advanced polyfills for compatibility
-* Design custom decorators
-* Design reusable modules
-* Develop custom async utilities
-* Implement advanced scoping mechanisms
-* Implement custom data structures
-* Implement custom event loop extensions
-* Contribute to open-source JavaScript libraries or frameworks
+224. [З якою швидкістю витягуватимуться дані за ключем зі звичайного JavaScript об’єкта? Поясніть, що це за структура даних і як вона працює?](./ua/senior/javascript/what-is-the-speed-of-retrieving-data-by-key-from-a-standard-javascript-object-explain-what-kind-of-data-structure-this-is-and-how-it-works.md)
+225. [Чим JS відрізняється від багатопотокових мов?](./ua/senior/javascript/what-sets-javascript-apart-from-multithreaded-languages.md)
+226. [Що таке функції вищого порядку?](./ua/senior/javascript/what-is-a-higherorder-function.md)
+227. [Назвіть об’єкти першого класу.](./ua/senior/javascript/what-are-firstclass-objects.md)
+228. [Як зрозуміти, чи є у вашому коді/застосунку витоки пам’яті (memory leaks)?](./ua/senior/javascript/how-to-detect-memory-leaks-in-codeapp.md)
+229. [Як працювати з асинхронною відповіддю?](./ua/senior/javascript/how-to-work-with-asynchronous-response.md)
+230. [Як можна отримати інкапсуляцію всередині класу без використання Typescript?](./ua/senior/javascript/how-to-achieve-encapsulation-within-a-class-without-using-typescript.md)
+* [Optimize code for the event loop](./ua/senior/javascript/optimize-code-for-the-event-loop.md)
+* [Use advanced JavaScript design patterns (Observer, Singleton, Factory)](./ua/senior/javascript/use-advanced-javascript-design-patterns.md)
+* [Handle memory leaks in JavaScript](./ua/senior/javascript/handle-memory-leaks-in-javascript.md)
+* [Optimize async systems](./ua/senior/javascript/optimizing-asynchronous-systems.md)
+* [Debug event loop bottlenecks](./ua/senior/javascript/debug-event-loop-bottlenecks.md)
+* [Implement TypeScript for JavaScript projects](./ua/senior/javascript/implement-typescript-in-js-projects.md)
+* [Write advanced polyfills for compatibility](./ua/senior/javascript/write-advanced-polyfills-for-older-browsers.md)
+* [Design custom decorators](./ua/senior/javascript/design-custom-decorations.md)
+* [Design reusable modules](./ua/senior/javascript/create-modular-designs.md)
+* [Develop custom async utilities](./ua/senior/javascript/create-asynchronous-tools.md)
+* [Implement advanced scoping mechanisms](./ua/senior/javascript/implement-advanced-scoping-mechanisms.md)
+* [Implement custom data structures](./ua/senior/javascript/implement-custom-data-structures.md)
+* [Implement custom event loop extensions](./ua/senior/javascript/implement-custom-event-loop-extensions.md)
+* [Contribute to open-source JavaScript libraries or frameworks](./ua/senior/javascript/contribute-to-opensource-javascript.md)
 
 ### Microservices
-231. Розкажіть про ваш досвід роботи з мікросервісами в Node.js. Як ви забезпечували комунікацію між різними сервісами?
-232. Як ви працювали з міграцією та покращенням сервісів в архітектурі мікросервісів?
-233. Як би ви підходили до тестування та дебагу застосунку з мікросервісною архітектурою у Node.js?
-234. Як би ви впоралися зі збоями в розподіленій системі (Failed message processing, dead letter queue)?
-235. Які патерни для побудови мікросервісної архітектури ви використовували?
-236. Як працює gateway?
-237. Що таке CAP теорема?
-238. Що краще: окремі бази даних для окремих мікросервісів чи одна база даних для всіх мікросервісів? Чому?
+231. [Розкажіть про ваш досвід роботи з мікросервісами в Node.js. Як ви забезпечували комунікацію між різними сервісами?](./ua/senior/microservices/can-you-describe-your-experience-with-microservices-in-nodejs-how-did-you-enable-communication-between-different-services.md)
+232. [Як ви працювали з міграцією та покращенням сервісів в архітектурі мікросервісів?](./ua/senior/microservices/how-did-you-work-with-migration-and-service-improvement-in-microservice-architecture.md)
+233. [Як би ви підходили до тестування та дебагу застосунку з мікросервісною архітектурою у Node.js?](./ua/senior/microservices/what-would-you-approach-testing-and-debugging-an-application-with-a-microservices-architecture-in-nodejs.md)
+234. [Як би ви впоралися зі збоями в розподіленій системі (Failed message processing, dead letter queue)?](./ua/senior/microservices/how-would-you-handle-failures-in-a-distributed-system-failed-message-processing-dead-letter-queue.md)
+235. [Які патерни для побудови мікросервісної архітектури ви використовували?](./ua/senior/microservices/what-microservice-architecture-patterns-did-you-use.md)
+236. [Як працює gateway?](./ua/senior/microservices/how-does-a-gateway-work.md)
+237. [Що таке CAP теорема?](./ua/senior/microservices/what-is-the-cap-theorem.md)
+238. [Що краще: окремі бази даних для окремих мікросервісів чи одна база даних для всіх мікросервісів? Чому?](./ua/senior/microservices/what-is-better-a-separate-database-for-each-microservice-or-one-database-for-all-services-why.md)
 
 ### Database
-239. Які бувають рівні ізоляції транзакцій та чим вони відрізняються?
-240. Навіщо існують рівні ізоляції транзакції? Наведіть приклади.
-241. Що таке аномалії транзакцій (dirty read, dirty write, read skew, phantom read, lost update)?
-242. У чому різниця нормалізованих і ненормалізованих даних? Наведіть приклад, коли які краще використовувати.
-243. У чому різниця між оптимістичним та песимістичним блокуванням?
-244. Навіщо потрібні індекси пошуку? Які мінуси в індексів?
-245. Що таке race condition? Можете навести приклад?
-246. Що таке реплікація? Навіщо вона потрібна?
-247. Яка різниця між графом і деревом?
-248. Чи доводилось вам робити оптимізацію перформансу за допомогою структур даних?
-249. Наведіть плюси та мінуси Shared DB.
-250. Що таке foreign keys і constraints у SQL базах даних?
-251. Що таке масштабування баз даних? Як це робити?
-252. Що таке шардинг?
-253. Що таке concurrent locking в базі даних?
-254. Чому властивості ACID важливі для SQL баз даних?
-255. Що таке eventual consistency? Які ще бувають типи узгодженості?
-* Use advanced SQL features (window functions, triggers)
-* Design scalable query logic
-* Optimize NoSQL data models for performance
-* Design scalable ORM systems
-* Debug complex queries
-* Implement distributed query handling
-* Handle eventual consistency in distributed databases
-* Design database schemas for multi-region setups
+239. [Які бувають рівні ізоляції транзакцій та чим вони відрізняються?](./ua/senior/database/what-are-the-levels-of-transaction-isolation-and-how-do-they-differ.md)
+240. [Навіщо існують рівні ізоляції транзакції? Наведіть приклади.](./ua/senior/database/why-are-isolation-levels-necessary-provide-examples.md)
+241. [Що таке аномалії транзакцій (dirty read, dirty write, read skew, phantom read, lost update)?](./ua/senior/database/what-are-transaction-anomalies-dirty-read-dirty-write-read-skew-phantom-read-lost-update.md)
+242. [У чому різниця нормалізованих і ненормалізованих даних? Наведіть приклад, коли які краще використовувати.](./ua/senior/database/what-is-the-difference-between-normalized-and-denormalized-data-provide-an-example-when-to-use-each.md)
+243. [У чому різниця між оптимістичним та песимістичним блокуванням?](./ua/senior/database/what-is-the-difference-between-optimistic-and-pessimistic-blocking.md)
+244. [Навіщо потрібні індекси пошуку? Які мінуси в індексів?](./ua/senior/database/244-why-are-search-indexes-needed-what-are-the-disadvantages-of-indexes.md)
+245. [Що таке race condition? Можете навести приклад?](./ua/senior/database/what-is-a-race-condition-can-you-give-an-example.md)
+246. [Що таке реплікація? Навіщо вона потрібна?](./ua/senior/database/what-is-replication-and-why-does-it-exist.md)
+247. [Яка різниця між графом і деревом?](./ua/senior/database/whats-the-difference-between-a-graph-and-a-tree.md)
+248. [Чи доводилось вам робити оптимізацію перформансу за допомогою структур даних?](./ua/senior/database/have-you-ever-had-to-optimize-performance-using-data-structures.md)
+249. [Наведіть плюси та мінуси Shared DB.](./ua/senior/database/what-are-the-pros-and-cons-of-a-shared-database.md)
+250. [Що таке foreign keys і constraints у SQL базах даних?](./ua/senior/database/what-are-foreign-keys-and-constraints-in-sql-databases.md)
+251. [Що таке масштабування баз даних? Як це робити?](./ua/senior/database/what-is-database-scaling-how-to-do-it.md)
+252. [Що таке шардинг?](./ua/senior/database/what-is-sharding.md)
+253. [Що таке concurrent locking в базі даних?](./ua/senior/database/what-is-concurrent-locking-in-a-database.md)
+254. [Чому властивості ACID важливі для SQL баз даних?](./ua/senior/database/254-why-are-acid-properties-important-for-sql-databases.md)
+255. [Що таке eventual consistency? Які ще бувають типи узгодженості?](./ua/senior/database/what-is-eventual-consistency-what-other-types-of-consistency-are-there.md)
+* [Use advanced SQL features (window functions, triggers)](./ua/senior/database/use-advanced-sql-features-window-functions-triggers.md)
+* [Design scalable query logic](./ua/senior/database/design-scalable-query-logic.md)
+* [Optimize NoSQL data models for performance](./ua/senior/database/optimise-nosql-data-models-for-performance.md)
+* [Design scalable ORM systems](./ua/senior/database/design-scalable-orm-systems.md)
+* [Debug complex queries](./ua/senior/database/debugging-intricate-sql-operations.md)
+* [Implement distributed query handling](./ua/senior/database/implement-distributed-query-handling.md)
+* [Handle eventual consistency in distributed databases](./ua/senior/database/handle-eventual-consistency-in-distributed-databases.md)
+* [Design database schemas for multi-region setups](./ua/senior/database/design-database-schema-for-multiple-regions.md)
