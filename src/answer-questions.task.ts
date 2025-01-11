@@ -1,8 +1,9 @@
 import {QuestionDto} from "./question.dto";
-import OpenAI from "openai";
 import {AbstractHandler} from "./handler.abstract.js";
+import OpenAI from "openai";
+import prompts from "./prompts.json" assert {type: "json"};
 
-const openai = new OpenAI({apiKey: ''});
+const openai = new OpenAI({apiKey: 'OPEN_AI_API_KEY'});
 
 export class AnswerQuestionsTask extends AbstractHandler {
     public async handle(question: QuestionDto): Promise<QuestionDto> {
@@ -10,7 +11,7 @@ export class AnswerQuestionsTask extends AbstractHandler {
             const response = await openai.chat.completions.create({
                 model: "gpt-4o-2024-08-06",
                 messages: [
-                    {role: "system", content: "Відповідай лише українською мовою та в форматі markdown"},
+                    {role: "system", content: prompts.answer.replaceAll('{{TOPIC}}', question.topic ?? '{{TOPIC}}')},
                     {
                         role: "user",
                         content: question.question || '',

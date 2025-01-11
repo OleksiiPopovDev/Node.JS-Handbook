@@ -18,19 +18,15 @@ export class TranslateQuestionsTask extends AbstractHandler {
         return super.handle(question);
     }
 
-    private llamaQuery = async (prompt: string) => {
+    private llamaQuery = async (question: string) => {
         return axios.post(
             'http://localhost:11434/api/chat',
             {
                 model: 'llama3.1:latest',
                 messages: [
                     {
-                        role: 'system',
-                        content: 'Твоя задача лише підготувати коротку унікальну назву файлу для Markdown англійською мовою без цифр до 10 слів. Видавай тільки результат без зайвих фраз'
-                    },
-                    {
                         role: 'user',
-                        content: prompt,
+                        content: question,
                     },
                 ],
                 stream: false,
@@ -40,7 +36,7 @@ export class TranslateQuestionsTask extends AbstractHandler {
 
     private formatFileName = (input: string): string => {
         return input
-            .replace(/^\d+\.\s*/, '')
+            .replace(/\d+\.\s*/, '')
             .replace(/[^a-zA-Z0-9\s]/g, '')
             .replace(/\s+/g, ' ')
             .trim()
