@@ -20,7 +20,6 @@ program
         const parseQuestionsService = new ParseQuestionsService();
         const updateReadmeService = new UpdateReadmeService();
         const updateNavigationService = new UpdateNavigationService();
-        const questions = parseQuestionsService.run().splice(0, 20);
 
         const createFoldersTask = new CreateFoldersTask();
         const translateQuestionsTask = new TranslateQuestionsTask();
@@ -28,7 +27,9 @@ program
         const prepareMdContentTask = new PrepareMdContentTask();
         const createMdFilesTask = new CreateMdFilesTask();
 
+        const questions = parseQuestionsService.run();//.splice(0, 20);
         createFoldersTask.setProgressBar('Progress...', questions.length)
+
         console.log('Processing question...');
 
         await BBPromise.map(questions, async (question: QuestionDto): Promise<void> => {
